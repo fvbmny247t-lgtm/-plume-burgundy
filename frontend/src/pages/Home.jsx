@@ -3,13 +3,41 @@ import { Link } from "react-router-dom";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { HOME, SUITES, ART_BLOCKS, IMAGES, NAV } from "../data/content";
+import Seo from "../components/Seo";
 
 const Home = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+
+  const hotelLd = {
+    "@context": "https://schema.org",
+    "@type": "Hotel",
+    name: "Plume Suites Collection",
+    description: lang === "fr"
+      ? "Boutique hôtel au bord du canal de Bourgogne, à Fleurey-sur-Ouche."
+      : "Boutique hotel by the Burgundy canal in Fleurey-sur-Ouche.",
+    image: IMAGES.heroPoster,
+    priceRange: "€€€",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Au-dessus du restaurant Ô P'tit Repère du Goût",
+      addressLocality: "Fleurey-sur-Ouche",
+      postalCode: "21410",
+      addressRegion: "Bourgogne-Franche-Comté",
+      addressCountry: "FR",
+    },
+    geo: { "@type": "GeoCoordinates", latitude: 47.2942, longitude: 4.8675 },
+    starRating: { "@type": "Rating", ratingValue: "4" },
+    amenityFeature: [
+      { "@type": "LocationFeatureSpecification", name: "Free Wi-Fi" },
+      { "@type": "LocationFeatureSpecification", name: "Air conditioning" },
+      { "@type": "LocationFeatureSpecification", name: "Restaurant" },
+    ],
+  };
 
   return (
     <div data-testid="home-page">
-      {/* HERO */}
+      <Seo path="/" jsonLd={hotelLd} />
+      {/* HERO — éditorial style Sabor Del Mar */}
       <section className="relative h-screen w-full overflow-hidden" data-testid="hero-section">
         <div className="absolute inset-0">
           <video
@@ -22,34 +50,50 @@ const Home = () => {
             className="w-full h-full object-cover"
             data-testid="hero-video"
           />
-          <div className="absolute inset-0 bg-ink/40" />
+          {/* Subtle bottom gradient only — keep visual breath */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
+          <div className="absolute inset-0 bg-ink/10" />
         </div>
 
-        <div className="relative h-full w-full px-6 md:px-12 pt-32 md:pt-40 pb-16 flex flex-col justify-between text-cream">
-          <div className="max-w-2xl fade-in">
-            <p className="ps-overline opacity-90">{t(HOME.heroLabel)}</p>
-            <p className="font-serif italic text-base md:text-lg mt-2 opacity-90">{t(HOME.heroLabelSub)}</p>
+        <div className="relative h-full w-full px-6 md:px-12 pt-28 md:pt-32 pb-10 flex flex-col justify-between text-cream">
+          {/* Top-left: small overline */}
+          <div className="fade-in flex items-start gap-6">
+            <div className="hidden md:block w-px h-12 bg-cream/60 mt-1" />
+            <div>
+              <p className="ps-overline opacity-90">{t(HOME.heroLabel)}</p>
+              <p className="font-serif italic text-sm md:text-base mt-1 opacity-80">{t(HOME.heroLabelSub)}</p>
+            </div>
           </div>
 
-          <div className="fade-in max-w-5xl">
-            <h1 className="font-serif text-5xl sm:text-7xl lg:text-[8rem] leading-[0.95] font-light italic">
+          {/* Center-bottom: huge title + minimal CTAs */}
+          <div className="fade-in max-w-6xl pb-6 md:pb-8">
+            <h1 className="font-serif text-[3.5rem] sm:text-7xl lg:text-[9rem] leading-[0.92] font-light italic whitespace-pre-line tracking-tight">
               {t(HOME.heroTitle)}
             </h1>
-            <p className="font-sans text-sm md:text-base mt-8 max-w-xl opacity-90 leading-relaxed">
-              {t(HOME.heroIntro)}
-            </p>
-            <div className="mt-10 flex items-center gap-6 flex-wrap">
-              <Link to="/sejours" data-testid="hero-cta-suites" className="ps-btn-outline-light">
-                {t(HOME.heroCta)}
-              </Link>
-              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] opacity-80">
-                <ArrowDown size={14} /> Scroll
+            <div className="mt-10 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+              <p className="font-sans text-sm md:text-base max-w-md opacity-90 leading-relaxed">
+                {t(HOME.heroIntro)}
+              </p>
+              <div className="flex items-center gap-4 flex-wrap">
+                <Link to="/reserver" data-testid="hero-cta-book" className="bg-terracotta hover:bg-terracottaDark text-cream px-7 py-3 uppercase text-[11px] tracking-[0.3em] transition-colors">
+                  {t(HOME.heroCta)}
+                </Link>
+                <Link to="/sejours" data-testid="hero-cta-suites" className="text-cream/90 hover:text-cream uppercase text-[11px] tracking-[0.3em] border-b border-cream/40 hover:border-cream pb-1 transition-colors">
+                  {t(HOME.heroCta2)}
+                </Link>
               </div>
             </div>
           </div>
 
-          <div className="absolute bottom-8 right-6 md:right-12 font-serif italic text-sm md:text-base text-cream/80">
+          {/* Bottom-right signature */}
+          <div className="absolute bottom-6 right-6 md:right-12 font-serif italic text-xs md:text-sm text-cream/70 tracking-wide">
             {t(HOME.heroCollection)}
+          </div>
+
+          {/* Subtle scroll arrow bottom-left */}
+          <div className="absolute bottom-8 left-6 md:left-12 hidden md:flex flex-col items-center gap-2 text-cream/70">
+            <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+            <ArrowDown size={14} className="animate-bounce" />
           </div>
         </div>
       </section>

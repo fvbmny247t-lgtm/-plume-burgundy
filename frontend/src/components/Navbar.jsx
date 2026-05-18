@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
-import { NAV, SMOOBU_BOOKING_URL } from "../data/content";
+import { NAV } from "../data/content";
 import PlumeLogo from "./PlumeLogo";
 
 const Navbar = () => {
@@ -29,37 +29,36 @@ const Navbar = () => {
     { to: "/contact", label: NAV.contact },
   ];
 
-  // Pages with full-bleed image/video hero use white logo & white text at top
+  // Pages with full-bleed image/video hero use transparent navbar at top
   const pathname = location.pathname;
   const heroIsDark =
     pathname === "/" ||
     pathname === "/art-de-vivre" ||
     /^\/sejours\/[^/]+$/.test(pathname);
 
-  // When scrolled or mobile menu open OR page is a cream page → solid dark bg
   const isDark = scrolled || open || !heroIsDark;
   const navBg = isDark ? "bg-ink" : "bg-transparent";
-  const navTextColor = "text-cream"; // always cream because bg is dark or image
-  const logoVariant = "white"; // white logo always — bg is either image or dark
+  const navTextColor = "text-cream";
+  const logoVariant = "white";
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${navBg}`}
       data-testid="main-navbar"
     >
-      <div className={`flex items-center justify-between px-6 md:px-12 py-4 md:py-5 ${navTextColor}`}>
+      <div className={`flex items-center justify-between px-6 md:px-10 py-3 md:py-4 ${navTextColor}`}>
         <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
-          <PlumeLogo variant={logoVariant} size="lg" />
+          <PlumeLogo variant={logoVariant} size="sm" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-10">
+        <nav className="hidden lg:flex items-center gap-9">
           {links.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               data-testid={`nav-link-${l.to.replace("/", "")}`}
               className={({ isActive }) =>
-                `font-sans uppercase text-xs tracking-[0.28em] hover:opacity-70 transition-opacity ${
+                `font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
                   isActive ? "opacity-100" : "opacity-90"
                 }`
               }
@@ -69,12 +68,12 @@ const Navbar = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4 md:gap-6">
-          <div className="hidden md:flex items-center text-xs uppercase tracking-[0.25em] font-sans">
+        <div className="flex items-center gap-4 md:gap-5">
+          <div className="hidden md:flex items-center text-[11px] uppercase tracking-[0.3em] font-sans">
             <button
               data-testid="lang-switch-fr"
               onClick={() => setLang("fr")}
-              className={`px-2 transition-opacity ${lang === "fr" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}
+              className={`px-1.5 transition-opacity ${lang === "fr" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}
             >
               FR
             </button>
@@ -82,21 +81,19 @@ const Navbar = () => {
             <button
               data-testid="lang-switch-en"
               onClick={() => setLang("en")}
-              className={`px-2 transition-opacity ${lang === "en" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}
+              className={`px-1.5 transition-opacity ${lang === "en" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}
             >
               EN
             </button>
           </div>
 
-          <a
-            href={SMOOBU_BOOKING_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/reserver"
             data-testid="nav-book-button"
-            className="hidden md:inline-flex items-center bg-terracotta text-cream px-5 py-2.5 uppercase text-[11px] tracking-[0.28em] hover:bg-terracottaDark transition-colors"
+            className="hidden md:inline-flex items-center bg-terracotta text-cream px-4 py-2 uppercase text-[10px] tracking-[0.3em] hover:bg-terracottaDark transition-colors"
           >
             {t(NAV.book)}
-          </a>
+          </Link>
 
           <button
             data-testid="mobile-menu-toggle"
@@ -104,7 +101,7 @@ const Navbar = () => {
             className="lg:hidden p-1"
             aria-label="Menu"
           >
-            {open ? <X size={26} /> : <Menu size={26} />}
+            {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
@@ -144,15 +141,13 @@ const Navbar = () => {
               EN
             </button>
           </div>
-          <a
-            href={SMOOBU_BOOKING_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/reserver"
             data-testid="mobile-book-button"
             className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.28em]"
           >
             {t(NAV.book)}
-          </a>
+          </Link>
         </div>
       )}
     </header>

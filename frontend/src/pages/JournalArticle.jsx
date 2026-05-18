@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
+import Seo from "../components/Seo";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -27,6 +28,23 @@ const JournalArticle = () => {
 
   return (
     <div className="bg-cream text-ink" data-testid="journal-article-page">
+      <Seo
+        title={article.title[lang]}
+        description={article.excerpt[lang]}
+        image={article.cover}
+        path={`/journal/${article.slug}`}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.title[lang],
+          description: article.excerpt[lang],
+          image: article.cover,
+          datePublished: article.date,
+          author: { "@type": "Organization", name: "Plume Suites Collection" },
+          publisher: { "@type": "Organization", name: "Plume Suites Collection" },
+        }}
+      />
       <article>
         <section className="pt-40 md:pt-48 pb-12 px-6 md:px-12">
           <div className="max-w-4xl mx-auto">

@@ -47,7 +47,19 @@ export const IMAGES = {
   doorway: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/24zvpl1j_rayyan-pl7Bd0IN7b4-unsplash.jpg",
 };
 
-export const SMOOBU_BOOKING_URL = "https://login.smoobu.com/en/cockpit/booking-tool"; // placeholder
+export const SMOOBU = {
+  apartmentId: 780197,
+  scriptUrl: "https://login.smoobu.com/js/Settings/BookingToolIframe.js",
+  baseUrl: "https://login.smoobu.com",
+  // language is interpolated from current i18n: fr | en
+  iframeUrl: (lang = "fr") => `https://login.smoobu.com/${lang}/booking-tool/iframe/780197`,
+};
+
+export const SITE = {
+  name: "Plume Suites",
+  url: "https://plumesuites.fr",
+  defaultImage: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+};
 
 export const NAV = {
   artDeVivre: { fr: "Art de vivre", en: "Lifestyle" },
@@ -59,17 +71,18 @@ export const NAV = {
 
 export const HOME = {
   heroLabel: { fr: "Bourgogne · Costa del Sol", en: "Burgundy · Costa del Sol" },
-  heroLabelSub: { fr: "(Nouveau chapitre bientôt)", en: "(A new chapter, soon)" },
+  heroLabelSub: { fr: "Nouveau chapitre · 2027", en: "A new chapter · 2027" },
   heroTitle: {
-    fr: "Des lieux pensés pour ralentir.",
-    en: "Places designed for slower living.",
+    fr: "Ralentir,\nau bord du canal.",
+    en: "Slow down,\nby the canal.",
   },
   heroIntro: {
-    fr: "Entre canal, gastronomie et douceur bourguignonne, Plume Suites Collection imagine des séjours inspirés par le calme et l'art de vivre.",
-    en: "Between canal, gastronomy and Burgundy softness, Plume Suites Collection imagines stays shaped by calm and the art of living.",
+    fr: "Plume Suites Collection — boutique hospitality entre Bourgogne & Méditerranée.",
+    en: "Plume Suites Collection — boutique hospitality between Burgundy & the Mediterranean.",
   },
-  heroCta: { fr: "Découvrir les suites", en: "Discover the suites" },
-  heroCollection: { fr: "Plume Suites Collection", en: "Plume Suites Collection" },
+  heroCta: { fr: "Réserver un séjour", en: "Book a stay" },
+  heroCta2: { fr: "Voir les suites", en: "View the suites" },
+  heroCollection: { fr: "Plume Suites Collection — Bourgogne", en: "Plume Suites Collection — Burgundy" },
 
   editorialOverline: { fr: "Une adresse confidentielle", en: "A confidential address" },
   editorialTitle: {

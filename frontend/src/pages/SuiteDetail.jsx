@@ -1,16 +1,45 @@
 import React from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { SUITES, SMOOBU_BOOKING_URL, NAV } from "../data/content";
+import { SUITES, NAV } from "../data/content";
+import Seo from "../components/Seo";
 
 const SuiteDetail = () => {
   const { slug } = useParams();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const suite = SUITES[slug];
   if (!suite) return <Navigate to="/sejours" replace />;
 
+  const hotelLd = {
+    "@context": "https://schema.org",
+    "@type": "HotelRoom",
+    name: suite.name[lang],
+    description: suite.intro[lang],
+    image: suite.cover,
+    bed: { "@type": "BedDetails", typeOfBed: "Queen" },
+    occupancy: { "@type": "QuantitativeValue", maxValue: 2 },
+    containedInPlace: {
+      "@type": "Hotel",
+      name: "Plume Suites Collection",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Fleurey-sur-Ouche",
+        addressRegion: "Bourgogne-Franche-Comté",
+        addressCountry: "FR",
+      },
+    },
+  };
+
   return (
     <div className="bg-cream text-ink" data-testid={`suite-page-${slug}`}>
+      <Seo
+        title={suite.name[lang]}
+        description={suite.intro[lang]}
+        image={suite.cover}
+        path={`/sejours/${slug}`}
+        type="article"
+        jsonLd={hotelLd}
+      />
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">
         <img src={suite.cover} alt={t(suite.name)} className="absolute inset-0 w-full h-full object-cover kenburns" />
@@ -121,15 +150,13 @@ const SuiteDetail = () => {
           {t({ fr: "Réserver votre séjour.", en: "Book your stay." })}
         </h2>
         <div className="mt-12 flex items-center justify-center gap-6 flex-wrap">
-          <a
-            href={SMOOBU_BOOKING_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/reserver"
             data-testid={`suite-book-${slug}`}
             className="inline-flex items-center justify-center bg-cream text-ink px-8 py-4 uppercase text-xs tracking-[0.28em] hover:bg-ink hover:text-cream transition-colors"
           >
             {t(NAV.book)}
-          </a>
+          </Link>
           <Link
             to="/sejours"
             data-testid={`suite-back-${slug}`}

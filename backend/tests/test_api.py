@@ -16,18 +16,45 @@ def session():
 
 # --- Journal endpoints ---
 class TestJournal:
-    def test_list_journal_returns_5(self, session):
+    def test_list_journal_returns_8(self, session):
         r = session.get(f"{API}/journal", timeout=30)
         assert r.status_code == 200, r.text
         data = r.json()
         assert isinstance(data, list)
-        assert len(data) == 5
-        slugs = {a["slug"] for a in data}
+        assert len(data) == 8
+        slugs = [a["slug"] for a in data]
+        # 3 new cycling articles must be present, and at the top (first 3)
+        cycling = [
+            "canal-de-bourgogne-velo-fleurey",
+            "eurovelo-6-bourgogne",
+            "week-end-velo-canal-dijon-beaune",
+        ]
+        for s in cycling:
+            assert s in slugs, f"missing slug {s}"
+        assert slugs[:3] == cycling, f"cycling articles should be first 3, got {slugs[:3]}"
         assert "matins-au-bord-du-canal" in slugs
         # excerpt fields exist and bilingual
         assert "fr" in data[0]["title"] and "en" in data[0]["title"]
         # body should NOT be in list endpoint
         assert "body" not in data[0]
+
+    @pytest.mark.parametrize("slug", [
+        "canal-de-bourgogne-velo-fleurey",
+        "eurovelo-6-bourgogne",
+        "week-end-velo-canal-dijon-beaune",
+    ])
+    def test_get_cycling_article_full_body(self, session, slug):
+        r = session.get(f"{API}/journal/{slug}", timeout=30)
+        assert r.status_code == 200, r.text
+        data = r.json()
+        assert data["slug"] == slug
+        assert "body" in data
+        assert "fr" in data["body"] and "en" in data["body"]
+        assert isinstance(data["body"]["fr"], list) and len(data["body"]["fr"]) >= 3
+        assert isinstance(data["body"]["en"], list) and len(data["body"]["en"]) >= 3
+        # category + title bilingual
+        assert "fr" in data["title"] and "en" in data["title"]
+        assert "fr" in data["category"] and "en" in data["category"]
 
     def test_get_journal_article_bilingual_body(self, session):
         r = session.get(f"{API}/journal/matins-au-bord-du-canal", timeout=30)

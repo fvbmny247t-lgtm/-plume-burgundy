@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { CONTACT_PAGE, FOOTER, NAV, SMOOBU_BOOKING_URL } from "../data/content";
+import { CONTACT_PAGE, FOOTER, NAV } from "../data/content";
+import Seo from "../components/Seo";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -26,6 +28,14 @@ const Contact = () => {
 
   return (
     <div className="bg-cream text-ink" data-testid="contact-page">
+      <Seo
+        title={t({ fr: "Contact", en: "Contact" })}
+        description={t({
+          fr: "Contactez Plume Suites — boutique hôtel au bord du canal de Bourgogne, Fleurey-sur-Ouche.",
+          en: "Contact Plume Suites — boutique hotel by the Burgundy canal, Fleurey-sur-Ouche.",
+        })}
+        path="/contact"
+      />
       <section className="pt-40 md:pt-52 pb-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <p className="ps-overline text-ink/60">{t(CONTACT_PAGE.overline)}</p>
@@ -116,15 +126,13 @@ const Contact = () => {
             </div>
             <div>
               <p className="ps-overline text-ink/60 mb-3">{t({ fr: "Réservation directe", en: "Direct booking" })}</p>
-              <a
-                href={SMOOBU_BOOKING_URL}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/reserver"
                 data-testid="contact-book"
                 className="ps-btn-outline"
               >
                 {t(NAV.book)}
-              </a>
+              </Link>
             </div>
             <div>
               <p className="ps-overline text-ink/60 mb-3">{t(FOOTER.followTitle)}</p>

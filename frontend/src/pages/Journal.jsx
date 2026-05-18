@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { JOURNAL_PAGE } from "../data/content";
+import Seo from "../components/Seo";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -16,6 +17,14 @@ const Journal = () => {
 
   return (
     <div className="bg-cream text-ink" data-testid="journal-page">
+      <Seo
+        title={t({ fr: "Journal — Bourgogne, vélo, gastronomie & vignobles", en: "Journal — Burgundy, cycling, gastronomy & vineyards" })}
+        description={t({
+          fr: "Inspirations slow living, itinéraires à vélo le long du canal de Bourgogne, escapades dans les vignobles, table de saison — le carnet éditorial de Plume Suites.",
+          en: "Slow living inspirations, cycling itineraries along the Burgundy canal, vineyard escapes, seasonal table — the editorial notebook of Plume Suites.",
+        })}
+        path="/journal"
+      />
       <section className="pt-40 md:pt-52 pb-20 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <p className="ps-overline text-ink/60">{t(JOURNAL_PAGE.heroOverline)}</p>

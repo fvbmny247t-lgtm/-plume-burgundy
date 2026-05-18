@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { FOOTER, NAV, SMOOBU_BOOKING_URL } from "../data/content";
+import { FOOTER, NAV } from "../data/content";
 import PlumeLogo from "./PlumeLogo";
 
 const Footer = () => {
@@ -14,19 +14,17 @@ const Footer = () => {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         <div className="md:col-span-4">
-          <PlumeLogo variant="white" size="lg" />
+          <PlumeLogo variant="white" size="md" />
           <p className="mt-6 font-serif italic text-2xl leading-tight max-w-xs">
             {t(FOOTER.tagline)}
           </p>
-          <a
-            href={SMOOBU_BOOKING_URL}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/reserver"
             data-testid="footer-book-button"
             className="ps-btn-outline-light mt-8"
           >
             {t(NAV.book)}
-          </a>
+          </Link>
         </div>
 
         <div className="md:col-span-3">

@@ -3,11 +3,20 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { SEJOURS_PAGE, SUITES } from "../data/content";
+import Seo from "../components/Seo";
 
 const Sejours = () => {
   const { t } = useLang();
   return (
     <div data-testid="sejours-page" className="bg-cream text-ink">
+      <Seo
+        title={t({ fr: "Séjours — Douceur & L'Envolée", en: "Stays — Douceur & L'Envolée" })}
+        description={t({
+          fr: "Deux suites éditoriales au bord du canal de Bourgogne. Douceur, chaleureuse et familiale. L'Envolée, exclusive et lumineuse.",
+          en: "Two editorial suites by the Burgundy canal. Douceur, warm and family-friendly. L'Envolée, exclusive and full of light.",
+        })}
+        path="/sejours"
+      />
       <section className="pt-40 md:pt-52 pb-20 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <p className="ps-overline text-ink/60">{t(SEJOURS_PAGE.heroOverline)}</p>

@@ -1,11 +1,20 @@
 import React from "react";
 import { useLang } from "../context/LanguageContext";
 import { ART_BLOCKS, ARTDEVIVRE_PAGE, IMAGES, HOME } from "../data/content";
+import Seo from "../components/Seo";
 
 const ArtDeVivre = () => {
   const { t } = useLang();
   return (
     <div className="bg-cream text-ink" data-testid="art-de-vivre-page">
+      <Seo
+        title={t({ fr: "Art de vivre — Bourgogne, canal & vignobles", en: "Lifestyle — Burgundy, canal & vineyards" })}
+        description={t({
+          fr: "Gastronomie, vélo le long du canal de Bourgogne, vignobles bourguignons, slow living — l'art de vivre Plume Suites.",
+          en: "Gastronomy, cycling along the Burgundy canal, vineyards, slow living — the Plume Suites way.",
+        })}
+        path="/art-de-vivre"
+      />
       {/* HERO */}
       <section className="relative h-[85vh] overflow-hidden">
         <img src={IMAGES.vineyardSunset} alt="" className="absolute inset-0 w-full h-full object-cover kenburns" />
