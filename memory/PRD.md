@@ -1,0 +1,35 @@
+# Plume Suites Collection — PRD
+
+## Problem statement
+Boutique hotel website for Plume Suites (Bourgogne, France + Costa del Sol 2027). Editorial magazine style inspired by Sabor Del Mar webflow template. Bilingual FR/EN, mobile responsive. Two suites: "Plume Suites — Douceur" and "Plume Suites — L'Envolée". Smoobu booking link + contact form.
+
+## Architecture
+- Frontend: React 19 + Tailwind CSS, React Router 7, Google Fonts (Cormorant Garamond + Outfit)
+- Backend: FastAPI + MongoDB (Motor), endpoints under /api
+- i18n: React Context (FR/EN), persisted in localStorage
+- Colors: #f5f1ea (cream), #3b312b (ink), #b9785d (terracotta)
+
+## Implemented (Feb 2026)
+- Home: hero fullscreen, editorial intro, suites slider (2 suites), Art de vivre bento grid (4 blocks), quote section terracotta, location Bourgogne, Costa del Sol future, journal preview, footer with distances
+- /sejours: editorial list of both suites
+- /sejours/:slug: full suite page (hero, intro, overlay terracotta, editorial, gallery, experience dark, details, CTA Réserver)
+- /art-de-vivre: alternating editorial blocks
+- /journal: card grid pulled from /api/journal
+- /journal/:slug: article body from /api/journal/{slug}
+- /contact: form posting to /api/contact (MongoDB), success/error states
+- Navbar: transparent → #3b312b on scroll, FR/EN switcher, Réserver button (Smoobu placeholder), mobile burger menu
+- Footer: distances (Dijon, Beaune, Marsannay, canal, TGV, airport), bilingual nav
+- Backend: GET /api/journal, GET /api/journal/{slug}, POST/GET /api/contact
+
+## Tests
+- Backend pytest 6/6 ✅
+- Frontend Playwright 13/13 ✅ (iteration_1.json)
+
+## Backlog (P1/P2)
+- Replace Smoobu placeholder URL with real booking widget (channel manager)
+- Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)
+- Optionally connect Resend for contact email notifications
+- Admin panel for journal articles + view contact submissions (currently public GET — lock down)
+- Real Plume Suites SVG logo file (currently rendered as styled wordmark)
+- Open Graph / SEO meta tags + sitemap
+- Costa del Sol page when address opens (2027)
