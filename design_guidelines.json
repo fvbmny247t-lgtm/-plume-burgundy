@@ -1,0 +1,139 @@
+{
+  "theme": "light",
+  "archetype": "1 (Organic & Earthy)",
+  "mood": "Poetic, calm, sensory, editorial magazine lifestyle",
+  "colors": {
+    "primary": {
+      "DEFAULT": "#f5f1ea",
+      "description": "Cream/Ivoire, main background, soft and natural."
+    },
+    "secondary": {
+      "DEFAULT": "#3b312b",
+      "description": "Dark brown, used for text on light backgrounds and background for dark sections."
+    },
+    "accent": {
+      "DEFAULT": "#b9785d",
+      "description": "Terracotta, used for highlights, CTA buttons, and specific emphasis blocks."
+    },
+    "background": "#f5f1ea",
+    "foreground": "#3b312b",
+    "card": {
+      "DEFAULT": "#ffffff",
+      "foreground": "#3b312b"
+    },
+    "border": "#e5dfd3",
+    "muted": {
+      "DEFAULT": "#ebe5d9",
+      "foreground": "#7a7067"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "heading": "Cormorant Garamond",
+      "body": "Outfit"
+    },
+    "strategies": {
+      "h1": "text-5xl sm:text-6xl lg:text-8xl font-light tracking-tighter leading-none italic",
+      "h2": "text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight",
+      "h3": "text-2xl sm:text-3xl font-medium",
+      "body": "text-base font-light leading-relaxed tracking-wide",
+      "overline": "text-xs sm:text-sm uppercase tracking-[0.2em] font-medium"
+    },
+    "rules": [
+      "Headings should heavily utilize italics for an editorial, magazine-like feel.",
+      "Never use Inter for headings.",
+      "Use massive font sizes for quotes and primary hero texts to create impact."
+    ]
+  },
+  "spacing_and_layout": {
+    "strategy": "Generous Spacing Philosophy",
+    "padding": "Use p-12, p-16, p-24, and p-32 for sections to give an airy, luxurious feel.",
+    "grid": "MODE A: The 'Tetris' Grid. Asymmetrical layouts mixing large images and small text blocks. 12-column grid on desktop.",
+    "alignment": "Optical alignment over geometrical. Center align hero text, left align body paragraphs."
+  },
+  "components": {
+    "navbar": {
+      "style": "Transparent on top, smoothly transitions to bg-[#3b312b] on scroll.",
+      "elements": "Large white serif text logo ('Plume Suites'), Language switch (FR/EN), Burger menu (mobile), 'Réserver' button (Smoobu integration)."
+    },
+    "hero": {
+      "style": "Fullscreen immersive (h-screen).",
+      "overlay": "bg-black/30 for text readability.",
+      "text": "Giant serif title, center aligned, poetic vibe."
+    },
+    "buttons": {
+      "primary": "bg-[#b9785d] text-white hover:bg-[#a66a51] transition-colors px-6 py-3 rounded-none uppercase tracking-widest text-sm",
+      "secondary": "bg-transparent border border-[#3b312b] text-[#3b312b] hover:bg-[#3b312b] hover:text-[#f5f1ea] transition-colors px-6 py-3 rounded-none uppercase tracking-widest text-sm"
+    },
+    "sections": [
+      "Hero Fullscreen",
+      "Editorial Intro (Text heavy, large quote)",
+      "Suites Slider (Douceur & L'Envolée)",
+      "Art de Vivre Bento Grid (4 blocks: Gastronomie, Canal, Villages/Vignobles, Slow moments)",
+      "Fullscreen Citation (Terracotta or Dark Brown bg)",
+      "Location Map / Info (Bourgogne)",
+      "Future Address (Costa del Sol 2027)",
+      "Journal Teaser (Blog)",
+      "Minimalist Footer"
+    ]
+  },
+  "images": {
+    "hero_landscape": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/562139024ff8b3bead873b6988f985c7ce9954c28aa327ddc0cb5eed225ad5e8.png",
+      "description": "Serene countryside landscape at golden hour, misty hills, a calm river, elegant atmosphere.",
+      "category": "Hero Background"
+    },
+    "suite_douceur": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/0a3fbd8d2f12c8e5f1ced94f4076a961cb757ac0e835ae436117de0f9a5bc2f3.png",
+      "description": "Luxury boutique hotel bedroom interior, warm cream and terracotta tones.",
+      "category": "Suites Slider - Douceur"
+    },
+    "suite_envolee": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/dd748844ec9d71dc9cf1e360a4c722713abd3ac4d821194d12a8d759ec7c724d.png",
+      "description": "Airy, elegant boutique hotel suite interior, high ceilings, large arched windows.",
+      "category": "Suites Slider - L'Envolée"
+    },
+    "lifestyle_reading": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/493b60b139867f69a68c79dd8513bac88f3c0231159c259962fa2946d377e6ac.png",
+      "description": "Woman in linen dress reading a book, warm sunlight, beige and earthy tones.",
+      "category": "Editorial / Slow Moments"
+    },
+    "bourgogne_canal": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/ad7c098fd3177e2c398eea963ce0f20cb29a1c232a3273d56900e626537962d8.png",
+      "description": "Burgundy Canal in France, calm water reflecting tall trees, misty morning.",
+      "category": "Art de Vivre - Canal"
+    },
+    "vineyard_bourgogne": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/cfcfe909a4314bdbcf72c65923b299904d188bcc0cffa7d5ba37b784d5939a2a.png",
+      "description": "Sunny vineyard in Burgundy France, terracotta and green colors.",
+      "category": "Art de Vivre - Villages/Vignobles"
+    },
+    "art_de_vivre_gastronomy": {
+      "url": "https://images.unsplash.com/photo-1616671285410-2a676a9a433d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwzfHxnYXN0cm9ub215JTIwZmluZSUyMGRpbmluZ3xlbnwwfHx8fDE3NzkxMjU4NDl8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Fine dining gastronomy, elegant setup.",
+      "category": "Art de Vivre - Gastronomie"
+    },
+    "costa_del_sol": {
+      "url": "https://images.unsplash.com/photo-1736428995445-827f17ad9cc8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwzfHxhbmRhbHVzaWElMjBzcGFpbiUyMGNvYXN0fGVufDB8fHx8MTc3OTEyNTg0OXww&ixlib=rb-4.1.0&q=85",
+      "description": "Sunny coastal view with palm trees, representing the future Costa del Sol location.",
+      "category": "Future Location"
+    }
+  },
+  "motion_and_interactions": {
+    "hover_states": "Images should have a subtle slow scale effect (scale-105 duration-700) on hover. Buttons should change background colors smoothly.",
+    "scroll": "Use Lenis for smooth momentum scrolling. Implement parallax effects on fullscreen images.",
+    "reveal": "Fade in text block by block as the user scrolls down (staggered animations)."
+  },
+  "instructions_to_main_agent": [
+    "Install 'lucide-react' for icons.",
+    "Install 'framer-motion' for scroll and hover animations.",
+    "Install '@studio-freight/react-lenis' for smooth scrolling.",
+    "Use Tailwind configuration to map the exact colors provided.",
+    "Load 'Cormorant Garamond' and 'Outfit' fonts from Google Fonts.",
+    "Ensure the layout feels like a high-end print magazine (use the 'Tetris' bento grid rules).",
+    "Include 'data-testid' on all interactive elements (links, buttons, form inputs).",
+    "Build a dynamic Navigation bar that is transparent on top and turns dark brown (#3b312b) on scroll.",
+    "Implement routing for all requested pages (/, /art-de-vivre, /sejours, /sejours/douceur, /sejours/envolee, /journal, /journal/[slug], /contact).",
+    "DO NOT use placeholder images; rely strictly on the provided image URLs in this JSON."
+  ]
+}
