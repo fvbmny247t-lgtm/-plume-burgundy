@@ -29,17 +29,27 @@ const Navbar = () => {
     { to: "/contact", label: NAV.contact },
   ];
 
-  const navTextColor = scrolled || open ? "text-cream" : "text-cream";
-  const navBg = scrolled || open ? "bg-ink" : "bg-transparent";
+  // Pages with full-bleed image/video hero use white logo & white text at top
+  const pathname = location.pathname;
+  const heroIsDark =
+    pathname === "/" ||
+    pathname === "/art-de-vivre" ||
+    /^\/sejours\/[^/]+$/.test(pathname);
+
+  // When scrolled or mobile menu open OR page is a cream page → solid dark bg
+  const isDark = scrolled || open || !heroIsDark;
+  const navBg = isDark ? "bg-ink" : "bg-transparent";
+  const navTextColor = "text-cream"; // always cream because bg is dark or image
+  const logoVariant = "white"; // white logo always — bg is either image or dark
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${navBg}`}
       data-testid="main-navbar"
     >
-      <div className={`flex items-center justify-between px-6 md:px-12 py-5 md:py-6 ${navTextColor}`}>
-        <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites">
-          <PlumeLogo />
+      <div className={`flex items-center justify-between px-6 md:px-12 py-4 md:py-5 ${navTextColor}`}>
+        <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
+          <PlumeLogo variant={logoVariant} size="lg" />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-10">

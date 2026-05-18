@@ -12,12 +12,17 @@ const Home = () => {
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden" data-testid="hero-section">
         <div className="absolute inset-0">
-          <img
-            src={IMAGES.hero}
-            alt="Plume Suites — Bourgogne"
-            className="w-full h-full object-cover kenburns"
+          <video
+            src={IMAGES.heroVideo}
+            poster={IMAGES.heroPoster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            data-testid="hero-video"
           />
-          <div className="absolute inset-0 bg-ink/35" />
+          <div className="absolute inset-0 bg-ink/40" />
         </div>
 
         <div className="relative h-full w-full px-6 md:px-12 pt-32 md:pt-40 pb-16 flex flex-col justify-between text-cream">
@@ -183,7 +188,7 @@ const Home = () => {
             </p>
           </div>
           <div className="md:col-span-7 h-[60vh] overflow-hidden">
-            <img src={IMAGES.canal} alt="Bourgogne canal" className="w-full h-full object-cover" />
+            <img src={IMAGES.dijonPalais} alt="Palais des Ducs de Dijon" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>

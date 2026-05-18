@@ -1,19 +1,50 @@
-// Centralized bilingual content for Plume Suites
+// Centralized bilingual content for Plume Suites — real authentic photos
 export const IMAGES = {
-  hero: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/562139024ff8b3bead873b6988f985c7ce9954c28aa327ddc0cb5eed225ad5e8.png",
-  douceur: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/0a3fbd8d2f12c8e5f1ced94f4076a961cb757ac0e835ae436117de0f9a5bc2f3.png",
-  envolee: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/dd748844ec9d71dc9cf1e360a4c722713abd3ac4d821194d12a8d759ec7c724d.png",
-  reading: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/493b60b139867f69a68c79dd8513bac88f3c0231159c259962fa2946d377e6ac.png",
+  // Hero video + poster fallback
+  heroVideo: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/pw8xl9qs_12583104_1920_1080_30fps.mp4",
+  heroPoster: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+
+  // Plume Suites — Douceur (chaleureux, cocon, 2 lits, suspensions cuivre, pierre)
+  douceur: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG",
+  douceurTv: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/vacmfd3h_F1EED553-FC8A-4B91-83E2-006C644628E0.JPG",
+  douceurHeadboard: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/p7ognvc7_B4C093FA-ECD4-4A9C-8CAC-D3B799C14E1B.JPG",
+
+  // Plume Suites — L'Envolée (mansardé, exclusif, lumière)
+  envolee: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/49xdp4zr_F28F0185-183B-4CAC-9287-576C414DD07A.JPG",
+  envoleeDesk: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/6ompvcnm_7A67B1F7-EFA0-42FE-8054-5C7B83393CB8.JPG",
+
+  // Bourgogne — Beaune
+  beauneRoof: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/kzvstbfs_francesco-ungaro-6duN7DsOgcQ-unsplash.jpg",
+  beauneCourtyard: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/3gvv3v16_herve-marmillot-DNjoCoORXxU-unsplash.jpg",
+
+  // Bourgogne — Dijon
+  dijonPalais: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/24zvpl1j_rayyan-pl7Bd0IN7b4-unsplash.jpg",
+  dijonStreet: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/fta8g3gi_zhu-yunxiao-Ov-FZkRaxKw-unsplash.jpg",
+  dijonCarousel: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/oz1hfjes_zhu-yunxiao-2E8g1HimrNc-unsplash.jpg",
+
+  // Vignobles
+  vineyard: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/pjvibq7i_alvin-frey-uxOR5cIlaCY-unsplash.jpg",
+  vineyardSunset: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+
+  // Wine / Gastronomy / Art de vivre
+  gastronomy: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
+  wineGlass: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
+  wineWindow: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
+  wineFriends: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/oal49whg_kelsey-chance-tAH2cA_BL5g-unsplash.jpg",
+  wineTop: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/l2isc13w_corina-rainer-xx-qrRRNabQ-unsplash.jpg",
+
+  // Canal (placeholder until real photo) + Costa del Sol
   canal: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/ad7c098fd3177e2c398eea963ce0f20cb29a1c232a3273d56900e626537962d8.png",
-  vineyard: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/cfcfe909a4314bdbcf72c65923b299904d188bcc0cffa7d5ba37b784d5939a2a.png",
-  gastronomy: "https://images.unsplash.com/photo-1616671285410-2a676a9a433d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwzfHxnYXN0cm9ub215JTIwZmluZSUyMGRpbmluZ3xlbnwwfHx8fDE3NzkxMjU4NDl8MA&ixlib=rb-4.1.0&q=85",
+  reading: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
   costa: "https://images.unsplash.com/photo-1736428995445-827f17ad9cc8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwzfHxhbmRhbHVzaWElMjBzcGFpbiUyMGNvYXN0fGVufDB8fHx8MTc3OTEyNTg0OXww&ixlib=rb-4.1.0&q=85",
-  doorway: "https://customer-assets.emergentagent.com/job_9f3bfbc7-be66-4d19-b445-7eab6a98eb47/artifacts/ntwqy0wu_Capture%20d%E2%80%99e%CC%81cran%202026-05-18%20a%CC%80%2019.04.16.png",
-  // extra unsplash fallbacks
-  village: "https://images.unsplash.com/photo-1568797629192-789acf8e4df3?auto=format&fit=crop&w=2000&q=80",
-  bedroom2: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=2000&q=80",
-  bathroom: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=2000&q=80",
-  table: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=80",
+
+  // Legacy keys still referenced
+  hero: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+  village: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/fta8g3gi_zhu-yunxiao-Ov-FZkRaxKw-unsplash.jpg",
+  bedroom2: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/vacmfd3h_F1EED553-FC8A-4B91-83E2-006C644628E0.JPG",
+  bathroom: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/p7ognvc7_B4C093FA-ECD4-4A9C-8CAC-D3B799C14E1B.JPG",
+  table: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
+  doorway: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/24zvpl1j_rayyan-pl7Bd0IN7b4-unsplash.jpg",
 };
 
 export const SMOOBU_BOOKING_URL = "https://login.smoobu.com/en/cockpit/booking-tool"; // placeholder
@@ -191,7 +222,7 @@ export const SUITES = {
       { fr: "Climatisation", en: "Air conditioning" },
       { fr: "Wi-Fi haut débit", en: "High-speed Wi-Fi" },
     ],
-    gallery: [IMAGES.douceur, IMAGES.reading, IMAGES.bedroom2, IMAGES.bathroom],
+    gallery: [IMAGES.douceur, IMAGES.douceurTv, IMAGES.douceurHeadboard, IMAGES.wineGlass],
   },
   envolee: {
     slug: "envolee",
@@ -234,7 +265,7 @@ export const SUITES = {
       { fr: "Café & minibar", en: "Coffee & minibar" },
       { fr: "Chromecast", en: "Chromecast" },
     ],
-    gallery: [IMAGES.envolee, IMAGES.canal, IMAGES.bedroom2, IMAGES.table],
+    gallery: [IMAGES.envolee, IMAGES.envoleeDesk, IMAGES.vineyardSunset, IMAGES.dijonPalais],
   },
 };
 

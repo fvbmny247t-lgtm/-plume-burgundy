@@ -8,7 +8,7 @@ const ArtDeVivre = () => {
     <div className="bg-cream text-ink" data-testid="art-de-vivre-page">
       {/* HERO */}
       <section className="relative h-[85vh] overflow-hidden">
-        <img src={IMAGES.vineyard} alt="" className="absolute inset-0 w-full h-full object-cover kenburns" />
+        <img src={IMAGES.vineyardSunset} alt="" className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-ink/30" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
           <p className="ps-overline opacity-90 mb-4">{t(ARTDEVIVRE_PAGE.heroOverline)}</p>

@@ -76,7 +76,7 @@ JOURNAL_ARTICLES = [
             "fr": "Une promenade lente à l'aube, entre brume bourguignonne et reflets de pierre.",
             "en": "A slow walk at dawn, between Burgundy mist and stone reflections.",
         },
-        "cover": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/ad7c098fd3177e2c398eea963ce0f20cb29a1c232a3273d56900e626537962d8.png",
+        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/oz1hfjes_zhu-yunxiao-2E8g1HimrNc-unsplash.jpg",
         "date": "2026-02-04",
         "read_time": {"fr": "4 min", "en": "4 min"},
         "body": {
@@ -103,7 +103,7 @@ JOURNAL_ARTICLES = [
             "fr": "Au restaurant Ô P'tit Repère du Goût, la Bourgogne se raconte à travers les producteurs locaux.",
             "en": "At Ô P'tit Repère du Goût, Burgundy tells its story through local growers.",
         },
-        "cover": "https://images.unsplash.com/photo-1616671285410-2a676a9a433d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwzfHxnYXN0cm9ub215JTIwZmluZSUyMGRpbmluZ3xlbnwwfHx8fDE3NzkxMjU4NDl8MA&ixlib=rb-4.1.0&q=85",
+        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
         "date": "2026-01-22",
         "read_time": {"fr": "5 min", "en": "5 min"},
         "body": {
@@ -130,7 +130,7 @@ JOURNAL_ARTICLES = [
             "fr": "De Marsannay à Meursault, un itinéraire pensé pour ceux qui prennent leur temps.",
             "en": "From Marsannay to Meursault, an itinerary for those who take their time.",
         },
-        "cover": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/cfcfe909a4314bdbcf72c65923b299904d188bcc0cffa7d5ba37b784d5939a2a.png",
+        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
         "date": "2026-01-10",
         "read_time": {"fr": "6 min", "en": "6 min"},
         "body": {
@@ -157,7 +157,7 @@ JOURNAL_ARTICLES = [
             "fr": "Pourquoi nous croyons aux séjours longs, aux lumières dorées et aux livres qui traînent.",
             "en": "Why we believe in long stays, golden light and books left open.",
         },
-        "cover": "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/493b60b139867f69a68c79dd8513bac88f3c0231159c259962fa2946d377e6ac.png",
+        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
         "date": "2025-12-18",
         "read_time": {"fr": "3 min", "en": "3 min"},
         "body": {
