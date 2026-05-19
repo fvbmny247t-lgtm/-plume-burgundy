@@ -71,15 +71,53 @@ const JournalArticle = () => {
         </section>
 
         <section className="px-6 md:px-12 pb-24">
-          <div className="max-w-3xl mx-auto space-y-8">
-            {article.body[lang].map((p, i) => (
-              <p
-                key={i}
-                className={`leading-relaxed ${i === 0 ? "font-serif italic text-2xl md:text-3xl text-ink/90" : "font-sans text-base md:text-lg text-ink/85"}`}
-              >
-                {p}
-              </p>
-            ))}
+          <div className="max-w-3xl mx-auto space-y-6">
+            {article.body[lang].map((p, i) => {
+              if (typeof p !== "string") return null;
+              if (p.startsWith("## ")) {
+                return (
+                  <h2
+                    key={i}
+                    className="font-serif italic text-3xl md:text-5xl font-light leading-[1.05] mt-14 mb-2 text-ink"
+                  >
+                    {p.slice(3)}
+                  </h2>
+                );
+              }
+              if (p.startsWith("### ")) {
+                return (
+                  <h3
+                    key={i}
+                    className="font-serif italic text-2xl md:text-3xl font-light mt-10 mb-2 text-ink"
+                  >
+                    {p.slice(4)}
+                  </h3>
+                );
+              }
+              // Render bold inline markdown **text**
+              const renderInline = (txt) => {
+                const parts = txt.split(/(\*\*[^*]+\*\*)/g);
+                return parts.map((part, idx) =>
+                  /^\*\*[^*]+\*\*$/.test(part) ? (
+                    <strong key={idx} className="font-medium text-ink">{part.slice(2, -2)}</strong>
+                  ) : (
+                    <React.Fragment key={idx}>{part}</React.Fragment>
+                  )
+                );
+              };
+              return (
+                <p
+                  key={i}
+                  className={`leading-relaxed ${
+                    i === 0
+                      ? "font-serif italic text-2xl md:text-3xl text-ink/90"
+                      : "font-sans text-base md:text-lg text-ink/85"
+                  }`}
+                >
+                  {renderInline(p)}
+                </p>
+              );
+            })}
           </div>
         </section>
       </article>

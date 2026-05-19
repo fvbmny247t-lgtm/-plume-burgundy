@@ -12,7 +12,7 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,24 +29,27 @@ const Navbar = () => {
     { to: "/contact", label: NAV.contact },
   ];
 
-  // Pages with full-bleed image/video hero use transparent navbar at top
   const pathname = location.pathname;
+  // Pages with a full-bleed image/video hero start with light text
   const heroIsDark =
     pathname === "/" ||
     pathname === "/art-de-vivre" ||
     /^\/sejours\/[^/]+$/.test(pathname);
 
-  const isDark = scrolled || open || !heroIsDark;
-  const navBg = isDark ? "bg-ink" : "bg-transparent";
-  const navTextColor = "text-cream";
-  const logoVariant = "white";
+  // At top of image-hero pages: white. On scroll OR on cream pages: ink (Nespresso brown).
+  const useDarkContent = !heroIsDark || scrolled;
+  const textColor = useDarkContent ? "text-ink" : "text-cream";
+  const logoVariant = useDarkContent ? "dark" : "white";
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${navBg}`}
+      className="fixed top-0 left-0 right-0 z-50"
       data-testid="main-navbar"
     >
-      <div className={`flex items-center justify-between px-6 md:px-10 py-3 md:py-4 ${navTextColor}`}>
+      {/* Navbar always transparent — content color changes on scroll */}
+      <div
+        className={`flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ${textColor}`}
+      >
         <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
           <PlumeLogo variant={logoVariant} size="sm" />
         </Link>
@@ -106,20 +109,21 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — fullscreen overlay */}
       {open && (
         <div
-          className="lg:hidden bg-ink text-cream px-6 pt-6 pb-12 fade-in"
+          className="lg:hidden fixed inset-0 bg-ink text-cream pt-20 px-6 pb-12 overflow-y-auto"
           data-testid="mobile-menu"
         >
-          <nav className="flex flex-col gap-6">
-            {links.map((l) => (
+          <nav className="flex flex-col gap-6 mt-4">
+            {links.map((l, i) => (
               <Link
                 key={l.to}
                 to={l.to}
                 data-testid={`mobile-nav-${l.to.replace("/", "")}`}
-                className="font-serif italic text-3xl"
+                className="font-serif italic text-4xl border-b border-cream/15 pb-4"
               >
+                <span className="ps-overline text-cream/40 block mb-1">0{i + 1}</span>
                 {t(l.label)}
               </Link>
             ))}
@@ -144,7 +148,7 @@ const Navbar = () => {
           <Link
             to="/reserver"
             data-testid="mobile-book-button"
-            className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.28em]"
+            className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
           >
             {t(NAV.book)}
           </Link>

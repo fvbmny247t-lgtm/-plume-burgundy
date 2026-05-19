@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { HOME, SUITES, ART_BLOCKS, IMAGES, NAV } from "../data/content";
 import Seo from "../components/Seo";
+import SuitesSlider from "../components/SuitesSlider";
 
 const Home = () => {
   const { t, lang } = useLang();
@@ -117,50 +118,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* SUITES SECTION */}
-      <section className="bg-cream pb-24" data-testid="suites-section">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-16">
-          <p className="ps-overline text-ink/60">{t(HOME.suitesOverline)}</p>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mt-4">
-            <h2 className="font-serif italic text-4xl md:text-6xl font-light leading-tight max-w-3xl">
-              {t(HOME.suitesTitle)}
-            </h2>
-            <p className="font-sans text-sm md:text-base max-w-md text-ink/80 leading-relaxed">
-              {t(HOME.suitesIntro)}
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-          {Object.values(SUITES).map((s) => (
-            <Link
-              key={s.slug}
-              to={`/sejours/${s.slug}`}
-              data-testid={`suite-card-${s.slug}`}
-              className="group relative h-[80vh] overflow-hidden block"
-            >
-              <img
-                src={s.cover}
-                alt={t(s.name)}
-                className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-ink/25 group-hover:bg-ink/35 transition-colors" />
-              <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between text-cream">
-                <p className="ps-overline opacity-90">{t({ fr: "Suite", en: "Suite" })}</p>
-                <div>
-                  <h3 className="font-serif italic text-4xl md:text-5xl leading-[1.05] mb-4">
-                    {t(s.name)}
-                  </h3>
-                  <p className="font-sans text-sm max-w-sm opacity-90 mb-6">{t(s.overlay)}</p>
-                  <span className="inline-flex items-center gap-2 ps-overline">
-                    {t({ fr: "Découvrir", en: "Discover" })} <ArrowUpRight size={16} />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* SUITES SLIDER */}
+      <SuitesSlider />
 
       {/* ART DE VIVRE BENTO */}
       <section className="bg-cream py-24 md:py-32 px-6 md:px-12" data-testid="art-section">

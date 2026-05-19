@@ -45,20 +45,39 @@ const SuiteDetail = () => {
         <img src={suite.cover} alt={t(suite.name)} className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
-          <p className="ps-overline opacity-90 mb-4">Plume Suites Collection</p>
+          <p className="ps-overline opacity-90 mb-4">— Plume Suites Collection</p>
           <h1 className="font-serif italic text-6xl md:text-[10rem] leading-[0.9] font-light max-w-5xl">
             {t(suite.name)}
           </h1>
         </div>
       </section>
 
-      {/* INTRO */}
-      <section className="py-24 md:py-40 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <p className="ps-overline text-ink/60 mb-6">{t({ fr: "Introduction", en: "Introduction" })}</p>
-          <p className="font-serif italic text-3xl md:text-5xl leading-[1.15] font-light max-w-4xl">
-            {t(suite.intro)}
-          </p>
+      {/* INTRO + KEY STATS */}
+      <section className="py-24 md:py-32 px-6 md:px-12" data-testid={`suite-stats-${slug}`}>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+          <div className="md:col-span-7">
+            <p className="ps-overline text-ink/60 mb-6">— {t({ fr: "Introduction", en: "Introduction" })}</p>
+            <p className="font-serif italic text-3xl md:text-5xl leading-[1.15] font-light">
+              {t(suite.intro)}
+            </p>
+          </div>
+          <div className="md:col-span-5 md:pt-12">
+            <p className="ps-overline text-ink/60 mb-6">— {t({ fr: "En un coup d'œil", en: "At a glance" })}</p>
+            <div className="grid grid-cols-3 gap-6 md:gap-8">
+              <div>
+                <div className="font-serif italic text-5xl md:text-6xl font-light leading-none">{suite.stats.rooms}</div>
+                <p className="ps-overline text-ink/60 mt-3">{t(suite.stats.labels.rooms)}</p>
+              </div>
+              <div>
+                <div className="font-serif italic text-5xl md:text-6xl font-light leading-none">{suite.stats.guests}</div>
+                <p className="ps-overline text-ink/60 mt-3">{t(suite.stats.labels.guests)}</p>
+              </div>
+              <div>
+                <div className="font-serif italic text-2xl md:text-3xl font-light leading-none mt-3">{suite.stats.size}</div>
+                <p className="ps-overline text-ink/60 mt-3">{t(suite.stats.labels.size)}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -46,7 +46,7 @@ const Sejours = () => {
                 />
               </div>
               <div className="md:col-span-5 px-6 md:px-16 py-12 md:py-0 flex flex-col justify-center md:[direction:ltr]">
-                <p className="ps-overline text-ink/60">{t({ fr: "Suite", en: "Suite" })} · 0{i + 1}</p>
+                <p className="ps-overline text-ink/60">0{i + 1} — {t({ fr: "Suite", en: "Suite" })}</p>
                 <h2 className="font-serif italic text-5xl md:text-7xl font-light mt-4 leading-[1]">
                   {t(s.name)}
                 </h2>
@@ -56,6 +56,22 @@ const Sejours = () => {
                 <p className="font-sans text-sm md:text-base mt-6 text-ink/80 leading-relaxed">
                   {t(s.intro)}
                 </p>
+                <div className="flex items-end gap-10 mt-8 pt-8 border-t border-ink/15">
+                  <div>
+                    <div className="font-serif italic text-5xl font-light leading-none">{s.stats.rooms}</div>
+                    <p className="ps-overline text-ink/60 mt-2">{t(s.stats.labels.rooms)}</p>
+                  </div>
+                  <div>
+                    <div className="font-serif italic text-5xl font-light leading-none">{s.stats.guests}</div>
+                    <p className="ps-overline text-ink/60 mt-2">{t(s.stats.labels.guests)}</p>
+                  </div>
+                  {s.stats.size && (
+                    <div>
+                      <div className="font-serif italic text-2xl font-light leading-none mt-3">{s.stats.size}</div>
+                      <p className="ps-overline text-ink/60 mt-2">{t(s.stats.labels.size)}</p>
+                    </div>
+                  )}
+                </div>
                 <span className="inline-flex items-center gap-2 ps-overline mt-10 text-ink">
                   {t({ fr: "Découvrir la suite", en: "Discover the suite" })} <ArrowUpRight size={16} />
                 </span>

@@ -104,13 +104,14 @@ export const HOME = {
 
   suitesOverline: { fr: "Séjours", en: "Stays" },
   suitesTitle: {
-    fr: "Deux suites, deux atmosphères",
-    en: "Two suites, two atmospheres",
+    fr: "Deux chapitres.",
+    en: "Two chapters.",
   },
   suitesIntro: {
-    fr: "Imaginées comme des parenthèses calmes au cœur de la Bourgogne.",
-    en: "Imagined as quiet pauses at the heart of Burgundy.",
+    fr: "Deux suites imaginées comme des parenthèses calmes au cœur de la Bourgogne.",
+    en: "Two suites imagined as quiet pauses at the heart of Burgundy.",
   },
+  suitesCta: { fr: "Découvrir la suite", en: "Discover the suite" },
 
   artOverline: { fr: "L'art de vivre Plume", en: "The Plume way" },
   artTitle: { fr: "Vivre la Bourgogne", en: "Living Burgundy" },
@@ -153,7 +154,7 @@ export const HOME = {
 export const ART_BLOCKS = [
   {
     key: "gastronomy",
-    overline: { fr: "01 / Gastronomie", en: "01 / Gastronomy" },
+    overline: { fr: "01 — Gastronomie", en: "01 — Gastronomy" },
     title: { fr: "Une table de saison", en: "A seasonal table" },
     text: {
       fr: "Une table gastronomique pensée autour des saisons, des producteurs et du goût.",
@@ -163,7 +164,7 @@ export const ART_BLOCKS = [
   },
   {
     key: "canal",
-    overline: { fr: "02 / Le Canal", en: "02 / The Canal" },
+    overline: { fr: "02 — Le Canal", en: "02 — The Canal" },
     title: { fr: "Le canal, lentement", en: "The canal, slowly" },
     text: {
       fr: "Des promenades à pas lents au bord du canal de Bourgogne, à toute heure du jour.",
@@ -173,7 +174,7 @@ export const ART_BLOCKS = [
   },
   {
     key: "vineyards",
-    overline: { fr: "03 / Villages & vignobles", en: "03 / Villages & vineyards" },
+    overline: { fr: "03 — Villages & vignobles", en: "03 — Villages & vineyards" },
     title: { fr: "Routes des vins", en: "Wine routes" },
     text: {
       fr: "Entre routes des vins, pierre dorée et villages bourguignons confidentiels.",
@@ -183,7 +184,7 @@ export const ART_BLOCKS = [
   },
   {
     key: "slow",
-    overline: { fr: "04 / Slow Moments", en: "04 / Slow Moments" },
+    overline: { fr: "04 — Slow Moments", en: "04 — Slow Moments" },
     title: { fr: "Matins lents", en: "Slow mornings" },
     text: {
       fr: "Matins calmes, longues soirées, lumière dorée — la Bourgogne au ralenti.",
@@ -199,6 +200,16 @@ export const SUITES = {
     name: { fr: "Plume Suites — Douceur", en: "Plume Suites — Douceur" },
     short: { fr: "Douceur", en: "Douceur" },
     cover: IMAGES.douceur,
+    stats: {
+      rooms: 2,
+      guests: 4,
+      size: "60 m²",
+      labels: {
+        rooms: { fr: "Chambres", en: "Bedrooms" },
+        guests: { fr: "Hôtes", en: "Guests" },
+        size: { fr: "Surface", en: "Size" },
+      },
+    },
     overlay: {
       fr: "Intérieurs chaleureux & moments suspendus.",
       en: "Warm interiors & suspended moments.",
@@ -242,6 +253,16 @@ export const SUITES = {
     name: { fr: "Plume Suites — L'Envolée", en: "Plume Suites — L'Envolée" },
     short: { fr: "L'Envolée", en: "L'Envolée" },
     cover: IMAGES.envolee,
+    stats: {
+      rooms: 1,
+      guests: 2,
+      size: "40 m²",
+      labels: {
+        rooms: { fr: "Chambre", en: "Bedroom" },
+        guests: { fr: "Hôtes", en: "Guests" },
+        size: { fr: "Surface", en: "Size" },
+      },
+    },
     overlay: {
       fr: "Une parenthèse inspirée par l'art de vivre bourguignon.",
       en: "Quiet luxury inspired by Burgundy living.",
