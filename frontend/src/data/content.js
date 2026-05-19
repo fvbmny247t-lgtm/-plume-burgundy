@@ -33,10 +33,13 @@ export const IMAGES = {
   wineFriends: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/oal49whg_kelsey-chance-tAH2cA_BL5g-unsplash.jpg",
   wineTop: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/l2isc13w_corina-rainer-xx-qrRRNabQ-unsplash.jpg",
 
-  // Canal (placeholder until real photo) + Costa del Sol
+  // Canal placeholder (kept) + reading + Costa
   canal: "https://static.prod-images.emergentagent.com/jobs/9f3bfbc7-be66-4d19-b445-7eab6a98eb47/images/ad7c098fd3177e2c398eea963ce0f20cb29a1c232a3273d56900e626537962d8.png",
   reading: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
-  costa: "https://images.unsplash.com/photo-1736428995445-827f17ad9cc8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwzfHxhbmRhbHVzaWElMjBzcGFpbiUyMGNvYXN0fGVufDB8fHx8MTc3OTEyNTg0OXww&ixlib=rb-4.1.0&q=85",
+
+  // Costa del Sol — Marbella (real photos)
+  costa: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/7boq1875_simon-hermans-6tgHYmerKyM-unsplash.jpg",
+  costaBg: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/uqswchc7_ionut-dobre-M9BMyw8Ge4Y-unsplash.jpg",
 
   // Legacy keys still referenced
   hero: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
@@ -310,11 +313,11 @@ export const FOOTER = {
   },
   addressTitle: { fr: "Bourgogne", en: "Burgundy" },
   address: {
-    fr: "Fleurey-sur-Ouche, au bord du canal — au-dessus du restaurant Ô P'tit Repère du Goût.",
-    en: "Fleurey-sur-Ouche, by the canal — above Ô P'tit Repère du Goût.",
+    fr: "8 Rue des Vieilles Carrières\n21410 Fleurey-sur-Ouche\nCôte-d'Or — Bourgogne",
+    en: "8 Rue des Vieilles Carrières\n21410 Fleurey-sur-Ouche\nCôte-d'Or — Burgundy",
   },
   futureTitle: { fr: "Bientôt", en: "Coming soon" },
-  future: { fr: "Costa del Sol, 2027.", en: "Costa del Sol, 2027." },
+  future: { fr: "Costa del Sol — 2027.", en: "Costa del Sol — 2027." },
   distancesTitle: { fr: "À proximité", en: "Nearby" },
   distances: [
     { place: { fr: "Dijon", en: "Dijon" }, value: { fr: "20 min en voiture", en: "20 min by car" } },
@@ -327,8 +330,7 @@ export const FOOTER = {
   navTitle: { fr: "Navigation", en: "Navigate" },
   followTitle: { fr: "Suivre", en: "Follow" },
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/" },
-    { label: "Smoobu", href: "https://www.smoobu.com/" },
+    { label: "Instagram", href: "https://www.instagram.com/plume.suites/" },
   ],
   rights: {
     fr: "© Plume Suites Collection. Tous droits réservés.",
