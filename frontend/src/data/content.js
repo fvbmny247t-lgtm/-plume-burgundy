@@ -248,7 +248,7 @@ export const SUITES = {
       { fr: "Vue canal & lumière naturelle", en: "Canal view & natural light" },
       { fr: "Climatisation", en: "Air conditioning" },
       { fr: "Wi-Fi haut débit · Chromecast", en: "High-speed Wi-Fi · Chromecast" },
-      { fr: "Café d'auteur & sélection raffinée", en: "Specialty coffee & curated selection" },
+      { fr: "Café Nespresso & sélection raffinée", en: "Nespresso coffee & curated selection" },
     ],
     gallery: [IMAGES.envolee, IMAGES.envoleeDesk, IMAGES.vineyardSunset, IMAGES.dijonPalais],
   },
@@ -310,8 +310,8 @@ export const SUITES = {
 
 export const FOOTER = {
   tagline: {
-    fr: "Plume Suites Collection — Boutique hospitality.",
-    en: "Plume Suites Collection — Boutique hospitality.",
+    fr: "Plume Suites Collection.",
+    en: "Plume Suites Collection.",
   },
   addressTitle: { fr: "Bourgogne", en: "Burgundy" },
   address: {
@@ -332,7 +332,7 @@ export const FOOTER = {
   navTitle: { fr: "Navigation", en: "Navigate" },
   followTitle: { fr: "Suivre", en: "Follow" },
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/plume.suites/" },
+    { label: "Instagram", href: "https://www.instagram.com/plumesuites/" },
   ],
   rights: {
     fr: "© Plume Suites Collection. Tous droits réservés.",
