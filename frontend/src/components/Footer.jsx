@@ -29,7 +29,7 @@ const Footer = () => {
 
         <div className="md:col-span-3">
           <h4 className="ps-overline text-cream/70 mb-4">{t(FOOTER.addressTitle)}</h4>
-          <p className="font-sans text-sm leading-relaxed text-cream/90">{t(FOOTER.address)}</p>
+          <p className="font-sans text-sm leading-relaxed text-cream/90 whitespace-pre-line">{t(FOOTER.address)}</p>
           <h4 className="ps-overline text-cream/70 mt-8 mb-4">{t(FOOTER.futureTitle)}</h4>
           <p className="font-sans text-sm text-cream/90">{t(FOOTER.future)}</p>
         </div>

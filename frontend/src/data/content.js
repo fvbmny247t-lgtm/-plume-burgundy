@@ -87,7 +87,7 @@ export const HOME = {
   heroCta2: { fr: "Voir les suites", en: "View the suites" },
   heroCollection: { fr: "Plume Suites Collection — Bourgogne", en: "Plume Suites Collection — Burgundy" },
 
-  editorialOverline: { fr: "Une adresse confidentielle", en: "A confidential address" },
+  editorialOverline: { fr: "Le récit Plume", en: "The Plume story" },
   editorialTitle: {
     fr: "Une adresse confidentielle en Bourgogne",
     en: "A confidential address in Burgundy",
@@ -142,8 +142,8 @@ export const HOME = {
     en: "A new Mediterranean chapter",
   },
   costaText: {
-    fr: "Inspirations méditerranéennes — Costa del Sol, 2027.",
-    en: "Mediterranean inspirations — Costa del Sol, 2027.",
+    fr: "Costa del Sol — 2027. Un appartement signature, piscine privée, près de la plage. Une autre lumière, le même soin du détail.",
+    en: "Costa del Sol — 2027. A signature apartment with a private pool, steps from the beach. Another light, the same care for detail.",
   },
 
   journalOverline: { fr: "Le Journal", en: "The Journal" },
@@ -198,10 +198,65 @@ export const ART_BLOCKS = [
 ];
 
 export const SUITES = {
+  envolee: {
+    slug: "envolee",
+    name: { fr: "Plume Suites — L'Envolée", en: "Plume Suites — L'Envolée" },
+    short: { fr: "L'Envolée", en: "L'Envolée" },
+    tier: { fr: "Signature", en: "Signature" },
+    cover: IMAGES.envolee,
+    stats: {
+      rooms: 1,
+      guests: 2,
+      size: "55 m²",
+      labels: {
+        rooms: { fr: "Chambre", en: "Bedroom" },
+        guests: { fr: "Hôtes", en: "Guests" },
+        size: { fr: "Espace", en: "Living space" },
+      },
+    },
+    overlay: {
+      fr: "L'écrin signature — espace, lumière et raffinement.",
+      en: "The signature retreat — space, light and refinement.",
+    },
+    intro: {
+      fr: "Suite signature de la collection, L'Envolée déploie un espace généreux — chambre, salon et coin bureau — dans une atmosphère sereine, dessinée pour les séjours à deux où le temps prend une autre densité.",
+      en: "The collection's signature suite, L'Envolée unfolds a generous space — bedroom, lounge and writing corner — in a serene atmosphere designed for two, where time finds another density.",
+    },
+    overlayTitle: {
+      fr: "Fenêtres ouvertes. Lumière bourguignonne. Matins calmes.",
+      en: "Open windows. Burgundy light. Quiet mornings.",
+    },
+    editorialTitle: {
+      fr: "Une suite pensée pour le temps long.",
+      en: "A suite designed for slow time.",
+    },
+    editorial: {
+      fr: "Plus spacieuse, plus confidentielle, L'Envolée est notre suite la plus aboutie. Matières nobles, mobilier choisi, espaces distincts pour vivre, travailler et se reposer — tout y invite à s'attarder.",
+      en: "More spacious, more private, L'Envolée is our most refined suite. Noble materials, carefully chosen furniture, distinct spaces to live, work and rest — everything invites you to stay.",
+    },
+    experienceTitle: { fr: "À quelques pas", en: "Just steps away" },
+    experience: [
+      { fr: "Le canal de Bourgogne", en: "The Burgundy canal" },
+      { fr: "Les vignobles de la Côte de Nuits", en: "Côte de Nuits vineyards" },
+      { fr: "Les villages de pierre", en: "Stone villages" },
+      { fr: "La table Ô P'tit Repère du Goût", en: "Ô P'tit Repère du Goût" },
+    ],
+    detailsTitle: { fr: "Détails", en: "Details" },
+    details: [
+      { fr: "Salon & coin bureau", en: "Lounge & writing corner" },
+      { fr: "Lit Queen size haut de gamme", en: "Premium Queen size bed" },
+      { fr: "Vue canal & lumière naturelle", en: "Canal view & natural light" },
+      { fr: "Climatisation", en: "Air conditioning" },
+      { fr: "Wi-Fi haut débit · Chromecast", en: "High-speed Wi-Fi · Chromecast" },
+      { fr: "Café d'auteur & sélection raffinée", en: "Specialty coffee & curated selection" },
+    ],
+    gallery: [IMAGES.envolee, IMAGES.envoleeDesk, IMAGES.vineyardSunset, IMAGES.dijonPalais],
+  },
   douceur: {
     slug: "douceur",
     name: { fr: "Plume Suites — Douceur", en: "Plume Suites — Douceur" },
     short: { fr: "Douceur", en: "Douceur" },
+    tier: { fr: "Famille & amis", en: "Family & friends" },
     cover: IMAGES.douceur,
     stats: {
       rooms: 2,
@@ -218,8 +273,8 @@ export const SUITES = {
       en: "Warm interiors & suspended moments.",
     },
     intro: {
-      fr: "Une suite imaginée comme un refuge calme au bord du canal de Bourgogne, entre lumière douce, matières naturelles et atmosphère apaisante.",
-      en: "A quiet retreat along the Burgundy canal, inspired by warm light, natural textures and slower living.",
+      fr: "Une suite imaginée comme un refuge chaleureux au bord du canal de Bourgogne, pensée pour les séjours en famille ou entre amis — entre lumière douce, matières naturelles et atmosphère apaisante.",
+      en: "A warm retreat along the Burgundy canal, designed for family or friends — between soft light, natural textures and slower living.",
     },
     overlayTitle: {
       fr: "Des matins au rythme du canal.",
@@ -230,79 +285,26 @@ export const SUITES = {
       en: "A Burgundy pause.",
     },
     editorial: {
-      fr: "Pensée pour les séjours à deux, les parenthèses lentes ou les escapades bourguignonnes, Douceur mêle hospitalité contemporaine et charme discret de la campagne.",
-      en: "Designed for intimate escapes and slower moments, Douceur blends contemporary hospitality with the quiet charm of Burgundy countryside living.",
+      fr: "Pensée pour les escapades à plusieurs, Douceur mêle hospitalité contemporaine et charme discret de la campagne bourguignonne — chaleureuse, généreuse, vivante.",
+      en: "Designed for travelling together, Douceur blends contemporary hospitality with the quiet charm of the Burgundy countryside — warm, generous, alive.",
     },
     experienceTitle: { fr: "À quelques pas", en: "Just steps away" },
     experience: [
       { fr: "Le canal de Bourgogne", en: "The Burgundy canal" },
       { fr: "Les villages de pierre", en: "Stone villages" },
       { fr: "Les vignobles", en: "Vineyards" },
-      { fr: "Ô P'tit Repère du Goût", en: "Ô P'tit Repère du Goût" },
+      { fr: "La table Ô P'tit Repère du Goût", en: "Ô P'tit Repère du Goût" },
     ],
     detailsTitle: { fr: "Détails", en: "Details" },
     details: [
-      { fr: "Lit Queen size", en: "Queen size bed" },
+      { fr: "Deux chambres distinctes", en: "Two separate bedrooms" },
+      { fr: "Lit Queen size + lit secondaire", en: "Queen size + secondary bed" },
       { fr: "Vue canal", en: "Canal view" },
       { fr: "Matières naturelles", en: "Natural textures" },
+      { fr: "Climatisation · Wi-Fi haut débit", en: "Air conditioning · High-speed Wi-Fi" },
       { fr: "Chromecast", en: "Chromecast" },
-      { fr: "Climatisation", en: "Air conditioning" },
-      { fr: "Wi-Fi haut débit", en: "High-speed Wi-Fi" },
     ],
     gallery: [IMAGES.douceur, IMAGES.douceurTv, IMAGES.douceurHeadboard, IMAGES.wineGlass],
-  },
-  envolee: {
-    slug: "envolee",
-    name: { fr: "Plume Suites — L'Envolée", en: "Plume Suites — L'Envolée" },
-    short: { fr: "L'Envolée", en: "L'Envolée" },
-    cover: IMAGES.envolee,
-    stats: {
-      rooms: 1,
-      guests: 2,
-      size: "40 m²",
-      labels: {
-        rooms: { fr: "Chambre", en: "Bedroom" },
-        guests: { fr: "Hôtes", en: "Guests" },
-        size: { fr: "Surface", en: "Size" },
-      },
-    },
-    overlay: {
-      fr: "Une parenthèse inspirée par l'art de vivre bourguignon.",
-      en: "Quiet luxury inspired by Burgundy living.",
-    },
-    intro: {
-      fr: "Une suite ouverte sur le canal de Bourgogne, pensée comme une invitation à ralentir entre lumière naturelle, matières chaleureuses et atmosphère apaisante.",
-      en: "An intimate retreat overlooking the Burgundy canal, designed around natural light, warm textures and slower living.",
-    },
-    overlayTitle: {
-      fr: "Fenêtres ouvertes. Lumière bourguignonne. Matins calmes.",
-      en: "Open windows. Burgundy light. Quiet mornings.",
-    },
-    editorialTitle: {
-      fr: "Une suite ouverte sur le paysage.",
-      en: "A suite open to the landscape.",
-    },
-    editorial: {
-      fr: "Inspirée par le rythme paisible du village de Fleurey-sur-Ouche, L'Envolée mêle hospitalité contemporaine et douceur de campagne.",
-      en: "Inspired by the quiet pace of Burgundy countryside living, L'Envolée blends boutique hospitality with understated elegance.",
-    },
-    experienceTitle: { fr: "À quelques pas", en: "Just steps away" },
-    experience: [
-      { fr: "Le canal de Bourgogne", en: "The Burgundy canal" },
-      { fr: "Les vignobles", en: "Vineyards" },
-      { fr: "Les villages de pierre", en: "Stone villages" },
-      { fr: "Ô P'tit Repère du Goût", en: "Ô P'tit Repère du Goût" },
-    ],
-    detailsTitle: { fr: "Détails", en: "Details" },
-    details: [
-      { fr: "Vue canal", en: "Canal view" },
-      { fr: "Lit Queen size", en: "Queen size bed" },
-      { fr: "Climatisation", en: "Air conditioning" },
-      { fr: "Wi-Fi haut débit", en: "High-speed Wi-Fi" },
-      { fr: "Café & minibar", en: "Coffee & minibar" },
-      { fr: "Chromecast", en: "Chromecast" },
-    ],
-    gallery: [IMAGES.envolee, IMAGES.envoleeDesk, IMAGES.vineyardSunset, IMAGES.dijonPalais],
   },
 };
 

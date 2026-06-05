@@ -16,15 +16,15 @@ const ArtDeVivre = () => {
         path="/art-de-vivre"
       />
       {/* HERO */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative h-[80vh] overflow-hidden">
         <img src={IMAGES.vineyardSunset} alt="" className="absolute inset-0 w-full h-full object-cover kenburns" />
-        <div className="absolute inset-0 bg-ink/30" />
+        <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
-          <p className="ps-overline opacity-90 mb-4">{t(ARTDEVIVRE_PAGE.heroOverline)}</p>
-          <h1 className="font-serif italic text-6xl md:text-[10rem] leading-[0.92] font-light max-w-5xl">
+          <p className="ps-overline opacity-90 mb-4">— {t(ARTDEVIVRE_PAGE.heroOverline)}</p>
+          <h1 className="font-serif italic text-5xl md:text-7xl lg:text-[7rem] leading-[0.95] font-light max-w-4xl">
             {t(ARTDEVIVRE_PAGE.heroTitle)}
           </h1>
-          <p className="font-sans text-base md:text-lg max-w-xl mt-8 opacity-90">{t(ARTDEVIVRE_PAGE.heroIntro)}</p>
+          <p className="font-sans text-base md:text-lg max-w-xl mt-7 opacity-90">{t(ARTDEVIVRE_PAGE.heroIntro)}</p>
         </div>
       </section>
 

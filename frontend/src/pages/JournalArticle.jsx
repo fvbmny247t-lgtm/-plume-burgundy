@@ -46,19 +46,19 @@ const JournalArticle = () => {
         }}
       />
       <article>
-        <section className="pt-40 md:pt-48 pb-12 px-6 md:px-12">
+        <section className="pt-36 md:pt-44 pb-12 px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
-            <Link to="/journal" data-testid="article-back" className="inline-flex items-center gap-2 ps-overline text-ink/60 mb-12">
+            <Link to="/journal" data-testid="article-back" className="inline-flex items-center gap-2 ps-overline text-ink/60 mb-10">
               <ArrowLeft size={14} /> {t({ fr: "Retour au journal", en: "Back to journal" })}
             </Link>
             <div className="flex items-center gap-4 mb-6">
-              <span className="ps-overline text-terracotta">{article.category[lang]}</span>
+              <span className="ps-overline text-terracotta">— {article.category[lang]}</span>
               <span className="text-xs font-sans text-ink/60">{article.read_time[lang]}</span>
             </div>
-            <h1 className="font-serif italic text-5xl md:text-8xl leading-[0.95] font-light">
+            <h1 className="font-serif italic text-4xl md:text-6xl lg:text-7xl leading-[1] font-light">
               {article.title[lang]}
             </h1>
-            <p className="font-sans text-base md:text-lg mt-8 text-ink/80 max-w-2xl leading-relaxed">
+            <p className="font-sans text-base md:text-lg mt-7 text-ink/80 max-w-2xl leading-relaxed">
               {article.excerpt[lang]}
             </p>
           </div>

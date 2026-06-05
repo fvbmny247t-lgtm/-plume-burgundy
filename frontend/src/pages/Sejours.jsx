@@ -17,10 +17,10 @@ const Sejours = () => {
         })}
         path="/sejours"
       />
-      <section className="pt-40 md:pt-52 pb-20 px-6 md:px-12">
+      <section className="pt-36 md:pt-44 pb-20 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <p className="ps-overline text-ink/60">{t(SEJOURS_PAGE.heroOverline)}</p>
-          <h1 className="font-serif italic text-6xl md:text-[10rem] leading-[0.92] font-light mt-6">
+          <p className="ps-overline text-ink/60">— {t(SEJOURS_PAGE.heroOverline)}</p>
+          <h1 className="font-serif italic text-5xl md:text-7xl lg:text-[7rem] leading-[0.95] font-light mt-5">
             {t(SEJOURS_PAGE.heroTitle)}
           </h1>
           <p className="font-sans text-base md:text-lg max-w-xl mt-8 text-ink/80 leading-relaxed">

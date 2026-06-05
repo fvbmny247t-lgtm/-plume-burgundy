@@ -36,13 +36,13 @@ const Contact = () => {
         })}
         path="/contact"
       />
-      <section className="pt-40 md:pt-52 pb-12 px-6 md:px-12">
+      <section className="pt-36 md:pt-44 pb-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <p className="ps-overline text-ink/60">{t(CONTACT_PAGE.overline)}</p>
-          <h1 className="font-serif italic text-5xl md:text-[8rem] leading-[0.95] font-light mt-6 max-w-5xl">
+          <p className="ps-overline text-ink/60">— {t(CONTACT_PAGE.overline)}</p>
+          <h1 className="font-serif italic text-4xl md:text-6xl lg:text-[5.5rem] leading-[1] font-light mt-5 max-w-4xl">
             {t(CONTACT_PAGE.title)}
           </h1>
-          <p className="font-sans text-base md:text-lg max-w-xl mt-8 text-ink/80 leading-relaxed">
+          <p className="font-sans text-base md:text-lg max-w-xl mt-7 text-ink/80 leading-relaxed">
             {t(CONTACT_PAGE.intro)}
           </p>
         </div>

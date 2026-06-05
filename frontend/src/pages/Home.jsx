@@ -38,31 +38,30 @@ const Home = () => {
   return (
     <div data-testid="home-page">
       <Seo path="/" jsonLd={hotelLd} />
-      {/* HERO — éditorial style Sabor Del Mar */}
-      <section className="relative h-screen w-full overflow-hidden" data-testid="hero-section">
+      {/* HERO — éditorial, vidéo only */}
+      <section className="relative h-screen w-full overflow-hidden bg-ink" data-testid="hero-section">
         <div className="absolute inset-0">
           <video
             src={IMAGES.heroVideo}
-            poster={IMAGES.heroPoster}
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             className="w-full h-full object-cover"
             data-testid="hero-video"
           />
           {/* Subtle bottom gradient only — keep visual breath */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
-          <div className="absolute inset-0 bg-ink/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-ink/25" />
         </div>
 
         <div className="relative h-full w-full px-6 md:px-12 pt-28 md:pt-32 pb-10 flex flex-col justify-between text-cream">
-          {/* Top-left: small overline */}
-          <div className="fade-in flex items-start gap-6">
-            <div className="hidden md:block w-px h-12 bg-cream/60 mt-1" />
-            <div>
-              <p className="ps-overline opacity-90">{t(HOME.heroLabel)}</p>
-              <p className="font-serif italic text-sm md:text-base mt-1 opacity-80">{t(HOME.heroLabelSub)}</p>
+          {/* Top-left: overline pill — darker for readability */}
+          <div className="fade-in flex items-start gap-5">
+            <div className="hidden md:block w-px h-12 bg-ink mt-1" />
+            <div className="inline-flex flex-col bg-ink/85 backdrop-blur-sm px-4 py-2.5 rounded-sm">
+              <p className="ps-overline text-cream/95">{t(HOME.heroLabel)}</p>
+              <p className="font-serif italic text-sm md:text-base mt-0.5 text-cream/85">{t(HOME.heroLabelSub)}</p>
             </div>
           </div>
 
@@ -197,17 +196,26 @@ const Home = () => {
       </section>
 
       {/* COSTA DEL SOL */}
-      <section className="relative h-[80vh] overflow-hidden" data-testid="costa-section">
+      <section className="relative h-[85vh] overflow-hidden" data-testid="costa-section">
         <img src={IMAGES.costa} alt="Costa del Sol 2027" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-ink/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/65 via-ink/35 to-ink/20" />
         <div className="relative h-full w-full flex flex-col justify-center px-6 md:px-12 text-cream">
           <div className="max-w-3xl">
-            <p className="ps-overline opacity-80">{t(HOME.costaOverline)}</p>
-            <h2 className="font-serif italic text-5xl md:text-8xl font-light mt-4 leading-[0.95]">
+            <p className="ps-overline opacity-90">— {t(HOME.costaOverline)}</p>
+            <h2 className="font-serif italic text-5xl md:text-7xl lg:text-[7rem] font-light mt-5 leading-[0.95]">
               {t(HOME.costaTitle)}
             </h2>
-            <p className="font-sans text-base mt-6 max-w-xl opacity-90">{t(HOME.costaText)}</p>
+            <p className="font-sans text-base md:text-lg mt-6 max-w-xl opacity-95">{t(HOME.costaText)}</p>
+            <div className="mt-8 flex items-center gap-6">
+              <Link to="/journal/nouveau-chapitre-mediterraneen" className="border border-cream/60 hover:bg-cream hover:text-ink transition-colors px-6 py-3 uppercase text-[11px] tracking-[0.3em]">
+                {t({ fr: "En savoir plus", en: "Learn more" })}
+              </Link>
+            </div>
           </div>
+        </div>
+        {/* Secondary detail image bottom-right */}
+        <div className="hidden md:block absolute bottom-10 right-10 w-64 h-40 overflow-hidden shadow-2xl border-2 border-cream/30">
+          <img src={IMAGES.costaBg} alt="" className="w-full h-full object-cover" />
         </div>
       </section>
 
