@@ -101,7 +101,7 @@ const Reserver = () => {
               {t({ fr: "Tarif direct", en: "Direct rate" })}
             </div>
           </div>
-          <div className="bg-white border border-ink/10 p-2 md:p-4 shadow-sm">
+          <div className="bg-white border border-ink/10 p-2 md:p-4 shadow-sm max-w-3xl mx-auto">
             <BookingIframe />
           </div>
         </div>

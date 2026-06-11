@@ -59,9 +59,9 @@ const Home = () => {
           {/* Top-left: overline pill — darker for readability */}
           <div className="fade-in flex items-start gap-5">
             <div className="hidden md:block w-px h-12 bg-ink mt-1" />
-            <div className="inline-flex flex-col bg-ink/85 backdrop-blur-sm px-4 py-2.5 rounded-sm">
-              <p className="ps-overline text-cream/95">{t(HOME.heroLabel)}</p>
-              <p className="font-serif italic text-sm md:text-base mt-0.5 text-cream/85">{t(HOME.heroLabelSub)}</p>
+            <div className="inline-flex flex-col bg-ink/40 backdrop-blur-sm px-4 py-2.5 rounded-sm">
+              <p className="ps-overline text-cream/90">{t(HOME.heroLabel)}</p>
+              <p className="font-serif italic text-sm md:text-base mt-0.5 text-cream/75">{t(HOME.heroLabelSub)}</p>
             </div>
           </div>
 
@@ -81,6 +81,9 @@ const Home = () => {
                 <Link to="/sejours" data-testid="hero-cta-suites" className="text-cream/90 hover:text-cream uppercase text-[11px] tracking-[0.3em] border-b border-cream/40 hover:border-cream pb-1 transition-colors">
                   {t(HOME.heroCta2)}
                 </Link>
+                <a href="https://www.optitreperedugout.fr" target="_blank" rel="noreferrer" data-testid="hero-cta-restaurant" className="text-cream/90 hover:text-cream uppercase text-[11px] tracking-[0.3em] border-b border-cream/40 hover:border-cream pb-1 transition-colors">
+                  {t({ fr: "Découvrir le restaurant", en: "Discover the restaurant" })}
+                </a>
               </div>
             </div>
           </div>

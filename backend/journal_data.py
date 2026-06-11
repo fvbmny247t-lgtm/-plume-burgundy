@@ -750,53 +750,7 @@ JOURNAL_ARTICLES = [
     # ─────────────────────────────────────────────────────────────────────
     # 9. EDITORIAL — Table de saison (gastronomy lifestyle)
     # ─────────────────────────────────────────────────────────────────────
-    {
-        "slug": "table-de-saison",
-        "category": {"fr": "Gastronomie", "en": "Gastronomy"},
-        "title": {
-            "fr": "Une table de saison",
-            "en": "A seasonal table",
-        },
-        "excerpt": {
-            "fr": "Une cuisine travaillée, sincère, ancrée dans les saisons — et une carte des vins entièrement bourguignonne.",
-            "en": "A precise, sincere cuisine rooted in the seasons — paired with an entirely Burgundian wine list.",
-        },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
-        "date": "2026-01-22",
-        "read_time": {"fr": "6 min", "en": "6 min"},
-        "body": {
-            "fr": [
-                "La carte change avec les saisons. Quelques lignes, beaucoup de précision, et le sentiment qu'on est venu pour bien plus qu'un repas.",
-                "## Une cuisine de saison, travaillée",
-                "Le restaurant cherche le geste juste : un beau produit, deux ou trois compagnons, une cuisson exacte. Au printemps, les asperges blanches et les premières herbes. En été, les tomates anciennes, les abricots, les courgettes fleurs. En automne, les cèpes, le gibier, les coings. En hiver, les escargots, le bœuf, les agrumes.",
-                "Rien d'ostentatoire. Le plat doit raconter quelque chose — la saison, le territoire, parfois un souvenir — sans jamais en faire trop.",
-                "## Une carte des vins 100 % Bourgogne",
-                "C'est l'une des partis-pris les plus assumés de la maison : la carte des vins est exclusivement bourguignonne. Aucun détour par la Loire, aucune escapade dans la vallée du Rhône — la conviction qu'un dîner bourguignon mérite des vins bourguignons.",
-                "Du Crémant à l'Aligoté de Bouzeron, des Hautes-Côtes de Beaune aux grands climats de la Côte de Nuits, la carte se promène avec attention dans tous les recoins de la région. Des Marsannay rouges aux Meursault, en passant par les Côte Chalonnaise et les vins de Couchey, chacun trouve sa place — et son juste accord avec la cuisine.",
-                "## Pourquoi cette table compte",
-                "Plume Suites n'est pas pensée comme un hôtel posé à côté d'un restaurant. C'est une seule et même intention — celle de prolonger l'expérience du séjour à table.",
-                "On vient à Plume pour ralentir. On vient à la table pour la même raison. Un dîner ici, c'est un moment où l'on n'attend rien : ni show, ni discours, ni surcharge. Juste une cuisine sincère, des vins qui racontent la Bourgogne et une salle qui prend le temps qu'il faut.",
-                "C'est ce que nous appelons l'hospitalité Plume — une continuité, sans rupture, entre la suite, la lumière du canal et la première gorgée de vin.",
-                "Sous nos suites, la table devient une parenthèse. On y vient pour manger, on repart avec un souvenir.",
-            ],
-            "en": [
-                "The menu changes with the seasons. A few lines, much precision, and the feeling that you came for far more than a meal.",
-                "## A precise, seasonal cuisine",
-                "The restaurant looks for the right gesture: a beautiful product, two or three companions, an exact cooking. In spring, white asparagus and the first herbs. In summer, heirloom tomatoes, apricots, courgette flowers. In autumn, ceps, game, quince. In winter, snails, beef, citrus.",
-                "Nothing ostentatious. A dish must say something — the season, the territory, sometimes a memory — without ever overdoing it.",
-                "## A 100% Burgundy wine list",
-                "It is one of the house's most committed choices: the wine list is exclusively Burgundian. No detour through the Loire, no Rhône escape — the conviction that a Burgundy dinner deserves Burgundy wines.",
-                "From Crémant to Aligoté de Bouzeron, from the Hautes-Côtes de Beaune to the great Côte de Nuits climats, the list wanders carefully through every corner of the region. From Marsannay reds to Meursault, through Côte Chalonnaise and the wines of Couchey, each finds its place — and its right pairing with the cuisine.",
-                "## Why this table matters",
-                "Plume Suites isn't designed as a hotel placed next to a restaurant. It's one and the same intention — extending the experience of the stay to the table.",
-                "You come to Plume to slow down. You come to the table for the same reason. A dinner here is a moment where nothing is expected: no show, no speech, no excess. Just a sincere cuisine, wines that tell Burgundy, and a room that takes the time it needs.",
-                "This is what we call Plume hospitality — a continuity, without interruption, between the suite, the canal light and the first sip of wine.",
-                "Below our suites, the table becomes a pause. You come to eat, you leave with a memory.",
-            ],
-        },
-    },
-
-    # ─────────────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────────────
     # 10. EDITORIAL — Douceur de vivre (brand lifestyle)
     # ─────────────────────────────────────────────────────────────────────
     {

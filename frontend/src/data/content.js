@@ -27,7 +27,7 @@ export const IMAGES = {
   vineyardSunset: "/media/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
 
   // Wine / Gastronomy / Art de vivre
-  gastronomy: "/media/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
+  gastronomy: "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/6r50xqk9_PHOTO%201%20%28chef%29.jpg",
   wineGlass: "/media/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
   wineWindow: "/media/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
   wineFriends: "/media/oal49whg_kelsey-chance-tAH2cA_BL5g-unsplash.jpg",
@@ -250,7 +250,13 @@ export const SUITES = {
       { fr: "Wi-Fi haut débit · Chromecast", en: "High-speed Wi-Fi · Chromecast" },
       { fr: "Café Nespresso & sélection raffinée", en: "Nespresso coffee & curated selection" },
     ],
-    gallery: [IMAGES.envolee, IMAGES.envoleeDesk, IMAGES.vineyardSunset, IMAGES.dijonPalais],
+    gallery: [
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/x2jgmdrr_PHOTO%207.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/27a8ntzq_PHOTO%208.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/5klq14mm_PHOTO%209.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/re60qvsk_PHOTO%2010.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/0ilaw2p9_PHOTO%2011.jpg",
+    ],
   },
   douceur: {
     slug: "douceur",

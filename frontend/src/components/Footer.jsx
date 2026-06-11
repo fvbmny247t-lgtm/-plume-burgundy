@@ -18,13 +18,8 @@ const Footer = () => {
           <p className="mt-6 font-serif italic text-2xl leading-tight max-w-xs">
             {t(FOOTER.tagline)}
           </p>
-          <Link
-            to="/reserver"
-            data-testid="footer-book-button"
-            className="ps-btn-outline-light mt-8"
-          >
-            {t(NAV.book)}
-          </Link>
+          <Link to="/reserver" data-testid="footer-book-button" className="ps-btn-outline-light mt-8 mr-3">{t(NAV.book)}</Link>
+          <a href="https://www.optitreperedugout.fr" target="_blank" rel="noreferrer" data-testid="footer-restaurant-link" className="inline-flex items-center text-cream/80 hover:text-terracotta transition-colors text-xs uppercase tracking-[0.28em] mt-8">{t({fr:"Découvrir le restaurant",en:"Discover the restaurant"})}</a>
         </div>
 
         <div className="md:col-span-3">
@@ -62,6 +57,10 @@ const Footer = () => {
               </li>
             ))}
           </ul>
+          <div className="mt-6 space-y-2 text-xs font-sans">
+            <Link to="/cgv" data-testid="footer-cgv" className="block text-cream/60 hover:text-terracotta transition-colors">Conditions Générales de Vente</Link>
+            <Link to="/confidentialite" data-testid="footer-privacy" className="block text-cream/60 hover:text-terracotta transition-colors">Politique de Confidentialité</Link>
+          </div>
         </div>
       </div>
 

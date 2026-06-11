@@ -12,6 +12,7 @@ import Journal from "./pages/Journal";
 import JournalArticle from "./pages/JournalArticle";
 import Contact from "./pages/Contact";
 import Reserver from "./pages/Reserver";
+import LegalPage from "./pages/LegalPage";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
               <Route path="/journal/:slug" element={<JournalArticle />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/reserver" element={<Reserver />} />
+              <Route path="/cgv" element={<LegalPage variant="cgv" />} />
+              <Route path="/confidentialite" element={<LegalPage variant="privacy" />} />
             </Routes>
           </Layout>
         </BrowserRouter>
