@@ -244,7 +244,7 @@ export const SUITES = {
     detailsTitle: { fr: "Détails", en: "Details" },
     details: [
       { fr: "Salon & coin bureau", en: "Lounge & writing corner" },
-      { fr: "Lit Queen size haut de gamme", en: "Premium Queen size bed" },
+      { fr: "Lit King size haut de gamme", en: "Premium King size bed" },
       { fr: "Vue canal & lumière naturelle", en: "Canal view & natural light" },
       { fr: "Climatisation", en: "Air conditioning" },
       { fr: "Wi-Fi haut débit · Chromecast", en: "High-speed Wi-Fi · Chromecast" },
@@ -253,9 +253,9 @@ export const SUITES = {
     gallery: [
       "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/x2jgmdrr_PHOTO%207.jpg",
       "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/27a8ntzq_PHOTO%208.jpg",
-      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/5klq14mm_PHOTO%209.jpg",
-      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/re60qvsk_PHOTO%2010.jpg",
       "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/0ilaw2p9_PHOTO%2011.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/re60qvsk_PHOTO%2010.jpg",
+      "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/5klq14mm_PHOTO%209.jpg",
     ],
   },
   douceur: {
