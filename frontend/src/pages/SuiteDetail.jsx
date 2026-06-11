@@ -113,13 +113,16 @@ const SuiteDetail = () => {
         </div>
       </section>
 
-      {/* GALLERY */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-1" data-testid={`suite-gallery-${slug}`}>
-        {suite.gallery.slice(0, 3).map((g, idx) => (
-          <div key={idx} className="aspect-[4/5] overflow-hidden">
-            <img src={g} alt="" className="w-full h-full object-cover transition-transform duration-[1500ms] hover:scale-105" />
-          </div>
-        ))}
+      {/* GALLERY CARROUSEL — toutes les photos défilent */}
+      <section className="overflow-hidden bg-cream py-8" data-testid={`suite-gallery-${slug}`}>
+        <div className="flex gap-3 whitespace-nowrap" style={{animation: "ps-marquee 60s linear infinite"}}>
+          {[...suite.gallery, ...suite.gallery].map((g, idx) => (
+            <div key={idx} className="inline-block shrink-0 w-[70vw] md:w-[45vw] lg:w-[33vw] aspect-[4/5] overflow-hidden">
+              <img src={g} alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <style>{`@keyframes ps-marquee {from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
       </section>
 
       {/* EXPERIENCE */}
