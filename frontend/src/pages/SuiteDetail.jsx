@@ -3,6 +3,7 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { SUITES, NAV } from "../data/content";
 import Seo from "../components/Seo";
+import SuiteGallery from "../components/SuiteGallery";
 
 const SuiteDetail = () => {
   const { slug } = useParams();
@@ -113,17 +114,8 @@ const SuiteDetail = () => {
         </div>
       </section>
 
-      {/* GALLERY CARROUSEL — toutes les photos défilent */}
-      <section className="overflow-hidden bg-cream py-8" data-testid={`suite-gallery-${slug}`}>
-        <div className="flex gap-3 whitespace-nowrap" style={{animation: "ps-marquee 60s linear infinite"}}>
-          {[...suite.gallery, ...suite.gallery].map((g, idx) => (
-            <div key={idx} className="inline-block shrink-0 w-[70vw] md:w-[45vw] lg:w-[33vw] aspect-[4/5] overflow-hidden">
-              <img src={g} alt="" className="w-full h-full object-cover" loading="lazy" />
-            </div>
-          ))}
-        </div>
-        <style>{`@keyframes ps-marquee {from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
-      </section>
+      {/* GALLERY CARROUSEL — défile auto + draggable / swipeable */}
+      <SuiteGallery images={suite.gallery} slug={slug} />
 
       {/* EXPERIENCE */}
       <section className="bg-ink text-cream py-24 md:py-32 px-6 md:px-12" data-testid={`suite-experience-${slug}`}>
