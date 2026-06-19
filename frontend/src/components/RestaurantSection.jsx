@@ -21,9 +21,14 @@ const RestaurantSection = () => {
           <p className="font-sans text-base md:text-lg text-cream/80 leading-relaxed mt-7 max-w-xl">
             {t(RESTAURANT.lead)}
           </p>
-          <p className="font-serif italic text-2xl md:text-3xl text-cream leading-snug mt-8 border-l-2 border-terracotta pl-6">
-            « {t(RESTAURANT.quote)} »
-          </p>
+          <div className="mt-9">
+            <p className="font-serif italic text-cream leading-snug text-[1.05rem] md:text-[1.3rem] lg:text-[1.4rem] md:whitespace-nowrap">
+              « {t(RESTAURANT.quote)} »
+            </p>
+            <p className="font-sans uppercase tracking-[0.32em] text-[11px] text-terracotta mt-3">
+              Michaël Felmann — Chef
+            </p>
+          </div>
           <p className="font-sans text-sm md:text-base text-cream/70 leading-relaxed mt-8 max-w-xl">
             {t(RESTAURANT.body)}
           </p>

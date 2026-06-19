@@ -95,8 +95,8 @@ export const HOME = {
     en: "Slow down,\nby the canal.",
   },
   heroIntro: {
-    fr: "Plume Suites Collection — boutique hospitality entre Bourgogne & Méditerranée.",
-    en: "Plume Suites Collection — boutique hospitality between Burgundy & the Mediterranean.",
+    fr: "Plume Suites Collection, l'art de séjourner entre Bourgogne & Méditerranée.",
+    en: "Plume Suites Collection, the art of staying between Burgundy & the Mediterranean.",
   },
   heroCta: { fr: "Réserver un séjour", en: "Book a stay" },
   heroCta2: { fr: "Voir les suites", en: "View the suites" },
@@ -425,16 +425,16 @@ export const RESTAURANT = {
     en: "Gastronomy, just downstairs.",
   },
   lead: {
-    fr: "Un étage plus bas, Ô P'tit Repère du Goût prolonge naturellement l'esprit des suites. Le chef Michaël Felmann y signe une cuisine gastronomique de terroir, ancrée en Bourgogne et traversée d'une touche d'Espagne.",
-    en: "One floor below, Ô P'tit Repère du Goût naturally extends the spirit of the suites. Chef Michaël Felmann offers a refined terroir cuisine, rooted in Burgundy and touched by Spain.",
+    fr: "Un étage plus bas, Ô P'tit Repère du Goût prolonge naturellement l'esprit des suites. Le chef Michaël Felmann y signe une cuisine 100 % maison, généreuse et sincère, où le produit frais rencontre une belle alliance entre la France et l'Espagne.",
+    en: "One floor below, Ô P'tit Repère du Goût naturally extends the spirit of the suites. Chef Michaël Felmann offers an entirely house-made cuisine, generous and sincere, where fresh produce meets a fine alliance between France and Spain.",
   },
   quote: {
     fr: "Un bon produit n'a rien à cacher, juste à être partagé.",
     en: "A good product has nothing to hide — it only asks to be shared.",
   },
   body: {
-    fr: "Une table où l'on descend dîner sans avoir à sortir : produits respectés, producteurs locaux et le geste juste d'un chef qui cuisine depuis l'enfance. Ici, l'élégance rencontre le goût, dans la simplicité du partage.",
-    en: "A table you reach simply by going downstairs: respected produce, local growers and the sure hand of a chef who has cooked since childhood. Here, elegance meets taste, in the simple pleasure of sharing.",
+    fr: "Une table où l'on descend dîner sans avoir à sortir : du fait maison, des produits choisis pour leur goût et le geste juste d'un chef qui cuisine depuis l'enfance. Ici, l'élégance rencontre le plaisir, dans la simplicité du partage.",
+    en: "A table you reach simply by going downstairs: everything made in-house, products chosen for their taste and the sure hand of a chef who has cooked since childhood. Here, elegance meets pleasure, in the simple joy of sharing.",
   },
   cta: { fr: "Découvrir le restaurant", en: "Discover the restaurant" },
   url: "https://www.optitreperedugout.fr",
