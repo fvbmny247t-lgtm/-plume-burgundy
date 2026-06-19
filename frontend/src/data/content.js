@@ -47,14 +47,14 @@ export const IMAGES = {
 
   // Restaurant Ô P'tit Repère du Goût
   restaurantChef: "/images/6r50xqk9_PHOTO_1__chef_.jpg",
-  // TODO: remplacer plat1/plat2 par PHOTO_12 / PHOTO_13 (plats fournis) dès upload
-  plat1: "/media/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
+  // Plats du restaurant — PHOTO_13 fournie ; PHOTO_12 en attente (placeholder plat2)
+  plat1: "/images/PHOTO_13.jpg",
   plat2: "/media/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
 
-  // Suite Douceur — photos 3 & 4
-  // TODO: remplacer douceurPhoto3/4 par PHOTO_3 / PHOTO_4 (fournies) dès upload
-  douceurPhoto3: "/media/p7ognvc7_B4C093FA-ECD4-4A9C-8CAC-D3B799C14E1B.JPG",
-  douceurPhoto4: "/media/vacmfd3h_F1EED553-FC8A-4B91-83E2-006C644628E0.JPG",
+  // Suite Douceur — photos fournies (2 lits séparés, chambre, salle de bain)
+  douceurPhoto2: "/images/PHOTO_2.jpg",
+  douceurPhoto3: "/images/PHOTO_3.jpg",
+  douceurPhoto4: "/images/PHOTO_4.jpg",
 
   // Legacy keys still referenced
   hero: "/media/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
@@ -325,7 +325,7 @@ export const SUITES = {
       { fr: "Climatisation · Wi-Fi haut débit", en: "Air conditioning · High-speed Wi-Fi" },
       { fr: "Chromecast", en: "Chromecast" },
     ],
-    gallery: [IMAGES.douceur, IMAGES.douceurTv, IMAGES.douceurPhoto3, IMAGES.douceurPhoto4, IMAGES.douceurHeadboard],
+    gallery: [IMAGES.douceur, IMAGES.douceurPhoto3, IMAGES.douceurPhoto2, IMAGES.douceurPhoto4, IMAGES.douceurTv, IMAGES.douceurHeadboard],
   },
 };
 
@@ -487,12 +487,12 @@ export const EXPERIENCES = [
       en: "Burgundy is discovered as much in its landscapes as on the plate.",
     },
     editorial: {
-      fr: "Nous préparons pour vous une sélection de produits à partager dans l'intimité de votre suite : quelques spécialités locales, une belle bouteille de Bourgogne et le plaisir simple d'un moment hors du temps. Une invitation à goûter le territoire à votre rythme.",
-      en: "We prepare a selection of products to share in the intimacy of your suite: a few local specialities, a fine bottle of Burgundy and the simple pleasure of a timeless moment. An invitation to taste the region at your own pace.",
+      fr: "Nous préparons pour vous de quoi partager dans l'intimité de votre suite : un peu de jambon persillé artisanal et une belle bouteille de Bourgogne sélectionnée, rouge ou blanc au choix, pour un moment hors du temps. Une invitation à goûter le territoire à votre rythme.",
+      en: "We prepare something to share in the intimacy of your suite: some artisan jambon persillé and a fine selected bottle of Burgundy — red or white, your choice — for a timeless moment. An invitation to taste the region at your own pace.",
     },
     includes: [
-      { fr: "Une sélection de spécialités locales à partager", en: "A selection of local specialities to share" },
-      { fr: "Une belle bouteille de Bourgogne", en: "A fine bottle of Burgundy" },
+      { fr: "Du jambon persillé artisanal à partager", en: "Artisan jambon persillé (Burgundy parsley ham) to share" },
+      { fr: "Une bouteille de Bourgogne sélectionnée — rouge ou blanc au choix", en: "A selected bottle of Burgundy — red or white, your choice" },
       { fr: "Une mise en place soignée déposée dans la suite", en: "A careful set-up placed in the suite" },
     ],
     image: IMAGES.wineFriends,
@@ -506,12 +506,12 @@ export const EXPERIENCES = [
       en: "Some escapes deserve a little extra care.",
     },
     editorial: {
-      fr: "Anniversaire, surprise ou simple envie de faire plaisir : nous préparons quelques attentions pour marquer le moment avec élégance. Fleurs fraîches, bouteille soigneusement sélectionnée et douceurs gourmandes vous attendront à votre arrivée.",
-      en: "Birthday, surprise or simply the wish to delight: we prepare a few touches to mark the moment with elegance. Fresh flowers, a carefully chosen bottle and gourmet treats will be waiting on your arrival.",
+      fr: "Anniversaire, surprise ou simple envie de faire plaisir : nous préparons quelques attentions pour marquer le moment avec élégance. Fleurs fraîches, bouteille de Crémant de Bourgogne et douceurs gourmandes vous attendront à votre arrivée.",
+      en: "Birthday, surprise or simply the wish to delight: we prepare a few touches to mark the moment with elegance. Fresh flowers, a bottle of Crémant de Bourgogne and gourmet treats will be waiting on your arrival.",
     },
     includes: [
       { fr: "Un bouquet de fleurs fraîches", en: "A bouquet of fresh flowers" },
-      { fr: "Une bouteille soigneusement sélectionnée", en: "A carefully selected bottle" },
+      { fr: "Une bouteille de Crémant de Bourgogne", en: "A bottle of Crémant de Bourgogne" },
       { fr: "Des douceurs gourmandes", en: "Gourmet treats" },
       { fr: "Une mise en place soignée à votre arrivée", en: "A careful set-up on your arrival" },
     ],
