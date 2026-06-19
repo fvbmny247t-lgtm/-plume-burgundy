@@ -101,3 +101,55 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Plume Suites site — itération: nouvelle section restaurant, expériences, carrousels, photos, suppression mot hôtel, menu mobile, articles journal (ajout/suppression/édition), page légale bilingue + adresses Emergent/Smoobu, footer email/tel, et envoi d'emails du formulaire de contact via Resend (notification + accusé de réception au design Plume Suites)."
+
+backend:
+  - task: "Contact form email sending via Resend (notification + branded auto-reply)"
+    implemented: true
+    working: true
+    file: "backend/server.py, backend/email_service.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "POST /api/contact now (1) stores the message in Mongo, (2) sends a notification email to hello@plumesuites.fr with reply_to=customer, (3) sends a branded FR/EN confirmation auto-reply to the customer. Uses Resend (RESEND_API_KEY, SENDER_EMAIL=hello@plumesuites.fr, verified domain). Direct test of send_contact_emails returned valid notification + confirmation IDs, error=None. Email failures are logged, not raised, so the endpoint should always return 200 with the ContactMessage. Verify: POST /api/contact with valid name/email/subject/message/locale returns 200 + ContactMessage; endpoint does not 500 even if email layer hiccups; locale 'en' and 'fr' both accepted."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ ALL TESTS PASSED. Tested POST /api/contact with FR locale (Jean Test) - returned 200 with correct ContactMessage structure (id, name, email, subject, message, locale, created_at). Tested with EN locale (John Test) - returned 200 with correct structure. Validation working correctly: missing required fields returns 422, invalid email returns 422. Endpoint is resilient and does not return 500. Emails are being sent via Resend (domain plumesuites.fr verified). Both FR and EN locales accepted and processed correctly."
+  - task: "Journal API after content edits (delete 2 articles, add Dijon-Prenois SEO article, edit several)"
+    implemented: true
+    working: true
+    file: "backend/journal_data.py, backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "journal_data.py edited: removed slugs 'matins-au-bord-du-canal' and 'douceur-de-vivre'; added 'ou-dormir-circuit-dijon-prenois'; edited body text of several articles (FR+EN). Now 12 articles. Verify: GET /api/journal returns 12 items; GET /api/journal/ou-dormir-circuit-dijon-prenois returns 200 with FR+EN body; GET /api/journal/douceur-de-vivre and /api/journal/matins-au-bord-du-canal return 404 (or are absent); existing slugs still resolve."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ ALL TESTS PASSED. GET /api/journal returns exactly 12 articles as expected. New article 'ou-dormir-circuit-dijon-prenois' (Circuit de Dijon-Prenois) returns 200 with complete FR+EN body (13 paragraphs each). Deleted articles 'douceur-de-vivre' and 'matins-au-bord-du-canal' correctly return 404. Existing article 'o-ptit-repere-du-gout' still accessible and returns 200. All journal content changes implemented correctly."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Contact form email sending via Resend (notification + branded auto-reply)"
+    - "Journal API after content edits (delete 2 articles, add Dijon-Prenois SEO article, edit several)"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+    -agent: "main"
+    -message: "Please test the two backend tasks above. For /api/contact, sending a real email is fine (domain plumesuites.fr is verified in Resend). Use a test payload; you can use an @example.com customer email — Resend will accept it. Confirm 200 response + ContactMessage shape, and that the endpoint is resilient (no 500). For journal, confirm the count is 12, the new Prenois slug resolves with FR+EN body arrays, and the two deleted slugs are gone. Do NOT test frontend."
+    -agent: "testing"
+    -message: "✅ Backend testing complete - ALL TESTS PASSED (9/9). Created comprehensive test suite in /app/backend_test.py covering both tasks. Contact form: Tested FR/EN locales, validation (422 for missing fields/invalid email), endpoint resilience (always returns 200). Journal API: Verified 12 articles, new Dijon-Prenois article with FR+EN body, deleted articles return 404, existing articles still work. Both tasks are fully functional. No issues found. Ready for production."

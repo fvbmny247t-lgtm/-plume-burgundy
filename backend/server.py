@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime, timezone
 
 from journal_data import JOURNAL_ARTICLES
+from email_service import send_contact_emails
 
 
 ROOT_DIR = Path(__file__).parent
@@ -53,6 +54,20 @@ async def create_contact_message(payload: ContactMessageCreate):
     doc = obj.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.contact_messages.insert_one(doc)
+    # Fire notification + branded auto-reply (failures are logged, not raised)
+    try:
+        email_result = await send_contact_emails(
+            name=obj.name,
+            email=obj.email,
+            subject=obj.subject or "",
+            message=obj.message,
+            lang=obj.locale or "fr",
+        )
+        await db.contact_messages.update_one(
+            {"id": obj.id}, {"$set": {"email_result": email_result}}
+        )
+    except Exception as e:  # noqa: BLE001
+        logging.getLogger(__name__).error(f"send_contact_emails error: {e}")
     return obj
 
 
