@@ -125,6 +125,11 @@ const Contact = () => {
               <p className="font-serif italic text-2xl md:text-3xl leading-snug">{t(CONTACT_PAGE.address)}</p>
             </div>
             <div>
+              <p className="ps-overline text-ink/60 mb-3">{t({ fr: "Nous joindre", en: "Reach us" })}</p>
+              <a href="tel:+33695488760" data-testid="contact-phone" className="block font-serif italic text-2xl md:text-3xl leading-snug hover:text-terracotta transition-colors">+33 6 95 48 87 60</a>
+              <a href="mailto:hello@plumesuites.fr" data-testid="contact-email-link" className="block font-serif italic text-2xl md:text-3xl leading-snug hover:text-terracotta transition-colors mt-1">hello@plumesuites.fr</a>
+            </div>
+            <div>
               <p className="ps-overline text-ink/60 mb-3">{t({ fr: "Réservation directe", en: "Direct booking" })}</p>
               <Link
                 to="/reserver"

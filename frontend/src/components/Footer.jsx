@@ -25,6 +25,10 @@ const Footer = () => {
         <div className="md:col-span-3">
           <h4 className="ps-overline text-cream/70 mb-4">{t(FOOTER.addressTitle)}</h4>
           <p className="font-sans text-sm leading-relaxed text-cream/90 whitespace-pre-line">{t(FOOTER.address)}</p>
+          <div className="mt-5 space-y-1.5 font-sans text-sm">
+            <a href="tel:+33695488760" data-testid="footer-phone" className="block text-cream/90 hover:text-terracotta transition-colors">+33 6 95 48 87 60</a>
+            <a href="mailto:hello@plumesuites.fr" data-testid="footer-email" className="block text-cream/90 hover:text-terracotta transition-colors">hello@plumesuites.fr</a>
+          </div>
           <h4 className="ps-overline text-cream/70 mt-8 mb-4">{t(FOOTER.futureTitle)}</h4>
           <p className="font-sans text-sm text-cream/90">{t(FOOTER.future)}</p>
         </div>
@@ -58,8 +62,8 @@ const Footer = () => {
             ))}
           </ul>
           <div className="mt-6 space-y-2 text-xs font-sans">
-            <Link to="/cgv" data-testid="footer-cgv" className="block text-cream/60 hover:text-terracotta transition-colors">Conditions Générales de Vente</Link>
-            <Link to="/confidentialite" data-testid="footer-privacy" className="block text-cream/60 hover:text-terracotta transition-colors">Politique de Confidentialité</Link>
+            <Link to="/cgv" data-testid="footer-cgv" className="block text-cream/60 hover:text-terracotta transition-colors">{t({ fr: "Conditions Générales de Vente", en: "Terms and Conditions of Sale" })}</Link>
+            <Link to="/confidentialite" data-testid="footer-privacy" className="block text-cream/60 hover:text-terracotta transition-colors">{t({ fr: "Politique de Confidentialité", en: "Privacy Policy" })}</Link>
           </div>
         </div>
       </div>
@@ -67,12 +71,6 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto mt-16 pt-6 border-t border-cream/15 flex flex-col md:flex-row justify-between gap-4 text-xs uppercase tracking-[0.25em] text-cream/60">
         <p>{t(FOOTER.rights)}</p>
         <p className="font-serif italic normal-case tracking-normal text-cream/70">Bourgogne · Costa del Sol</p>
-      </div>
-
-      <div className="max-w-7xl mx-auto mt-8 text-center" data-testid="footer-love">
-        <p className="text-[10px] tracking-[0.18em] text-cream/35 font-sans lowercase">
-          fait avec amour <span className="text-terracotta/70" aria-hidden="true">♡</span>
-        </p>
       </div>
     </footer>
   );
