@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 resend.api_key = os.environ.get("RESEND_API_KEY", "")
 SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "hello@plumesuites.fr")
 CONTACT_INBOX = os.environ.get("CONTACT_INBOX", "hello@plumesuites.fr")
+LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
 FROM = f"Plume Suites <{SENDER_EMAIL}>"
 
 INK = "#3b312b"
@@ -23,6 +24,13 @@ def _esc(value: str) -> str:
 
 def _shell(inner_html: str) -> str:
     """Wrap content in the branded Plume Suites email shell (email-safe inline CSS)."""
+    logo_block = (
+        f'<img src="{LOGO_URL}" alt="Plume Suites" width="150" '
+        f'style="display:block;margin:0 auto;width:150px;max-width:60%;height:auto;border:0;" />'
+        if LOGO_URL else
+        f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:24px;letter-spacing:6px;color:{INK};font-weight:400;">PLUME</div>'
+        f'<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:5px;color:{TERRA};margin-top:4px;">SUITES</div>'
+    )
     return f"""<!DOCTYPE html>
 <html lang="fr">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
@@ -31,8 +39,7 @@ def _shell(inner_html: str) -> str:
     <tr><td align="center">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#ffffff;border:1px solid rgba(59,49,43,0.10);">
         <tr><td style="padding:36px 40px 0 40px;text-align:center;">
-          <div style="font-family:Georgia,'Times New Roman',serif;font-size:24px;letter-spacing:6px;color:{INK};font-weight:400;">PLUME</div>
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:5px;color:{TERRA};margin-top:4px;">SUITES</div>
+          {logo_block}
           <div style="height:1px;background-color:rgba(59,49,43,0.12);margin:24px 0 0 0;"></div>
         </td></tr>
         <tr><td style="padding:32px 40px 40px 40px;">
@@ -73,7 +80,7 @@ def _customer_html(name: str, message: str, lang: str) -> str:
                     "In the meantime, we wanted to confirm that your request has been received and is being taken care of.")
             + _para("With our warmest regards,<br/><span style=\"font-style:italic;\">The Plume Suites team</span>")
             + f'<div style="margin:24px 0;padding:18px 20px;background-color:{CREAM};border-left:2px solid {TERRA};">'
-            + f'<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Your message</p>'
+            + '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Your message</p>'
             + f'<p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:{INK};margin:0;line-height:1.6;">{_esc(message)}</p></div>'
         )
     else:
@@ -84,7 +91,7 @@ def _customer_html(name: str, message: str, lang: str) -> str:
                     "Nous tenions à vous confirmer que votre demande a bien été prise en charge.")
             + _para("Avec toute notre attention,<br/><span style=\"font-style:italic;\">L'équipe Plume Suites</span>")
             + f'<div style="margin:24px 0;padding:18px 20px;background-color:{CREAM};border-left:2px solid {TERRA};">'
-            + f'<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Votre message</p>'
+            + '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Votre message</p>'
             + f'<p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:{INK};margin:0;line-height:1.6;">{_esc(message)}</p></div>'
         )
     return _shell(inner)
@@ -106,7 +113,7 @@ def _notification_html(name: str, email: str, subject: str, message: str, lang: 
         _heading("Nouveau message de contact")
         + f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">{rows_html}</table>'
         + f'<div style="padding:18px 20px;background-color:{CREAM};border-left:2px solid {TERRA};">'
-        + f'<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Message</p>'
+        + '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Message</p>'
         + f'<p style="font-family:Georgia,serif;font-size:15px;color:{INK};margin:0;line-height:1.7;">{_esc(message)}</p></div>'
     )
     return _shell(inner)
