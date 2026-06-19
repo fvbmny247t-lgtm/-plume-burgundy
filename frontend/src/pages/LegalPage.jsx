@@ -83,7 +83,7 @@ const LegalPage = ({ variant }) => {
 
   return (
     <div className="bg-cream text-ink" data-testid={`legal-${variant}`}>
-      <Seo title={heading} path={isCgv ? "/cgv" : "/confidentialite"} />
+      <Seo title={heading} path={isCgv ? "/cgv" : "/confidentialite"} noindex />
       <section className="pt-36 md:pt-44 pb-16 px-6 md:px-12">
         <div className="max-w-3xl mx-auto">
           <p className="ps-overline text-ink/60 mb-4">— Plume Suites</p>

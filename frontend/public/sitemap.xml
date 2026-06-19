@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://plumesuites.fr/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://plumesuites.fr/sejours</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://plumesuites.fr/sejours/envolee</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://plumesuites.fr/sejours/douceur</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://plumesuites.fr/reserver</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://plumesuites.fr/art-de-vivre</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://plumesuites.fr/journal</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/contact</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://plumesuites.fr/journal/o-ptit-repere-du-gout</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/vignes-et-art-de-vivre-bourguignon</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/plume-suites-etape-en-bourgogne</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/canal-de-bourgogne-velo-fleurey</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/eurovelo-6-bourgogne</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/week-end-velo-canal-dijon-beaune</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/que-faire-a-dijon-week-end</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/visiter-beaune-48-heures</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/climats-bourgogne-unesco</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/route-des-vins</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/nouveau-chapitre-mediterraneen</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://plumesuites.fr/journal/ou-dormir-circuit-dijon-prenois</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+</urlset>

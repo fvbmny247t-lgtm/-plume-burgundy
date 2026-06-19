@@ -10,14 +10,16 @@ const Seo = ({
   path = "",
   type = "website",
   jsonLd = null,
+  noindex = false,
 }) => {
   const { lang } = useLang();
-  const finalTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Boutique Hospitality in Burgundy`;
+  const finalTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Suites de charme en Bourgogne, près de Dijon`;
   const finalDesc = description ||
     (lang === "fr"
-      ? "Plume Suites Collection — des suites de caractère au bord du canal de Bourgogne, à Fleurey-sur-Ouche. Deux suites éditoriales : Douceur & L'Envolée. Gastronomie, vignobles, vélo, slow living."
-      : "Plume Suites Collection — character suites by the Burgundy canal in Fleurey-sur-Ouche. Two editorial suites: Douceur & L'Envolée. Gastronomy, vineyards, cycling, slow living.");
-  const finalImage = image || SITE.defaultImage;
+      ? "Plume Suites, deux suites de charme au cœur de la Bourgogne, à Fleurey-sur-Ouche près de Dijon. Au-dessus du restaurant Ô P'tit Repère du Goût, entre canal, vignobles et art de vivre bourguignon."
+      : "Plume Suites — character suites in the heart of Burgundy, in Fleurey-sur-Ouche near Dijon. Above the Ô P'tit Repère du Goût restaurant, between canal, vineyards and the Burgundy art of living.");
+  const rawImage = image || SITE.defaultImage;
+  const finalImage = rawImage.startsWith("http") ? rawImage : `${SITE.url}${rawImage}`;
   const url = `${SITE.url}${path}`;
 
   return (
@@ -25,7 +27,7 @@ const Seo = ({
       <html lang={lang} />
       <title>{finalTitle}</title>
       <meta name="description" content={finalDesc} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content={type} />

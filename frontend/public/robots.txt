@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Pages utilitaires non pertinentes pour la recherche
+Disallow: /cgv
+Disallow: /confidentialite
+
+Sitemap: https://plumesuites.fr/sitemap.xml
