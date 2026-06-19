@@ -41,6 +41,21 @@ export const IMAGES = {
   costa: "/media/7boq1875_simon-hermans-6tgHYmerKyM-unsplash.jpg",
   costaBg: "/media/uqswchc7_ionut-dobre-M9BMyw8Ge4Y-unsplash.jpg",
 
+  // Village de Fleurey-sur-Ouche — cartes postales anciennes (ancrage local)
+  villageFleurey1: "/images/village_fleurey_1.jpg",
+  villageFleurey2: "/images/village_fleurey_2.jpg",
+
+  // Restaurant Ô P'tit Repère du Goût
+  restaurantChef: "/images/6r50xqk9_PHOTO_1__chef_.jpg",
+  // TODO: remplacer plat1/plat2 par PHOTO_12 / PHOTO_13 (plats fournis) dès upload
+  plat1: "/media/u8mp3yfa_ambitious-studio-rick-barrett-WT_r3dUwx6I-unsplash.jpg",
+  plat2: "/media/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
+
+  // Suite Douceur — photos 3 & 4
+  // TODO: remplacer douceurPhoto3/4 par PHOTO_3 / PHOTO_4 (fournies) dès upload
+  douceurPhoto3: "/media/p7ognvc7_B4C093FA-ECD4-4A9C-8CAC-D3B799C14E1B.JPG",
+  douceurPhoto4: "/media/vacmfd3h_F1EED553-FC8A-4B91-83E2-006C644628E0.JPG",
+
   // Legacy keys still referenced
   hero: "/media/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
   village: "/media/fta8g3gi_zhu-yunxiao-Ov-FZkRaxKw-unsplash.jpg",
@@ -304,13 +319,13 @@ export const SUITES = {
     detailsTitle: { fr: "Détails", en: "Details" },
     details: [
       { fr: "Deux chambres distinctes", en: "Two separate bedrooms" },
-      { fr: "Lit Queen size + lit secondaire", en: "Queen size + secondary bed" },
-      { fr: "Vue canal", en: "Canal view" },
-      { fr: "Matières naturelles", en: "Natural textures" },
+      { fr: "Chambre principale — un lit double", en: "Main bedroom — one double bed" },
+      { fr: "Seconde chambre — 2 lits séparés", en: "Second bedroom — 2 single beds" },
+      { fr: "Vue canal · matières naturelles", en: "Canal view · natural textures" },
       { fr: "Climatisation · Wi-Fi haut débit", en: "Air conditioning · High-speed Wi-Fi" },
       { fr: "Chromecast", en: "Chromecast" },
     ],
-    gallery: [IMAGES.douceur, IMAGES.douceurTv, IMAGES.douceurHeadboard, IMAGES.wineGlass],
+    gallery: [IMAGES.douceur, IMAGES.douceurTv, IMAGES.douceurPhoto3, IMAGES.douceurPhoto4, IMAGES.douceurHeadboard],
   },
 };
 
@@ -400,3 +415,106 @@ export const JOURNAL_PAGE = {
     en: "Inspirations, gastronomy, escapes and lifestyle between Burgundy and the Mediterranean.",
   },
 };
+
+// ── La table — Ô P'tit Repère du Goût (identité réelle du restaurant) ──
+export const RESTAURANT = {
+  overline: { fr: "La table — un étage plus bas", en: "The table — one floor below" },
+  name: "Ô P'tit Repère du Goût",
+  title: {
+    fr: "La gastronomie, juste en dessous.",
+    en: "Gastronomy, just downstairs.",
+  },
+  lead: {
+    fr: "Un étage plus bas, Ô P'tit Repère du Goût prolonge naturellement l'esprit des suites. Le chef Michaël Felmann y signe une cuisine gastronomique de terroir, ancrée en Bourgogne et traversée d'une touche d'Espagne.",
+    en: "One floor below, Ô P'tit Repère du Goût naturally extends the spirit of the suites. Chef Michaël Felmann offers a refined terroir cuisine, rooted in Burgundy and touched by Spain.",
+  },
+  quote: {
+    fr: "Un bon produit n'a rien à cacher, juste à être partagé.",
+    en: "A good product has nothing to hide — it only asks to be shared.",
+  },
+  body: {
+    fr: "Une table où l'on descend dîner sans avoir à sortir : produits respectés, producteurs locaux et le geste juste d'un chef qui cuisine depuis l'enfance. Ici, l'élégance rencontre le goût, dans la simplicité du partage.",
+    en: "A table you reach simply by going downstairs: respected produce, local growers and the sure hand of a chef who has cooked since childhood. Here, elegance meets taste, in the simple pleasure of sharing.",
+  },
+  cta: { fr: "Découvrir le restaurant", en: "Discover the restaurant" },
+  url: "https://www.optitreperedugout.fr",
+  images: [IMAGES.restaurantChef, IMAGES.plat1, IMAGES.plat2],
+};
+
+// ── Prolonger l'expérience — attentions à composer avant l'arrivée ──
+export const EXPERIENCES_SECTION = {
+  overline: { fr: "Avant l'arrivée", en: "Before you arrive" },
+  title: { fr: "Prolonger l'expérience", en: "Extend the experience" },
+  intro: {
+    fr: "Quelques attentions à imaginer avant votre venue, pensées dans l'esprit Plume Suites : le goût du détail, le plaisir de recevoir, l'art de vivre bourguignon. Faites-nous part de votre choix avant l'arrivée — tout sera prêt dans la suite.",
+    en: "A few thoughtful touches to imagine before your stay, in the Plume Suites spirit: an eye for detail, the pleasure of hosting, the Burgundy art of living. Let us know your choice before arrival — everything will be ready in the suite.",
+  },
+  note: {
+    fr: "Présentées lors de la réservation et dans le Guide du Voyageur envoyé automatiquement avant votre séjour.",
+    en: "Presented at booking and in the Traveller's Guide automatically sent before your stay.",
+  },
+  includesLabel: { fr: "Ce que comprend l'expérience", en: "What the experience includes" },
+  ctaDetail: { fr: "En savoir plus", en: "Learn more" },
+  ctaReserve: { fr: "Réserver", en: "Book" },
+};
+
+export const EXPERIENCES = [
+  {
+    key: "arrivee",
+    title: { fr: "Une arrivée qui vous attend", en: "An arrival that awaits you" },
+    price: 49,
+    teaser: {
+      fr: "Parce que les premiers instants donnent souvent le ton du séjour.",
+      en: "Because the first moments often set the tone of a stay.",
+    },
+    editorial: {
+      fr: "À votre arrivée, quelques attentions vous attendront déjà dans la suite : une bouteille de Crémant de Bourgogne, quelques douceurs artisanales et de quoi commencer votre parenthèse bourguignonne en toute simplicité. Une manière discrète de célébrer le début du séjour.",
+      en: "On arrival, a few thoughtful touches will already be waiting in your suite: a bottle of Crémant de Bourgogne, some artisan treats and everything to begin your Burgundy pause with ease. A discreet way to celebrate the start of the stay.",
+    },
+    includes: [
+      { fr: "Une bouteille de Crémant de Bourgogne", en: "A bottle of Crémant de Bourgogne" },
+      { fr: "Quelques douceurs artisanales", en: "A few artisan treats" },
+      { fr: "Une attention déposée dans la suite avant votre arrivée", en: "A welcome touch placed in the suite before you arrive" },
+    ],
+    image: IMAGES.wineGlass,
+  },
+  {
+    key: "saveurs",
+    title: { fr: "Saveurs de Bourgogne", en: "Flavours of Burgundy" },
+    price: 79,
+    teaser: {
+      fr: "La Bourgogne se découvre autant dans les paysages que dans l'assiette.",
+      en: "Burgundy is discovered as much in its landscapes as on the plate.",
+    },
+    editorial: {
+      fr: "Nous préparons pour vous une sélection de produits à partager dans l'intimité de votre suite : quelques spécialités locales, une belle bouteille de Bourgogne et le plaisir simple d'un moment hors du temps. Une invitation à goûter le territoire à votre rythme.",
+      en: "We prepare a selection of products to share in the intimacy of your suite: a few local specialities, a fine bottle of Burgundy and the simple pleasure of a timeless moment. An invitation to taste the region at your own pace.",
+    },
+    includes: [
+      { fr: "Une sélection de spécialités locales à partager", en: "A selection of local specialities to share" },
+      { fr: "Une belle bouteille de Bourgogne", en: "A fine bottle of Burgundy" },
+      { fr: "Une mise en place soignée déposée dans la suite", en: "A careful set-up placed in the suite" },
+    ],
+    image: IMAGES.wineFriends,
+  },
+  {
+    key: "celebration",
+    title: { fr: "Une occasion à célébrer", en: "An occasion to celebrate" },
+    price: 89,
+    teaser: {
+      fr: "Certaines escapades méritent une attention particulière.",
+      en: "Some escapes deserve a little extra care.",
+    },
+    editorial: {
+      fr: "Anniversaire, surprise ou simple envie de faire plaisir : nous préparons quelques attentions pour marquer le moment avec élégance. Fleurs fraîches, bouteille soigneusement sélectionnée et douceurs gourmandes vous attendront à votre arrivée.",
+      en: "Birthday, surprise or simply the wish to delight: we prepare a few touches to mark the moment with elegance. Fresh flowers, a carefully chosen bottle and gourmet treats will be waiting on your arrival.",
+    },
+    includes: [
+      { fr: "Un bouquet de fleurs fraîches", en: "A bouquet of fresh flowers" },
+      { fr: "Une bouteille soigneusement sélectionnée", en: "A carefully selected bottle" },
+      { fr: "Des douceurs gourmandes", en: "Gourmet treats" },
+      { fr: "Une mise en place soignée à votre arrivée", en: "A careful set-up on your arrival" },
+    ],
+    image: IMAGES.wineTop,
+  },
+];

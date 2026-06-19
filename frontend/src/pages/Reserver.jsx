@@ -2,6 +2,7 @@ import React from "react";
 import { Check, Lock, Sparkles, Tag } from "lucide-react";
 import Seo from "../components/Seo";
 import BookingIframe from "../components/BookingIframe";
+import ExperiencesSection from "../components/ExperiencesSection";
 import { useLang } from "../context/LanguageContext";
 import { IMAGES } from "../data/content";
 
@@ -40,8 +41,8 @@ const Reserver = () => {
       <Seo
         title={t({ fr: "Réserver", en: "Book a stay" })}
         description={t({
-          fr: "Réservez en direct votre séjour à Plume Suites — Douceur ou L'Envolée. Boutique hôtel au bord du canal de Bourgogne, Fleurey-sur-Ouche.",
-          en: "Book your stay directly at Plume Suites — Douceur or L'Envolée. Boutique hotel by the Burgundy canal in Fleurey-sur-Ouche.",
+          fr: "Réservez en direct votre séjour à Plume Suites — Douceur ou L'Envolée. Suites de caractère au bord du canal de Bourgogne, Fleurey-sur-Ouche.",
+          en: "Book your stay directly at Plume Suites — Douceur or L'Envolée. Character suites by the Burgundy canal in Fleurey-sur-Ouche.",
         })}
         path="/reserver"
       />
@@ -106,6 +107,9 @@ const Reserver = () => {
           </div>
         </div>
       </section>
+
+      {/* PROLONGER L'EXPÉRIENCE — présentées lors de la réservation */}
+      <ExperiencesSection embedded />
 
       {/* CLOSING editorial line */}
       <section className="px-6 md:px-12 pb-28">

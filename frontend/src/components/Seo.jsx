@@ -15,8 +15,8 @@ const Seo = ({
   const finalTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Boutique Hospitality in Burgundy`;
   const finalDesc = description ||
     (lang === "fr"
-      ? "Plume Suites Collection — un boutique hotel intimiste au bord du canal de Bourgogne, à Fleurey-sur-Ouche. Deux suites éditoriales : Douceur & L'Envolée. Gastronomie, vignobles, vélo, slow living."
-      : "Plume Suites Collection — an intimate boutique hotel by the Burgundy canal in Fleurey-sur-Ouche. Two editorial suites: Douceur & L'Envolée. Gastronomy, vineyards, cycling, slow living.");
+      ? "Plume Suites Collection — des suites de caractère au bord du canal de Bourgogne, à Fleurey-sur-Ouche. Deux suites éditoriales : Douceur & L'Envolée. Gastronomie, vignobles, vélo, slow living."
+      : "Plume Suites Collection — character suites by the Burgundy canal in Fleurey-sur-Ouche. Two editorial suites: Douceur & L'Envolée. Gastronomy, vineyards, cycling, slow living.");
   const finalImage = image || SITE.defaultImage;
   const url = `${SITE.url}${path}`;
 

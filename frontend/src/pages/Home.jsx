@@ -5,17 +5,19 @@ import { useLang } from "../context/LanguageContext";
 import { HOME, SUITES, ART_BLOCKS, IMAGES, NAV } from "../data/content";
 import Seo from "../components/Seo";
 import SuitesSlider from "../components/SuitesSlider";
+import RestaurantSection from "../components/RestaurantSection";
+import ExperiencesSection from "../components/ExperiencesSection";
 
 const Home = () => {
   const { t, lang } = useLang();
 
-  const hotelLd = {
+  const lodgingLd = {
     "@context": "https://schema.org",
-    "@type": "Hotel",
+    "@type": "LodgingBusiness",
     name: "Plume Suites Collection",
     description: lang === "fr"
-      ? "Boutique hôtel au bord du canal de Bourgogne, à Fleurey-sur-Ouche."
-      : "Boutique hotel by the Burgundy canal in Fleurey-sur-Ouche.",
+      ? "Suites de caractère au bord du canal de Bourgogne, à Fleurey-sur-Ouche."
+      : "Character suites by the Burgundy canal in Fleurey-sur-Ouche.",
     image: IMAGES.heroPoster,
     priceRange: "€€€",
     address: {
@@ -37,7 +39,7 @@ const Home = () => {
 
   return (
     <div data-testid="home-page">
-      <Seo path="/" jsonLd={hotelLd} />
+      <Seo path="/" jsonLd={lodgingLd} />
       {/* HERO — éditorial, vidéo only */}
       <section className="relative h-screen w-full overflow-hidden bg-ink" data-testid="hero-section">
         <div className="absolute inset-0">
@@ -123,6 +125,9 @@ const Home = () => {
       {/* SUITES SLIDER */}
       <SuitesSlider />
 
+      {/* RESTAURANT — Ô P'tit Repère du Goût (un étage plus bas) */}
+      <RestaurantSection />
+
       {/* ART DE VIVRE BENTO */}
       <section className="bg-cream py-24 md:py-32 px-6 md:px-12" data-testid="art-section">
         <div className="max-w-7xl mx-auto">
@@ -169,6 +174,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* PROLONGER L'EXPÉRIENCE */}
+      <ExperiencesSection />
+
       {/* QUOTE */}
       <section className="bg-terracotta text-cream py-32 md:py-48 px-6 md:px-12" data-testid="quote-section">
         <div className="max-w-5xl mx-auto text-center">
@@ -192,8 +200,21 @@ const Home = () => {
               {t(HOME.locationText)}
             </p>
           </div>
-          <div className="md:col-span-7 h-[60vh] overflow-hidden">
-            <img src={IMAGES.dijonPalais} alt="Palais des Ducs de Dijon" className="w-full h-full object-cover" />
+          <div className="md:col-span-7">
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
+              <div className="col-span-2 aspect-[16/10] overflow-hidden">
+                <img src={IMAGES.villageFleurey1} alt="Fleurey-sur-Ouche — La Grande Rue, carte postale ancienne" className="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div className="aspect-[4/3] overflow-hidden">
+                <img src={IMAGES.villageFleurey2} alt="Fleurey-sur-Ouche — Le canal de Bourgogne, carte postale ancienne" className="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div className="aspect-[4/3] overflow-hidden">
+                <img src={IMAGES.dijonPalais} alt="Bourgogne — pierre et patrimoine" className="w-full h-full object-cover" loading="lazy" />
+              </div>
+            </div>
+            <p className="ps-overline text-ink/50 mt-4">
+              {t({ fr: "— Fleurey-sur-Ouche · cartes postales anciennes", en: "— Fleurey-sur-Ouche · vintage postcards" })}
+            </p>
           </div>
         </div>
       </section>

@@ -25,6 +25,17 @@ Boutique hotel website for Plume Suites (Bourgogne, France + Costa del Sol 2027)
 - Backend pytest 6/6 ✅
 - Frontend Playwright 13/13 ✅ (iteration_1.json)
 
+## Update (Juillet 2025) — Univers art de vivre
+- Home: nouvelle section Restaurant "Ô P'tit Repère du Goût" (identité réelle, chef Michaël Felmann, citation « Un bon produit n'a rien à cacher, juste à être partagé », CTA → optitreperedugout.fr)
+- Home + /reserver: section "Prolonger l'expérience" (3 expériences 49/79/89€, fiche détaillée "Ce que comprend l'expérience" en modal + bouton Réserver → /reserver)
+- Carrousels suites: flèches visibles + clic → Lightbox plein écran (prev/next/clavier/swipe)
+- Suites: L'Envolée gallery [7,8,11,10,9] + lit King ; Douceur (lit principal + 2 lits séparés, photo bouteille retirée, +photos 3/4)
+- Cartes postales anciennes Fleurey-sur-Ouche intégrées (section Localisation)
+- Mot "hôtel/hotel" supprimé partout (texte + JSON-LD: LodgingBusiness/Accommodation)
+- Menu mobile: hamburger animé → croix, ouverture/fermeture fluides
+- FR/EN complet sur toutes les nouvelles sections + parité mobile vérifiée
+- EN ATTENTE: PHOTO_3, PHOTO_4 (Douceur), PHOTO_12, PHOTO_13 (plats resto) — placeholders temporaires (keys content.js: douceurPhoto3/4, plat1/2)
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

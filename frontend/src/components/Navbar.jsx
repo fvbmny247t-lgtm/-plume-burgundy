@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { NAV } from "../data/content";
 import PlumeLogo from "./PlumeLogo";
@@ -48,7 +47,7 @@ const Navbar = () => {
     >
       {/* Navbar always transparent — content color changes on scroll */}
       <div
-        className={`flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ${textColor}`}
+        className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ${textColor}`}
       >
         <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
           <PlumeLogo variant={logoVariant} size="sm" />
@@ -112,59 +111,79 @@ const Navbar = () => {
           <button
             data-testid="mobile-menu-toggle"
             onClick={() => setOpen((o) => !o)}
-            className="lg:hidden p-1"
+            className="lg:hidden relative w-7 h-7 flex items-center justify-center"
             aria-label="Menu"
+            aria-expanded={open}
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            <span className="sr-only">Menu</span>
+            <span
+              className={`absolute block h-[2px] w-6 bg-current transition-all duration-300 ease-out ${
+                open ? "rotate-45 translate-y-0" : "-translate-y-[6px]"
+              }`}
+            />
+            <span
+              className={`absolute block h-[2px] w-6 bg-current transition-all duration-200 ease-out ${
+                open ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute block h-[2px] w-6 bg-current transition-all duration-300 ease-out ${
+                open ? "-rotate-45 translate-y-0" : "translate-y-[6px]"
+              }`}
+            />
           </button>
         </div>
       </div>
 
-      {/* Mobile menu — fullscreen overlay */}
-      {open && (
-        <div
-          className="lg:hidden fixed inset-0 bg-ink text-cream pt-20 px-6 pb-12 overflow-y-auto"
-          data-testid="mobile-menu"
-        >
-          <nav className="flex flex-col gap-6 mt-4">
-            {links.map((l, i) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                data-testid={`mobile-nav-${l.to.replace("/", "")}`}
-                className="font-serif italic text-4xl border-b border-cream/15 pb-4"
-              >
-                <span className="ps-overline text-cream/40 block mb-1">0{i + 1}</span>
-                {t(l.label)}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-4 mt-10 text-xs uppercase tracking-[0.28em]">
-            <button
-              data-testid="mobile-lang-fr"
-              onClick={() => setLang("fr")}
-              className={lang === "fr" ? "opacity-100" : "opacity-50"}
+      {/* Mobile menu — fullscreen overlay, animated open/close */}
+      <div
+        className={`lg:hidden fixed inset-0 z-40 bg-ink text-cream pt-24 px-6 pb-12 overflow-y-auto transition-[opacity,transform] duration-500 ease-out ${
+          open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
+        data-testid="mobile-menu"
+        aria-hidden={!open}
+      >
+        <nav className="flex flex-col gap-6 mt-4">
+          {links.map((l, i) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              data-testid={`mobile-nav-${l.to.replace("/", "")}`}
+              style={{ transitionDelay: open ? `${120 + i * 70}ms` : "0ms" }}
+              className={`font-serif italic text-4xl border-b border-cream/15 pb-4 transition-all duration-500 ease-out ${
+                open ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
             >
-              FR
-            </button>
-            <span className="opacity-40">/</span>
-            <button
-              data-testid="mobile-lang-en"
-              onClick={() => setLang("en")}
-              className={lang === "en" ? "opacity-100" : "opacity-50"}
-            >
-              EN
-            </button>
-          </div>
-          <Link
-            to="/reserver"
-            data-testid="mobile-book-button"
-            className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
+              <span className="ps-overline text-cream/40 block mb-1">0{i + 1}</span>
+              {t(l.label)}
+            </Link>
+          ))}
+        </nav>
+        <div className="flex items-center gap-4 mt-10 text-xs uppercase tracking-[0.28em]">
+          <button
+            data-testid="mobile-lang-fr"
+            onClick={() => setLang("fr")}
+            className={lang === "fr" ? "opacity-100" : "opacity-50"}
           >
-            {t(NAV.book)}
-          </Link>
+            FR
+          </button>
+          <span className="opacity-40">/</span>
+          <button
+            data-testid="mobile-lang-en"
+            onClick={() => setLang("en")}
+            className={lang === "en" ? "opacity-100" : "opacity-50"}
+          >
+            EN
+          </button>
         </div>
-      )}
+        <Link
+          to="/reserver"
+          data-testid="mobile-book-button"
+          className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
+        >
+          {t(NAV.book)}
+        </Link>
+      </div>
     </header>
   );
 };

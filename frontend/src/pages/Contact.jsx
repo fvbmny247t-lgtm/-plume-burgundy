@@ -31,8 +31,8 @@ const Contact = () => {
       <Seo
         title={t({ fr: "Contact", en: "Contact" })}
         description={t({
-          fr: "Contactez Plume Suites — boutique hôtel au bord du canal de Bourgogne, Fleurey-sur-Ouche.",
-          en: "Contact Plume Suites — boutique hotel by the Burgundy canal, Fleurey-sur-Ouche.",
+          fr: "Contactez Plume Suites — suites de caractère au bord du canal de Bourgogne, Fleurey-sur-Ouche.",
+          en: "Contact Plume Suites — character suites by the Burgundy canal, Fleurey-sur-Ouche.",
         })}
         path="/contact"
       />

@@ -11,16 +11,16 @@ const SuiteDetail = () => {
   const suite = SUITES[slug];
   if (!suite) return <Navigate to="/sejours" replace />;
 
-  const hotelLd = {
+  const lodgingLd = {
     "@context": "https://schema.org",
-    "@type": "HotelRoom",
+    "@type": "Accommodation",
     name: suite.name[lang],
     description: suite.intro[lang],
     image: suite.cover,
-    bed: { "@type": "BedDetails", typeOfBed: "Queen" },
-    occupancy: { "@type": "QuantitativeValue", maxValue: 2 },
+    bed: { "@type": "BedDetails", typeOfBed: slug === "envolee" ? "King" : "Double" },
+    occupancy: { "@type": "QuantitativeValue", maxValue: suite.stats.guests },
     containedInPlace: {
-      "@type": "Hotel",
+      "@type": "LodgingBusiness",
       name: "Plume Suites Collection",
       address: {
         "@type": "PostalAddress",
@@ -39,7 +39,7 @@ const SuiteDetail = () => {
         image={suite.cover}
         path={`/sejours/${slug}`}
         type="article"
-        jsonLd={hotelLd}
+        jsonLd={lodgingLd}
       />
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">
