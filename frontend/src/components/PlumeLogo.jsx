@@ -1,7 +1,7 @@
 import React from "react";
 
-const LOGO_WHITE = "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/azsbsaor_Logo%20site%20plume.svg";
-const LOGO_DARK = "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/2le9q18k_Logo%20plume%20Marron%20site%20sans%20fond.svg";
+const LOGO_WHITE = "/images/azsbsaor_Logo_site_plume.svg";
+const LOGO_DARK = "/images/2le9q18k_Logo_plume_Marron_site_sans_fond.svg";
 
 const PlumeLogo = ({ variant = "white", className = "", size = "md" }) => {
   const sizes = {

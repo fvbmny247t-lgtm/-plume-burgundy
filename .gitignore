@@ -7,3 +7,9 @@ backend/__pycache__/
 .emergent/
 test_reports/
 memory/
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials

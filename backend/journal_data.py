@@ -19,7 +19,7 @@ JOURNAL_ARTICLES = [
             "fr": "Une cuisine sincère et précise, une carte des vins entièrement bourguignonne et une salle qui prend le temps qu'il faut.",
             "en": "Sincere, precise cuisine, a 100% Burgundy wine list, and a dining room that takes the time it needs.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/6r50xqk9_PHOTO%201%20%28chef%29.jpg",
+        "cover": "/images/6r50xqk9_PHOTO_1__chef_.jpg",
         "date": "2026-02-22",
         "read_time": {"fr": "7 min", "en": "7 min"},
         "body": {
@@ -78,7 +78,7 @@ JOURNAL_ARTICLES = [
             "fr": "Marcher dans les climats, comprendre un sol, écouter un vigneron — pourquoi la Bourgogne se laisse approcher plus qu'elle ne se visite.",
             "en": "Walking the climats, understanding a soil, listening to a winegrower — why Burgundy is approached more than visited.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+        "cover": "/images/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
         "date": "2026-02-20",
         "read_time": {"fr": "9 min", "en": "9 min"},
         "body": {
@@ -143,7 +143,7 @@ JOURNAL_ARTICLES = [
             "fr": "Un séjour idéalement placé entre Paris, Lyon, le Jura et la Provence — l'art de transformer une étape en moment de séjour.",
             "en": "A stay ideally placed between Paris, Lyon, the Jura and Provence — the art of turning a stop into a true stay.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/3gvv3v16_herve-marmillot-DNjoCoORXxU-unsplash.jpg",
+        "cover": "/images/3gvv3v16_herve-marmillot-DNjoCoORXxU-unsplash.jpg",
         "date": "2026-02-19",
         "read_time": {"fr": "7 min", "en": "7 min"},
         "body": {
@@ -204,7 +204,7 @@ JOURNAL_ARTICLES = [
             "fr": "Itinéraires complets, étapes gourmandes, locations de vélos, conseils d'un local — notre guide pour parcourir le canal de Bourgogne à vélo depuis Plume Suites.",
             "en": "Full itineraries, gourmet stops, bike rentals and a local's advice — our guide to cycling the Burgundy canal from Plume Suites.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/pjvibq7i_alvin-frey-uxOR5cIlaCY-unsplash.jpg",
+        "cover": "/images/pjvibq7i_alvin-frey-uxOR5cIlaCY-unsplash.jpg",
         "date": "2026-02-12",
         "read_time": {"fr": "12 min", "en": "12 min"},
         "body": {
@@ -280,7 +280,7 @@ JOURNAL_ARTICLES = [
             "fr": "De Nantes à Budapest, l'EuroVelo 6 traverse la Bourgogne. Étapes, hébergements, conseils logistiques et bonnes adresses — un guide local pour cyclo-voyageurs.",
             "en": "From Nantes to Budapest, EuroVelo 6 crosses Burgundy. Stages, accommodation, logistics and local tips for long-distance cyclists.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+        "cover": "/images/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
         "date": "2026-02-05",
         "read_time": {"fr": "10 min", "en": "10 min"},
         "body": {
@@ -341,7 +341,7 @@ JOURNAL_ARTICLES = [
             "fr": "Trois jours, deux nuits, le canal de Bourgogne et la Côte de Nuits — notre programme complet pour un week-end vélo & slow living depuis Plume Suites.",
             "en": "Three days, two nights, the Burgundy canal and the Côte de Nuits — our complete cycling weekend programme from Plume Suites.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
+        "cover": "/images/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
         "date": "2026-01-28",
         "read_time": {"fr": "9 min", "en": "9 min"},
         "body": {
@@ -406,7 +406,7 @@ JOURNAL_ARTICLES = [
             "fr": "Marché des Halles, palais des Ducs, Climats UNESCO, restaurants étoilés et meilleures rues — notre guide complet d'un week-end à Dijon, écrit par un local.",
             "en": "Halles market, Palace of the Dukes, UNESCO Climats, starred restaurants and the best streets — our complete weekend guide to Dijon, written by a local.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/24zvpl1j_rayyan-pl7Bd0IN7b4-unsplash.jpg",
+        "cover": "/images/24zvpl1j_rayyan-pl7Bd0IN7b4-unsplash.jpg",
         "date": "2026-02-18",
         "read_time": {"fr": "14 min", "en": "14 min"},
         "body": {
@@ -489,7 +489,7 @@ JOURNAL_ARTICLES = [
             "fr": "Hospices, Vente des Vins, marchés, restaurants, dégustations — notre guide local pour 48 heures intenses dans la capitale du vin de Bourgogne.",
             "en": "Hospices, Wine Auction, markets, restaurants, tastings — our local guide to 48 intense hours in the wine capital of Burgundy.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/kzvstbfs_francesco-ungaro-6duN7DsOgcQ-unsplash.jpg",
+        "cover": "/images/kzvstbfs_francesco-ungaro-6duN7DsOgcQ-unsplash.jpg",
         "date": "2026-02-14",
         "read_time": {"fr": "13 min", "en": "13 min"},
         "body": {
@@ -576,7 +576,7 @@ JOURNAL_ARTICLES = [
             "fr": "Pourquoi les Climats de Bourgogne sont au patrimoine mondial UNESCO, comment les visiter, et quelles parcelles connaître — un guide complet pour amateurs et néophytes.",
             "en": "Why the Climats of Burgundy are on the UNESCO World Heritage list, how to visit them, which plots to know — a full guide for enthusiasts and newcomers.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/pjvibq7i_alvin-frey-uxOR5cIlaCY-unsplash.jpg",
+        "cover": "/images/pjvibq7i_alvin-frey-uxOR5cIlaCY-unsplash.jpg",
         "date": "2026-02-08",
         "read_time": {"fr": "11 min", "en": "11 min"},
         "body": {
@@ -651,7 +651,7 @@ JOURNAL_ARTICLES = [
             "fr": "De Marsannay à Meursault, un itinéraire de la Route des Grands Crus pensé pour ceux qui prennent leur temps — adresses, dégustations, paysages.",
             "en": "From Marsannay to Meursault, a Grands Crus Route itinerary for those who take their time — addresses, tastings, landscapes.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+        "cover": "/images/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
         "date": "2026-01-10",
         "read_time": {"fr": "10 min", "en": "10 min"},
         "body": {
@@ -718,7 +718,7 @@ JOURNAL_ARTICLES = [
             "fr": "Une promenade lente à l'aube, entre brume bourguignonne et reflets de pierre — pourquoi nous croyons aux matins lents.",
             "en": "A slow walk at dawn, between Burgundy mist and stone reflections — why we believe in slow mornings.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/oz1hfjes_zhu-yunxiao-2E8g1HimrNc-unsplash.jpg",
+        "cover": "/images/oz1hfjes_zhu-yunxiao-2E8g1HimrNc-unsplash.jpg",
         "date": "2026-02-04",
         "read_time": {"fr": "5 min", "en": "5 min"},
         "body": {
@@ -764,7 +764,7 @@ JOURNAL_ARTICLES = [
             "fr": "Pourquoi nous croyons aux séjours longs, aux lumières dorées et aux livres qui traînent.",
             "en": "Why we believe in long stays, golden light and books left open.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
+        "cover": "/images/ndqs3jyd_rinat-shakirov-gwfOeeb-QjY-unsplash.jpg",
         "date": "2025-12-18",
         "read_time": {"fr": "4 min", "en": "4 min"},
         "body": {
@@ -805,7 +805,7 @@ JOURNAL_ARTICLES = [
             "fr": "Costa del Sol, 2027 — un appartement signature avec piscine privée, à deux pas de la plage. La même intention, une autre lumière.",
             "en": "Costa del Sol, 2027 — a signature apartment with a private pool, steps from the beach. Same intention, a different light.",
         },
-        "cover": "https://customer-assets.emergentagent.com/job_plume-burgundy-edit/artifacts/7boq1875_simon-hermans-6tgHYmerKyM-unsplash.jpg",
+        "cover": "/images/7boq1875_simon-hermans-6tgHYmerKyM-unsplash.jpg",
         "date": "2025-11-30",
         "read_time": {"fr": "6 min", "en": "6 min"},
         "body": {
