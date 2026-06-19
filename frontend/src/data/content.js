@@ -47,9 +47,9 @@ export const IMAGES = {
 
   // Restaurant Ô P'tit Repère du Goût
   restaurantChef: "/images/6r50xqk9_PHOTO_1__chef_.jpg",
-  // Plats du restaurant — PHOTO_13 fournie ; PHOTO_12 en attente (placeholder plat2)
+  // Plats du restaurant — PHOTO_12 & PHOTO_13 fournies
   plat1: "/images/PHOTO_13.jpg",
-  plat2: "/media/sapcz2ed_mark-bloomfield-5PhGfLjTL0w-unsplash.jpg",
+  plat2: "/images/PHOTO_12.jpg",
 
   // Suite Douceur — photos fournies (2 lits séparés, chambre, salle de bain)
   douceurPhoto2: "/images/PHOTO_2.jpg",
@@ -282,7 +282,7 @@ export const SUITES = {
     stats: {
       rooms: 2,
       guests: 4,
-      size: "60 m²",
+      size: "40 m²",
       labels: {
         rooms: { fr: "Chambres", en: "Bedrooms" },
         guests: { fr: "Hôtes", en: "Guests" },
