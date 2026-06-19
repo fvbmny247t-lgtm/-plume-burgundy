@@ -60,8 +60,8 @@ const Reserver = () => {
           </h1>
           <p className="font-sans text-base md:text-lg max-w-xl mt-7 text-ink/80 leading-relaxed">
             {t({
-              fr: "Réservez directement auprès de Plume Suites — au meilleur tarif et avec l'attention qui nous est propre.",
-              en: "Book directly with Plume Suites — at the best available rate and with our particular attention.",
+              fr: "Réservez directement auprès de Plume Suites, au meilleur tarif et avec l'attention qui nous est propre.",
+              en: "Book directly with Plume Suites, at the best available rate and with our particular attention.",
             })}
           </p>
         </div>
@@ -112,12 +112,12 @@ const Reserver = () => {
       <ExperiencesSection embedded />
 
       {/* CLOSING editorial line */}
-      <section className="px-6 md:px-12 pb-28">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="px-6 md:px-12 pb-28 pt-10">
+        <div className="max-w-3xl mx-auto min-h-[40vh] flex items-center justify-center text-center">
           <p className="font-serif italic text-2xl md:text-3xl text-ink/85 leading-snug">
             {t({
-              fr: "« Une réservation, c'est déjà une attention — la nôtre commence ici. »",
-              en: "“A reservation is already a gesture of care — ours starts here.”",
+              fr: "« Une réservation, c'est déjà une attention, la nôtre commence ici. »",
+              en: "“A reservation is already a gesture of care, ours starts here.”",
             })}
           </p>
         </div>

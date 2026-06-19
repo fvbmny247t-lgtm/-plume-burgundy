@@ -44,6 +44,9 @@ export const IMAGES = {
   // Village de Fleurey-sur-Ouche — cartes postales anciennes (ancrage local)
   villageFleurey1: "/images/village_fleurey_1.jpg",
   villageFleurey2: "/images/village_fleurey_2.jpg",
+  villageVineyard: "/images/PHOTO_24.jpg",
+  artDeVivreHeader: "/images/PHOTO_23.jpg",
+  circuitPrenois: "/images/PHOTO_21.jpg",
 
   // Restaurant Ô P'tit Repère du Goût
   restaurantChef: "/images/6r50xqk9_PHOTO_1__chef_.jpg",
@@ -271,6 +274,7 @@ export const SUITES = {
       "/images/0ilaw2p9_PHOTO_11.jpg",
       "/images/re60qvsk_PHOTO_10.jpg",
       "/images/5klq14mm_PHOTO_9.jpg",
+      "/images/PHOTO_20.jpg",
     ],
   },
   douceur: {

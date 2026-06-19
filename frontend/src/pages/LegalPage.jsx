@@ -32,7 +32,7 @@ const PRIVACY_HTML = `
 <h2>Protection des mineurs</h2><p>Nous ne collectons pas intentionnellement d'informations sur des mineurs. Contact : hello@plumesuites.fr.</p>
 <h2>Modifications</h2><p>Cette Politique peut être modifiée à tout moment. Dernière mise à jour : 14/03/2025.</p>
 <h2>Nous contacter</h2><ul><li>Plume Suites — 8 rue des Vieilles Carrières, 21410 Fleurey-sur-Ouche, France</li><li>Téléphone : 06 95 48 87 60</li><li>E-mail : <a href="mailto:hello@plumesuites.fr">hello@plumesuites.fr</a></li></ul>
-<h2>Hébergement du site</h2><p>Smoobu GmbH — Pappelallee 78/79, 10437 Berlin, Allemagne — service@smoobu.com</p>
+<h2>Hébergement du site</h2><p>Ce site est hébergé par Emergent, plateforme de développement et d'hébergement d'applications web. Smoobu, notre channel manager, reste utilisé uniquement pour le moteur de réservation en ligne.</p>
 `;
 
 const LegalPage = ({ variant }) => {

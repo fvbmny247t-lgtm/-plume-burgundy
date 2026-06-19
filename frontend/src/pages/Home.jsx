@@ -209,7 +209,7 @@ const Home = () => {
                 <img src={IMAGES.villageFleurey2} alt="Fleurey-sur-Ouche — Le canal de Bourgogne, carte postale ancienne" className="w-full h-full object-cover" loading="lazy" />
               </div>
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={IMAGES.dijonPalais} alt="Bourgogne — pierre et patrimoine" className="w-full h-full object-cover" loading="lazy" />
+                <img src={IMAGES.villageVineyard} alt="Dijon, scène de soir dans le centre historique" className="w-full h-full object-cover" loading="lazy" />
               </div>
             </div>
             <p className="ps-overline text-ink/50 mt-4">

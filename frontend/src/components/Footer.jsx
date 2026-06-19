@@ -68,6 +68,12 @@ const Footer = () => {
         <p>{t(FOOTER.rights)}</p>
         <p className="font-serif italic normal-case tracking-normal text-cream/70">Bourgogne · Costa del Sol</p>
       </div>
+
+      <div className="max-w-7xl mx-auto mt-8 text-center" data-testid="footer-love">
+        <p className="text-[10px] tracking-[0.18em] text-cream/35 font-sans lowercase">
+          fait avec amour <span className="text-terracotta/70" aria-hidden="true">♡</span>
+        </p>
+      </div>
     </footer>
   );
 };
