@@ -11,15 +11,20 @@ import uuid
 from datetime import datetime, timezone
 
 from journal_data import JOURNAL_ARTICLES
-from email_service import send_contact_emails
+try:
+    from email_service import send_contact_emails
+except Exception as _e:  # never let email layer block server startup
+    logging.getLogger(__name__).error(f"email_service import failed: {_e}")
+    async def send_contact_emails(*args, **kwargs):
+        return {"error": "email_service_unavailable"}
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-mongo_url = os.environ['MONGO_URL']
+mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ.get('DB_NAME', 'test_database')]
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
