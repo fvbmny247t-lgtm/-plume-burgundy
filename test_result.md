@@ -134,16 +134,83 @@ backend:
         -agent: "testing"
         -comment: "✅ ALL TESTS PASSED. GET /api/journal returns exactly 12 articles as expected. New article 'ou-dormir-circuit-dijon-prenois' (Circuit de Dijon-Prenois) returns 200 with complete FR+EN body (13 paragraphs each). Deleted articles 'douceur-de-vivre' and 'matins-au-bord-du-canal' correctly return 404. Existing article 'o-ptit-repere-du-gout' still accessible and returns 200. All journal content changes implemented correctly."
 
+frontend:
+  - task: "SEO/404 behavior - Unknown/legacy URLs render 404 page with noindex"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/NotFound.jsx, frontend/src/components/Seo.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ PASSED (4/4). Tested legacy URLs: /es/, /de/, /new-page, /random-does-not-exist-123. All correctly render NotFound page (data-testid='notfound-page') with visible '404' text, robots meta 'noindex, nofollow', and NO canonical link. SEO implementation working correctly for unknown routes."
+  - task: "SEO/404 behavior - Valid routes are indexable with proper SEO"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Seo.jsx, frontend/src/pages/*.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ PASSED (8/8). Tested valid routes: /, /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver. All show real content (NOT 404 page), robots meta 'index, follow', and canonical link present. Titles and descriptions properly set for each page."
+  - task: "SEO/404 behavior - Legal pages are noindex"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/LegalPage.jsx"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ PASSED (2/2). Tested /cgv and /confidentialite. Both render legal content (data-testid='legal-cgv' / 'legal-privacy'), robots meta 'noindex, nofollow', and NO canonical link. Legal pages correctly excluded from search indexing."
+  - task: "SEO/404 behavior - Non-existent journal articles show 404"
+    implemented: false
+    working: false
+    file: "frontend/src/pages/JournalArticle.jsx"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        -working: false
+        -agent: "testing"
+        -comment: "❌ CRITICAL ISSUE. URL /journal/this-article-does-not-exist does NOT render the 404 page. Instead shows loading state with no robots meta and no canonical. Root cause: JournalArticle.jsx line 17 catches 404 API error and sets article=null, then lines 21-27 just show loading '…' text without proper 404 handling or SEO meta. MUST either: (1) Navigate to NotFound page, (2) Render NotFound component, or (3) Add Seo component with noindex when article is null after loading completes. This affects SEO - non-existent article URLs won't be properly de-indexed by search engines."
+  - task: "Home page - No console errors"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Home.jsx"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ PASSED. No console errors detected on home page load."
+  - task: "Emergent badge removal"
+    implemented: true
+    working: true
+    file: "frontend/public/index.html"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ PASSED. No element with id='emergent-badge' found on the page."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 1
-  run_ui: false
+  test_sequence: 2
+  run_ui: true
 
 test_plan:
   current_focus:
-    - "Contact form email sending via Resend (notification + branded auto-reply)"
-    - "Journal API after content edits (delete 2 articles, add Dijon-Prenois SEO article, edit several)"
+    - "SEO/404 behavior - Non-existent journal articles show 404"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -153,3 +220,5 @@ agent_communication:
     -message: "Please test the two backend tasks above. For /api/contact, sending a real email is fine (domain plumesuites.fr is verified in Resend). Use a test payload; you can use an @example.com customer email — Resend will accept it. Confirm 200 response + ContactMessage shape, and that the endpoint is resilient (no 500). For journal, confirm the count is 12, the new Prenois slug resolves with FR+EN body arrays, and the two deleted slugs are gone. Do NOT test frontend."
     -agent: "testing"
     -message: "✅ Backend testing complete - ALL TESTS PASSED (9/9). Created comprehensive test suite in /app/backend_test.py covering both tasks. Contact form: Tested FR/EN locales, validation (422 for missing fields/invalid email), endpoint resilience (always returns 200). Journal API: Verified 12 articles, new Dijon-Prenois article with FR+EN body, deleted articles return 404, existing articles still work. Both tasks are fully functional. No issues found. Ready for production."
+    -agent: "testing"
+    -message: "SEO/404 TESTING COMPLETE - 16/17 TESTS PASSED. ✅ Legacy URLs (/es/, /de/, /new-page, /random-does-not-exist-123) correctly show 404 page with noindex,nofollow and no canonical. ✅ All valid routes (home, sejours, journal, contact, reserver) show real content with index,follow and canonical. ✅ Legal pages (/cgv, /confidentialite) are noindex with no canonical. ✅ No console errors. ✅ No Emergent badge. ❌ CRITICAL: /journal/this-article-does-not-exist does NOT show 404 page - JournalArticle.jsx needs to handle non-existent articles by rendering NotFound component or adding noindex SEO meta when article is null."

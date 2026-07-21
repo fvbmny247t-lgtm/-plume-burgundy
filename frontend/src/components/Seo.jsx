@@ -27,8 +27,8 @@ const Seo = ({
       <html lang={lang} />
       <title>{finalTitle}</title>
       <meta name="description" content={finalDesc} />
-      <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
-      <link rel="canonical" href={url} />
+      <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+      {!noindex && <link rel="canonical" href={url} />}
 
       <meta property="og:type" content={type} />
       <meta property="og:title" content={finalTitle} />

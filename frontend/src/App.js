@@ -13,6 +13,7 @@ import JournalArticle from "./pages/JournalArticle";
 import Contact from "./pages/Contact";
 import Reserver from "./pages/Reserver";
 import LegalPage from "./pages/LegalPage";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/reserver" element={<Reserver />} />
               <Route path="/cgv" element={<LegalPage variant="cgv" />} />
               <Route path="/confidentialite" element={<LegalPage variant="privacy" />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
         </BrowserRouter>
