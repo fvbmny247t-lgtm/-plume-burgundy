@@ -169,16 +169,19 @@ frontend:
         -agent: "testing"
         -comment: "✅ PASSED (2/2). Tested /cgv and /confidentialite. Both render legal content (data-testid='legal-cgv' / 'legal-privacy'), robots meta 'noindex, nofollow', and NO canonical link. Legal pages correctly excluded from search indexing."
   - task: "SEO/404 behavior - Non-existent journal articles show 404"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "frontend/src/pages/JournalArticle.jsx"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         -working: false
         -agent: "testing"
         -comment: "❌ CRITICAL ISSUE. URL /journal/this-article-does-not-exist does NOT render the 404 page. Instead shows loading state with no robots meta and no canonical. Root cause: JournalArticle.jsx line 17 catches 404 API error and sets article=null, then lines 21-27 just show loading '…' text without proper 404 handling or SEO meta. MUST either: (1) Navigate to NotFound page, (2) Render NotFound component, or (3) Add Seo component with noindex when article is null after loading completes. This affects SEO - non-existent article URLs won't be properly de-indexed by search engines."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ ALL TESTS PASSED (13/13). Regression testing complete after fix. Tested /journal/this-article-does-not-exist and /journal/another-fake-slug-999 - both correctly render NotFound page (data-testid='notfound-page') with visible '404' text, robots meta 'noindex, nofollow', and NO canonical link. Valid article /journal/ou-dormir-circuit-dijon-prenois renders correctly (data-testid='journal-article-page') with title 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ?', robots meta 'index, follow', and canonical 'https://plumesuites.fr/journal/ou-dormir-circuit-dijon-prenois'. Journal list page /journal renders normally with 12 article cards. Fix implemented: JournalArticle.jsx now uses notFound state and renders <NotFound /> component when API returns 404. SEO behavior is now correct for all scenarios."
   - task: "Home page - No console errors"
     implemented: true
     working: true
@@ -205,12 +208,11 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "SEO/404 behavior - Non-existent journal articles show 404"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -222,3 +224,5 @@ agent_communication:
     -message: "✅ Backend testing complete - ALL TESTS PASSED (9/9). Created comprehensive test suite in /app/backend_test.py covering both tasks. Contact form: Tested FR/EN locales, validation (422 for missing fields/invalid email), endpoint resilience (always returns 200). Journal API: Verified 12 articles, new Dijon-Prenois article with FR+EN body, deleted articles return 404, existing articles still work. Both tasks are fully functional. No issues found. Ready for production."
     -agent: "testing"
     -message: "SEO/404 TESTING COMPLETE - 16/17 TESTS PASSED. ✅ Legacy URLs (/es/, /de/, /new-page, /random-does-not-exist-123) correctly show 404 page with noindex,nofollow and no canonical. ✅ All valid routes (home, sejours, journal, contact, reserver) show real content with index,follow and canonical. ✅ Legal pages (/cgv, /confidentialite) are noindex with no canonical. ✅ No console errors. ✅ No Emergent badge. ❌ CRITICAL: /journal/this-article-does-not-exist does NOT show 404 page - JournalArticle.jsx needs to handle non-existent articles by rendering NotFound component or adding noindex SEO meta when article is null."
+    -agent: "testing"
+    -message: "✅ REGRESSION TEST COMPLETE - ALL TESTS PASSED (13/13). Verified fix for non-existent journal article handling. Non-existent articles (/journal/this-article-does-not-exist, /journal/another-fake-slug-999) now correctly render 404 NotFound page with noindex,nofollow and no canonical. Valid article (/journal/ou-dormir-circuit-dijon-prenois) renders correctly with index,follow and canonical present. Journal list page works normally with 12 articles. The fix in JournalArticle.jsx (notFound state + <NotFound /> component) is working perfectly. All SEO requirements met. Ready for production."

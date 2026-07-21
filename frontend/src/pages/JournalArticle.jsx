@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import Seo from "../components/Seo";
+import NotFound from "./NotFound";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -11,12 +12,19 @@ const JournalArticle = () => {
   const { slug } = useParams();
   const { lang, t } = useLang();
   const [article, setArticle] = useState(null);
+  const [notFound, setNotFound] = useState(false);
   const [related, setRelated] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API}/journal/${slug}`).then((r) => setArticle(r.data)).catch(() => setArticle(null));
+    setNotFound(false);
+    setArticle(null);
+    axios.get(`${API}/journal/${slug}`).then((r) => setArticle(r.data)).catch(() => setNotFound(true));
     axios.get(`${API}/journal`).then((r) => setRelated(r.data.filter((a) => a.slug !== slug).slice(0, 2))).catch(() => {});
   }, [slug]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   if (!article) {
     return (
