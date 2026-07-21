@@ -11,6 +11,7 @@ const Seo = ({
   type = "website",
   jsonLd = null,
   noindex = false,
+  nofollow = true,
 }) => {
   const { lang } = useLang();
   const finalTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Suites de charme en Bourgogne, près de Dijon`;
@@ -27,7 +28,7 @@ const Seo = ({
       <html lang={lang} />
       <title>{finalTitle}</title>
       <meta name="description" content={finalDesc} />
-      <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+      <meta name="robots" content={noindex ? `noindex, ${nofollow ? "nofollow" : "follow"}` : "index, follow"} />
       {!noindex && <link rel="canonical" href={url} />}
 
       <meta property="og:type" content={type} />

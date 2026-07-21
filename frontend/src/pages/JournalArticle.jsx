@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -54,7 +55,15 @@ const JournalArticle = () => {
         }}
       />
       <article>
-        <section className="pt-36 md:pt-44 pb-12 px-6 md:px-12">
+        <Breadcrumbs
+          className="pt-32 md:pt-40"
+          items={[
+            { name: t({ fr: "Accueil", en: "Home" }), to: "/" },
+            { name: t({ fr: "Journal", en: "Journal" }), to: "/journal" },
+            { name: article.title[lang], to: `/journal/${article.slug}` },
+          ]}
+        />
+        <section className="pt-6 md:pt-8 pb-12 px-6 md:px-12">
           <div className="max-w-4xl mx-auto">
             <Link to="/journal" data-testid="article-back" className="inline-flex items-center gap-2 ps-overline text-ink/60 mb-10">
               <ArrowLeft size={14} /> {t({ fr: "Retour au journal", en: "Back to journal" })}

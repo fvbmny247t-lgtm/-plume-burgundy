@@ -4,6 +4,7 @@ import { useLang } from "../context/LanguageContext";
 import { SUITES, NAV } from "../data/content";
 import Seo from "../components/Seo";
 import SuiteGallery from "../components/SuiteGallery";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 const SuiteDetail = () => {
   const { slug } = useParams();
@@ -52,6 +53,15 @@ const SuiteDetail = () => {
           </h1>
         </div>
       </section>
+
+      <Breadcrumbs
+        className="pt-10 md:pt-12"
+        items={[
+          { name: t({ fr: "Accueil", en: "Home" }), to: "/" },
+          { name: t(NAV.sejours), to: "/sejours" },
+          { name: t(suite.name), to: `/sejours/${slug}` },
+        ]}
+      />
 
       {/* INTRO + KEY STATS */}
       <section className="py-24 md:py-32 px-6 md:px-12" data-testid={`suite-stats-${slug}`}>

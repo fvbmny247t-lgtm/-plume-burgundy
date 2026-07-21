@@ -168,6 +168,9 @@ frontend:
         -working: "NA"
         -agent: "testing"
         -comment: "✅ PASSED (2/2). Tested /cgv and /confidentialite. Both render legal content (data-testid='legal-cgv' / 'legal-privacy'), robots meta 'noindex, nofollow', and NO canonical link. Legal pages correctly excluded from search indexing."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ REGRESSION TEST PASSED (2/2). Legal pages now correctly use 'noindex, FOLLOW' (NOT nofollow). Tested /cgv and /confidentialite - both render legal content (data-testid='legal-cgv' / 'legal-privacy'), robots meta 'noindex, follow', and NO canonical link. This change allows search engines to follow links on legal pages while not indexing the pages themselves."
   - task: "SEO/404 behavior - Non-existent journal articles show 404"
     implemented: true
     working: true
@@ -204,11 +207,22 @@ frontend:
         -working: "NA"
         -agent: "testing"
         -comment: "✅ PASSED. No element with id='emergent-badge' found on the page."
+  - task: "Breadcrumbs with JSON-LD on suite and journal article pages"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Breadcrumbs.jsx, frontend/src/pages/SuiteDetail.jsx, frontend/src/pages/JournalArticle.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ REGRESSION TEST PASSED (2/2). Breadcrumbs are present and working correctly on both suite and journal article pages. Tested /sejours/envolee - breadcrumbs render with text 'Accueil/Séjours/Plume Suites — L'Envolée', JSON-LD BreadcrumbList present, suite page renders normally with intact layout (no overlap/broken hero). Tested /journal/ou-dormir-circuit-dijon-prenois - breadcrumbs render with text 'Accueil/Journal/Circuit de Dijon-Prenois : où séjourner près du circuit automobile ?', JSON-LD BreadcrumbList present, article page renders normally with intact layout. Screenshots confirm visual integrity."
 
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 3
+  test_sequence: 4
   run_ui: true
 
 test_plan:
@@ -226,3 +240,5 @@ agent_communication:
     -message: "SEO/404 TESTING COMPLETE - 16/17 TESTS PASSED. ✅ Legacy URLs (/es/, /de/, /new-page, /random-does-not-exist-123) correctly show 404 page with noindex,nofollow and no canonical. ✅ All valid routes (home, sejours, journal, contact, reserver) show real content with index,follow and canonical. ✅ Legal pages (/cgv, /confidentialite) are noindex with no canonical. ✅ No console errors. ✅ No Emergent badge. ❌ CRITICAL: /journal/this-article-does-not-exist does NOT show 404 page - JournalArticle.jsx needs to handle non-existent articles by rendering NotFound component or adding noindex SEO meta when article is null."
     -agent: "testing"
     -message: "✅ REGRESSION TEST COMPLETE - ALL TESTS PASSED (13/13). Verified fix for non-existent journal article handling. Non-existent articles (/journal/this-article-does-not-exist, /journal/another-fake-slug-999) now correctly render 404 NotFound page with noindex,nofollow and no canonical. Valid article (/journal/ou-dormir-circuit-dijon-prenois) renders correctly with index,follow and canonical present. Journal list page works normally with 12 articles. The fix in JournalArticle.jsx (notFound state + <NotFound /> component) is working perfectly. All SEO requirements met. Ready for production."
+    -agent: "testing"
+    -message: "✅ REGRESSION SEO TEST COMPLETE - ALL TESTS PASSED (13/13). Comprehensive regression testing completed for Plume Suites SPA. LEGAL PAGES: /cgv and /confidentialite now correctly use 'noindex, follow' (NOT nofollow), NO canonical, content renders properly. 404 PAGES: /es/, /new-page, /journal/fake-slug-xyz all render NotFound page with 'noindex, nofollow', NO canonical. BREADCRUMBS: Present on /sejours/envolee (Accueil/Séjours/suite name) and /journal/ou-dormir-circuit-dijon-prenois (Accueil/Journal/article title) with JSON-LD BreadcrumbList, layouts intact with no overlap/broken hero. VALID PAGES: /, /sejours, /journal all have 'index, follow' and canonical present. NO CONSOLE ERRORS on / and /sejours/envolee. NO EMERGENT BADGE. All SEO requirements met. Ready for production."
