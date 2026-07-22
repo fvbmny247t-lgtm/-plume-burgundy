@@ -135,6 +135,20 @@ backend:
         -comment: "✅ ALL TESTS PASSED. GET /api/journal returns exactly 12 articles as expected. New article 'ou-dormir-circuit-dijon-prenois' (Circuit de Dijon-Prenois) returns 200 with complete FR+EN body (13 paragraphs each). Deleted articles 'douceur-de-vivre' and 'matins-au-bord-du-canal' correctly return 404. Existing article 'o-ptit-repere-du-gout' still accessible and returns 200. All journal content changes implemented correctly."
 
 frontend:
+  - task: "SEO duplicate <title> and <meta name='description'> bug fix"
+    implemented: true
+    working: true
+    file: "frontend/public/index.html, frontend/src/components/Seo.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "main"
+        -comment: "Removed static <title> and <meta name='description'> from public/index.html. React-helmet-async (Seo component) is now the single source for all page titles and descriptions. This fixes the duplicate title/description bug where both static HTML and dynamic React helmet were creating multiple tags."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ ALL TESTS PASSED (9/9). Verified duplicate <title> and <meta name='description'> bug is FIXED. Tested all specified pages: / (home), /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/ (404). RESULTS: Every page has exactly ONE <title> element (document.querySelectorAll('title').length === 1). Every page has exactly ONE <meta name='description'> element (querySelectorAll('meta[name=description]').length === 1). All titles are non-empty and page-specific (e.g., 'Plume Suites — Suites de charme en Bourgogne, près de Dijon' for home vs 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites' for article). All 9 page titles are unique (no duplicates). Page content renders normally on all pages. No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async is the single source of truth for SEO meta tags."
   - task: "SEO/404 behavior - Unknown/legacy URLs render 404 page with noindex"
     implemented: true
     working: true
@@ -222,7 +236,7 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 4
+  test_sequence: 5
   run_ui: true
 
 test_plan:
@@ -242,3 +256,5 @@ agent_communication:
     -message: "✅ REGRESSION TEST COMPLETE - ALL TESTS PASSED (13/13). Verified fix for non-existent journal article handling. Non-existent articles (/journal/this-article-does-not-exist, /journal/another-fake-slug-999) now correctly render 404 NotFound page with noindex,nofollow and no canonical. Valid article (/journal/ou-dormir-circuit-dijon-prenois) renders correctly with index,follow and canonical present. Journal list page works normally with 12 articles. The fix in JournalArticle.jsx (notFound state + <NotFound /> component) is working perfectly. All SEO requirements met. Ready for production."
     -agent: "testing"
     -message: "✅ REGRESSION SEO TEST COMPLETE - ALL TESTS PASSED (13/13). Comprehensive regression testing completed for Plume Suites SPA. LEGAL PAGES: /cgv and /confidentialite now correctly use 'noindex, follow' (NOT nofollow), NO canonical, content renders properly. 404 PAGES: /es/, /new-page, /journal/fake-slug-xyz all render NotFound page with 'noindex, nofollow', NO canonical. BREADCRUMBS: Present on /sejours/envolee (Accueil/Séjours/suite name) and /journal/ou-dormir-circuit-dijon-prenois (Accueil/Journal/article title) with JSON-LD BreadcrumbList, layouts intact with no overlap/broken hero. VALID PAGES: /, /sejours, /journal all have 'index, follow' and canonical present. NO CONSOLE ERRORS on / and /sejours/envolee. NO EMERGENT BADGE. All SEO requirements met. Ready for production."
+    -agent: "testing"
+    -message: "✅ DUPLICATE <title> BUG FIX VERIFIED - ALL TESTS PASSED (9/9). Tested all specified pages for duplicate <title> and <meta name='description'> tags. RESULTS: Every page has exactly ONE <title> element. Every page has exactly ONE <meta name='description'> element. All titles are non-empty and page-specific (home: 'Plume Suites — Suites de charme en Bourgogne, près de Dijon', article: 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites', etc.). All 9 page titles are unique (no duplicates). Page content renders normally on all pages (/, /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/). No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async (Seo component) is the single source of truth for SEO meta tags. Static <title> and <meta name='description'> successfully removed from public/index.html. Ready for production."
