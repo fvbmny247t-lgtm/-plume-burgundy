@@ -239,7 +239,7 @@ const Home = () => {
         </div>
         {/* Secondary detail image bottom-right */}
         <div className="hidden md:block absolute bottom-10 right-10 w-64 h-40 overflow-hidden shadow-2xl border-2 border-cream/30">
-          <img src={IMAGES.costaBg} alt="" className="w-full h-full object-cover" />
+          <img src={IMAGES.costaBg} alt="Costa del Sol, Andalousie — future adresse Plume Suites" className="w-full h-full object-cover" />
         </div>
       </section>
 

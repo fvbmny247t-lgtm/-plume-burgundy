@@ -17,8 +17,8 @@ const Seo = ({
   const finalTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Suites de charme en Bourgogne, près de Dijon`;
   const finalDesc = description ||
     (lang === "fr"
-      ? "Plume Suites, deux suites de charme au cœur de la Bourgogne, à Fleurey-sur-Ouche près de Dijon. Au-dessus du restaurant Ô P'tit Repère du Goût, entre canal, vignobles et art de vivre bourguignon."
-      : "Plume Suites — character suites in the heart of Burgundy, in Fleurey-sur-Ouche near Dijon. Above the Ô P'tit Repère du Goût restaurant, between canal, vineyards and the Burgundy art of living.");
+      ? "Plume Suites : deux suites de charme en Bourgogne, à Fleurey-sur-Ouche près de Dijon, au-dessus du restaurant Ô P'tit Repère du Goût."
+      : "Plume Suites: two character suites in Burgundy, in Fleurey-sur-Ouche near Dijon, above the Ô P'tit Repère du Goût restaurant.");
   const rawImage = image || SITE.defaultImage;
   const finalImage = rawImage.startsWith("http") ? rawImage : `${SITE.url}${rawImage}`;
   const url = `${SITE.url}${path}`;

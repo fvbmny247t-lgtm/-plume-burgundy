@@ -96,7 +96,7 @@ const SuiteDetail = () => {
       <section className="relative h-[85vh] overflow-hidden" data-testid={`suite-overlay-${slug}`}>
         <img
           src={suite.gallery[1]}
-          alt=""
+          alt={t(suite.name)}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-terracotta/55" />

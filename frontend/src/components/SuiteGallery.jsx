@@ -111,7 +111,7 @@ const SuiteGallery = ({ images, slug }) => {
           >
             <img
               src={g}
-              alt=""
+              alt={`Suite ${slug} — Plume Suites, Bourgogne`}
               draggable={false}
               onClick={() => { if (!drag.current.moved) setLb(idx); }}
               className="w-full h-full object-cover cursor-zoom-in transition-transform duration-700 group-hover:scale-[1.03]"

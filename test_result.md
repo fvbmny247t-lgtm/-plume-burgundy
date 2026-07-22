@@ -149,6 +149,28 @@ frontend:
         -working: true
         -agent: "testing"
         -comment: "✅ ALL TESTS PASSED (9/9). Verified duplicate <title> and <meta name='description'> bug is FIXED. Tested all specified pages: / (home), /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/ (404). RESULTS: Every page has exactly ONE <title> element (document.querySelectorAll('title').length === 1). Every page has exactly ONE <meta name='description'> element (querySelectorAll('meta[name=description]').length === 1). All titles are non-empty and page-specific (e.g., 'Plume Suites — Suites de charme en Bourgogne, près de Dijon' for home vs 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites' for article). All 9 page titles are unique (no duplicates). Page content renders normally on all pages. No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async is the single source of truth for SEO meta tags."
+  - task: "SEO meta description length optimization (25-160 chars)"
+    implemented: false
+    working: false
+    file: "frontend/src/data/content.js, backend/journal_data.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: false
+        -agent: "testing"
+        -comment: "❌ CRITICAL SEO ISSUE - 3 pages have meta descriptions exceeding 160 character limit. FAILURES: (1) /sejours/envolee - 203 chars (exceeds by 43) - Description: 'Suite signature de la collection, L'Envolée déploie un espace généreux — chambre, salon et coin bureau — dans une atmosphère sereine, dessinée pour les séjours à deux où le temps prend une autre densité.' Source: frontend/src/data/content.js line 240 (SUITES.envolee.intro.fr). (2) /sejours/douceur - 193 chars (exceeds by 33) - Description: 'Une suite imaginée comme un refuge chaleureux au bord du canal de Bourgogne, pensée pour les séjours en famille ou entre amis — entre lumière douce, matières naturelles et atmosphère apaisante.' Source: frontend/src/data/content.js line 301 (SUITES.douceur.intro.fr). (3) /journal/ou-dormir-circuit-dijon-prenois - 162 chars (exceeds by 2) - Description: 'Vous venez pour un week-end automobile, un track day ou une course au circuit de Dijon-Prenois ? Voici où dormir tout près, dans le calme de la vallée de l'Ouche.' Source: backend/journal_data.py excerpt field. PASSES (6/9): / (133 chars), /sejours (124 chars), /journal (160 chars - exactly at limit), /contact (94 chars), /reserver (140 chars), /es/ (43 chars). All pages have exactly ONE title and ONE description element. All titles are unique. Search engines typically truncate descriptions over 160 chars, reducing SEO effectiveness."
+  - task: "SEO image alt attributes verification"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Home.jsx, frontend/src/pages/SuiteDetail.jsx, frontend/src/pages/ArtDeVivre.jsx, frontend/src/pages/Reserver.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: true
+        -agent: "testing"
+        -comment: "✅ EXCELLENT - ALL IMAGE ALT ATTRIBUTES VERIFIED (100% PASS). Comprehensive testing across all specified pages shows perfect implementation of descriptive alt text for all images. RESULTS: (1) Home page (/) - 21/21 images have non-empty descriptive alt text (100%). Includes Costa background, hero images, restaurant images, suite images. Sample alts: 'Plume Suites — L'Envolée', 'Ô P'tit Repère du Goût'. (2) /art-de-vivre - 7/7 images have non-empty alt text (100%). Header image alt: 'Vignobles de Bourgogne à l'automne, dans la vallée de l'Ouche'. Other alts include: 'Une table de saison', 'Le canal, lentement', 'Routes des vins', 'Matins lents'. (3) /reserver - 6/6 images have non-empty alt text (100%). Suite image alt: 'Suite Plume Suites au bord du canal de Bourgogne, Fleurey-sur-Ouche'. Other alts: 'Une arrivée qui vous attend', 'Saveurs de Bourgogne', 'Une occasion à célébrer'. (4) /sejours/envolee - 10/10 images have non-empty alt text (100%). Gallery and overlay images all have descriptive alts: 'Plume Suites — L'Envolée', 'Suite envolee — Plume Suites, Bourgogne'. (5) Home experiences section - Covered in home page test, all experience card images have alt text. All key above-the-fold and indexable images now have descriptive, SEO-friendly alt attributes. This significantly improves accessibility and image SEO."
   - task: "SEO/404 behavior - Unknown/legacy URLs render 404 page with noindex"
     implemented: true
     working: true
@@ -236,11 +258,12 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 5
+  test_sequence: 6
   run_ui: true
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "SEO meta description length optimization (25-160 chars)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -258,3 +281,5 @@ agent_communication:
     -message: "✅ REGRESSION SEO TEST COMPLETE - ALL TESTS PASSED (13/13). Comprehensive regression testing completed for Plume Suites SPA. LEGAL PAGES: /cgv and /confidentialite now correctly use 'noindex, follow' (NOT nofollow), NO canonical, content renders properly. 404 PAGES: /es/, /new-page, /journal/fake-slug-xyz all render NotFound page with 'noindex, nofollow', NO canonical. BREADCRUMBS: Present on /sejours/envolee (Accueil/Séjours/suite name) and /journal/ou-dormir-circuit-dijon-prenois (Accueil/Journal/article title) with JSON-LD BreadcrumbList, layouts intact with no overlap/broken hero. VALID PAGES: /, /sejours, /journal all have 'index, follow' and canonical present. NO CONSOLE ERRORS on / and /sejours/envolee. NO EMERGENT BADGE. All SEO requirements met. Ready for production."
     -agent: "testing"
     -message: "✅ DUPLICATE <title> BUG FIX VERIFIED - ALL TESTS PASSED (9/9). Tested all specified pages for duplicate <title> and <meta name='description'> tags. RESULTS: Every page has exactly ONE <title> element. Every page has exactly ONE <meta name='description'> element. All titles are non-empty and page-specific (home: 'Plume Suites — Suites de charme en Bourgogne, près de Dijon', article: 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites', etc.). All 9 page titles are unique (no duplicates). Page content renders normally on all pages (/, /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/). No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async (Seo component) is the single source of truth for SEO meta tags. Static <title> and <meta name='description'> successfully removed from public/index.html. Ready for production."
+    -agent: "testing"
+    -message: "✅ SEO VERIFICATION COMPLETE - IMAGE ALT ATTRIBUTES PERFECT, META DESCRIPTION LENGTH NEEDS FIX. Comprehensive SEO testing completed on Plume Suites SPA (https://suites-art-vivre.preview.emergentagent.com). PART A - TITLE & DESCRIPTION: ✅ All 9 pages have exactly ONE <title> and ONE <meta name='description'> element. ✅ All titles are unique and page-specific. ❌ 3 pages exceed 160 char limit: /sejours/envolee (203 chars, +43), /sejours/douceur (193 chars, +33), /journal/ou-dormir-circuit-dijon-prenois (162 chars, +2). PART B - IMAGE ALT: ✅ PERFECT - 100% of images have descriptive non-empty alt text across all tested pages (Home: 21/21, /art-de-vivre: 7/7, /reserver: 6/6, /sejours/envolee: 10/10). All key images including Costa background, hero images, suite images, gallery images, and experience cards have proper alt attributes. PART C - RENDER: ✅ All pages (/, /sejours/envolee, /art-de-vivre) render normally with zero console errors. RECOMMENDATION: Shorten 3 meta descriptions to ≤160 chars in frontend/src/data/content.js (SUITES.envolee.intro.fr line 240, SUITES.douceur.intro.fr line 301) and backend/journal_data.py (ou-dormir-circuit-dijon-prenois excerpt). Image alt implementation is exemplary and requires no changes."

@@ -25,7 +25,7 @@ const ExperienceModal = ({ exp, onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative h-56 md:h-auto md:min-h-full">
-          <img src={exp.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <img src={exp.image} alt={t(exp.title)} className="absolute inset-0 w-full h-full object-cover" />
         </div>
         <div className="p-7 md:p-10 relative">
           <button
@@ -100,7 +100,7 @@ const ExperiencesSection = ({ embedded = false }) => {
                 className="relative aspect-[4/3] overflow-hidden"
                 aria-label={t(exp.title)}
               >
-                <img src={exp.image} alt="" className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" loading="lazy" />
+                <img src={exp.image} alt={t(exp.title)} className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" loading="lazy" />
                 <span className="absolute top-4 right-4 bg-cream/95 text-ink font-serif italic text-lg px-3 py-1">
                   {exp.price} €
                 </span>

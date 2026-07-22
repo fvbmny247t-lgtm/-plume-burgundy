@@ -17,7 +17,7 @@ const ArtDeVivre = () => {
       />
       {/* HERO */}
       <section className="relative h-[80vh] overflow-hidden">
-        <img src={IMAGES.artDeVivreHeader} alt="" className="absolute inset-0 w-full h-full object-cover kenburns" />
+        <img src={IMAGES.artDeVivreHeader} alt="Vignobles de Bourgogne à l'automne, dans la vallée de l'Ouche" className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
           <p className="ps-overline opacity-90 mb-4">— {t(ARTDEVIVRE_PAGE.heroOverline)}</p>
