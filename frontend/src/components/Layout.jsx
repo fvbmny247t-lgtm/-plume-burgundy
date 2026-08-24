@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import PromoBanner from "./PromoBanner";
 
 const Layout = ({ children }) => {
   const { pathname } = useLocation();
@@ -11,6 +12,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="bg-cream text-ink min-h-screen">
+      <PromoBanner />
       <Navbar />
       <main>{children}</main>
       <Footer />

@@ -150,9 +150,9 @@ frontend:
         -agent: "testing"
         -comment: "✅ ALL TESTS PASSED (9/9). Verified duplicate <title> and <meta name='description'> bug is FIXED. Tested all specified pages: / (home), /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/ (404). RESULTS: Every page has exactly ONE <title> element (document.querySelectorAll('title').length === 1). Every page has exactly ONE <meta name='description'> element (querySelectorAll('meta[name=description]').length === 1). All titles are non-empty and page-specific (e.g., 'Plume Suites — Suites de charme en Bourgogne, près de Dijon' for home vs 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites' for article). All 9 page titles are unique (no duplicates). Page content renders normally on all pages. No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async is the single source of truth for SEO meta tags."
   - task: "SEO meta description length optimization (25-160 chars)"
-    implemented: false
-    working: false
-    file: "frontend/src/data/content.js, backend/journal_data.py"
+    implemented: true
+    working: true
+    file: "frontend/src/data/content.js, backend/journal_data.py, frontend/src/components/Seo.jsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
@@ -160,6 +160,9 @@ frontend:
         -working: false
         -agent: "testing"
         -comment: "❌ CRITICAL SEO ISSUE - 3 pages have meta descriptions exceeding 160 character limit. FAILURES: (1) /sejours/envolee - 203 chars (exceeds by 43) - Description: 'Suite signature de la collection, L'Envolée déploie un espace généreux — chambre, salon et coin bureau — dans une atmosphère sereine, dessinée pour les séjours à deux où le temps prend une autre densité.' Source: frontend/src/data/content.js line 240 (SUITES.envolee.intro.fr). (2) /sejours/douceur - 193 chars (exceeds by 33) - Description: 'Une suite imaginée comme un refuge chaleureux au bord du canal de Bourgogne, pensée pour les séjours en famille ou entre amis — entre lumière douce, matières naturelles et atmosphère apaisante.' Source: frontend/src/data/content.js line 301 (SUITES.douceur.intro.fr). (3) /journal/ou-dormir-circuit-dijon-prenois - 162 chars (exceeds by 2) - Description: 'Vous venez pour un week-end automobile, un track day ou une course au circuit de Dijon-Prenois ? Voici où dormir tout près, dans le calme de la vallée de l'Ouche.' Source: backend/journal_data.py excerpt field. PASSES (6/9): / (133 chars), /sejours (124 chars), /journal (160 chars - exactly at limit), /contact (94 chars), /reserver (140 chars), /es/ (43 chars). All pages have exactly ONE title and ONE description element. All titles are unique. Search engines typically truncate descriptions over 160 chars, reducing SEO effectiveness."
+        -working: true
+        -agent: "testing"
+        -comment: "✅ FIXED - Meta descriptions now within 160 char limit via automatic truncation. Tested 3 previously failing pages: (1) /sejours/envolee - NOW 152 chars (was 203) with '…' truncation. (2) /sejours/douceur - NOW 158 chars (was 193) with '…' truncation. (3) /journal/ou-dormir-circuit-dijon-prenois - NOW 157 chars (was 162) with '…' truncation. All pages have exactly ONE <title> and ONE <meta name='description'> tag. The Seo component is automatically truncating long descriptions to fit within 160 chars. RECOMMENDATION: While the truncation works, the source text in content.js (lines 240, 301) and journal_data.py should ideally be shortened to avoid the '…' ellipsis for better SEO presentation."
   - task: "SEO image alt attributes verification"
     implemented: true
     working: true
@@ -258,12 +261,12 @@ frontend:
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 6
+  test_sequence: 7
   run_ui: true
 
 test_plan:
   current_focus:
-    - "SEO meta description length optimization (25-160 chars)"
+    - "Promo banner - Fixed banner above navbar"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -283,3 +286,17 @@ agent_communication:
     -message: "✅ DUPLICATE <title> BUG FIX VERIFIED - ALL TESTS PASSED (9/9). Tested all specified pages for duplicate <title> and <meta name='description'> tags. RESULTS: Every page has exactly ONE <title> element. Every page has exactly ONE <meta name='description'> element. All titles are non-empty and page-specific (home: 'Plume Suites — Suites de charme en Bourgogne, près de Dijon', article: 'Circuit de Dijon-Prenois : où séjourner près du circuit automobile ? — Plume Suites', etc.). All 9 page titles are unique (no duplicates). Page content renders normally on all pages (/, /sejours, /sejours/envolee, /sejours/douceur, /journal, /journal/ou-dormir-circuit-dijon-prenois, /contact, /reserver, /es/). No console errors on / and /sejours/envolee. The fix is working perfectly - react-helmet-async (Seo component) is the single source of truth for SEO meta tags. Static <title> and <meta name='description'> successfully removed from public/index.html. Ready for production."
     -agent: "testing"
     -message: "✅ SEO VERIFICATION COMPLETE - IMAGE ALT ATTRIBUTES PERFECT, META DESCRIPTION LENGTH NEEDS FIX. Comprehensive SEO testing completed on Plume Suites SPA (https://suites-art-vivre.preview.emergentagent.com). PART A - TITLE & DESCRIPTION: ✅ All 9 pages have exactly ONE <title> and ONE <meta name='description'> element. ✅ All titles are unique and page-specific. ❌ 3 pages exceed 160 char limit: /sejours/envolee (203 chars, +43), /sejours/douceur (193 chars, +33), /journal/ou-dormir-circuit-dijon-prenois (162 chars, +2). PART B - IMAGE ALT: ✅ PERFECT - 100% of images have descriptive non-empty alt text across all tested pages (Home: 21/21, /art-de-vivre: 7/7, /reserver: 6/6, /sejours/envolee: 10/10). All key images including Costa background, hero images, suite images, gallery images, and experience cards have proper alt attributes. PART C - RENDER: ✅ All pages (/, /sejours/envolee, /art-de-vivre) render normally with zero console errors. RECOMMENDATION: Shorten 3 meta descriptions to ≤160 chars in frontend/src/data/content.js (SUITES.envolee.intro.fr line 240, SUITES.douceur.intro.fr line 301) and backend/journal_data.py (ou-dormir-circuit-dijon-prenois excerpt). Image alt implementation is exemplary and requires no changes."
+  - task: "Promo banner - Fixed banner above navbar"
+    implemented: true
+    working: true
+    file: "frontend/src/components/PromoBanner.jsx, frontend/src/components/Layout.jsx, frontend/src/components/Navbar.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        -working: "NA"
+        -agent: "testing"
+        -comment: "✅ ALL TESTS PASSED (18/18). PART 1 - PROMO BANNER: (1) Banner appears at top with correct FR text: 'Prenez le temps de découvrir la Bourgogne.' and '–10 % dès 6 nuits avec le code SEMAINE10 *'. SEMAINE10 is semi-bold (font-weight: 600). (2) Navbar positioned below banner with no overlap (banner bottom: 36px, navbar top: 36px). (3) Close button (×) with data-testid='promo-close' present. (4) Language switch works: EN shows 'Take the time to discover Burgundy.' and '10% off stays of 6 nights or more with code SEMAINE10 *'. (5) Asterisk link navigation works perfectly: FR → /cgv#offre-semaine10 with section 'Offre Long Séjour – SEMAINE10', EN → /cgv#long-stay-semaine10 with section 'Long Stay Offer – SEMAINE10'. (6) Close behavior: Clicking × hides banner (translates to y=-36, off-screen), navbar moves to top (y=0), localStorage key 'ps_promo_closed_until' set with 24h expiry. Banner stays hidden after reload. Clearing localStorage makes banner reappear. (7) Banner visible on /reserver page with no overlap. (8) Responsive: Mobile (390px) - banner height 44.875px, readable, navbar offset correctly. Tablet (768px) - banner height 36px, navbar offset correctly. All functionality working as specified. Screenshots captured: home-top-desktop.png, home-top-mobile.png, cgv-offer-section.png."
+
+    -agent: "testing"
+    -message: "✅ PROMO BANNER & META DESCRIPTION TESTING COMPLETE - ALL TESTS PASSED. Comprehensive testing of new promo banner feature and meta description regression. PROMO BANNER (18/18 PASS): Fixed banner appears at top above navbar with correct FR/EN text, SEMAINE10 semi-bold, asterisk link navigates to /cgv#offre-semaine10 (FR) and /cgv#long-stay-semaine10 (EN) with correct sections. Close behavior works perfectly: banner hides (translates off-screen to y=-36), navbar moves to top (y=0), localStorage persists for 24h, banner stays hidden after reload. Responsive: Mobile (390px) height 44.875px, Tablet (768px) height 36px, both with correct navbar offset. Banner visible on /reserver with no overlap. META DESCRIPTIONS (3/3 PASS): All 3 previously failing pages now within 160 char limit via automatic truncation: /sejours/envolee (152 chars), /sejours/douceur (158 chars), /journal/ou-dormir-circuit-dijon-prenois (157 chars). All pages have exactly ONE <title> and ONE <meta name='description'> tag. REGRESSIONS (3/3 PASS): /, /sejours/envolee, /cgv all render normally with zero console errors. RECOMMENDATION: While meta description truncation works, consider shortening source text in content.js (lines 240, 301) and journal_data.py to avoid '…' ellipsis for better SEO presentation. All features ready for production."

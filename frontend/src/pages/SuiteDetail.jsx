@@ -6,6 +6,14 @@ import Seo from "../components/Seo";
 import SuiteGallery from "../components/SuiteGallery";
 import Breadcrumbs from "../components/Breadcrumbs";
 
+// Trim a string to a clean meta-description length (<=160) at a word boundary.
+const metaClamp = (s, max = 158) => {
+  if (!s || s.length <= max) return s;
+  const cut = s.slice(0, max);
+  const sp = cut.lastIndexOf(" ");
+  return (sp > 0 ? cut.slice(0, sp) : cut).replace(/[\s—,;:.]+$/, "") + "…";
+};
+
 const SuiteDetail = () => {
   const { slug } = useParams();
   const { t, lang } = useLang();
@@ -36,7 +44,7 @@ const SuiteDetail = () => {
     <div className="bg-cream text-ink" data-testid={`suite-page-${slug}`}>
       <Seo
         title={suite.name[lang]}
-        description={suite.intro[lang]}
+        description={metaClamp(suite.intro[lang])}
         image={suite.cover}
         path={`/sejours/${slug}`}
         type="article"

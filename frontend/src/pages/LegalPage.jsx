@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Seo from "../components/Seo";
 import { useLang } from "../context/LanguageContext";
 
@@ -16,6 +17,7 @@ const CGV_FR = `
 <h2>7. Assurance</h2><p>Nous vous recommandons de souscrire une <strong>assurance voyage</strong> couvrant les risques de santé, d'annulation de réservation, de vol, de perte de bagages et autres incidents pouvant survenir avant ou pendant votre séjour. Plume Suites décline toute responsabilité en cas d'incident survenant lors de votre séjour, y compris les accidents ou les dommages à vos biens personnels.</p>
 <h2>8. Comportement et Utilisation des Espaces</h2><p>Les clients s'engagent à respecter les règles de bon voisinage et à ne pas troubler la tranquillité des autres résidents. Tout comportement inapproprié ou nuisible pourra entraîner l'annulation immédiate de la réservation sans remboursement.</p>
 <h2>9. Casse et Dommages</h2><p>Les clients sont responsables de toute casse ou tout dommage causé dans les chambres ou dans les parties communes de l'établissement. En cas de casse ou de dommage, le montant des réparations nécessaires sera facturé au client. Les clients doivent signaler immédiatement toute casse ou dommage. En cas de négligence ou de non-signalement, des frais supplémentaires pourront être appliqués pour couvrir les coûts de réparation ou de remplacement.</p>
+<h2 id="offre-semaine10">Offre Long Séjour – SEMAINE10</h2><p>L'offre permet de bénéficier d'une remise de 10 % sur le tarif hébergement pour tout séjour de 6 nuits consécutives minimum à Plume Suites Fleurey-sur-Ouche. Elle est valable pour les séjours dont la date de départ intervient au plus tard le 31 janvier 2027, sous réserve de disponibilité. L'offre est soumise à l'utilisation du code promotionnel SEMAINE10, n'est pas cumulable avec une autre offre promotionnelle et peut être modifiée ou retirée à tout moment pour les nouvelles réservations. Les réservations déjà confirmées restent acquises aux conditions en vigueur lors de leur confirmation.</p>
 `;
 
 const CGV_EN = `
@@ -32,6 +34,7 @@ const CGV_EN = `
 <h2>7. Insurance</h2><p>We recommend taking out <strong>travel insurance</strong> covering health risks, booking cancellation, theft, lost luggage and other incidents that may occur before or during your stay. Plume Suites declines any responsibility for incidents occurring during your stay, including accidents or damage to your personal belongings.</p>
 <h2>8. Conduct and Use of the Spaces</h2><p>Guests agree to respect good-neighbour rules and not to disturb the peace of other residents. Any inappropriate or harmful behaviour may result in the immediate cancellation of the booking without refund.</p>
 <h2>9. Breakage and Damage</h2><p>Guests are responsible for any breakage or damage caused in the suites or in the common areas. In the event of breakage or damage, the cost of the necessary repairs will be charged to the guest. Guests must report any breakage or damage immediately. In case of negligence or failure to report, additional fees may be applied to cover repair or replacement costs.</p>
+<h2 id="long-stay-semaine10">Long Stay Offer – SEMAINE10</h2><p>This offer provides a 10% discount on the accommodation rate for any stay of at least 6 consecutive nights at Plume Suites Fleurey-sur-Ouche. It is valid for stays with a departure date no later than 31 January 2027, subject to availability. The offer requires the use of the promotional code SEMAINE10, cannot be combined with any other promotional offer and may be modified or withdrawn at any time for new bookings. Bookings already confirmed remain subject to the conditions in force at the time of their confirmation.</p>
 `;
 
 const PRIVACY_FR = `
@@ -72,6 +75,7 @@ const PRIVACY_EN = `
 
 const LegalPage = ({ variant }) => {
   const { lang } = useLang();
+  const { hash } = useLocation();
   const isCgv = variant === "cgv";
   const title = isCgv
     ? { fr: "Conditions Générales de Vente", en: "Terms and Conditions of Sale" }
@@ -80,6 +84,17 @@ const LegalPage = ({ variant }) => {
     ? (lang === "en" ? CGV_EN : CGV_FR)
     : (lang === "en" ? PRIVACY_EN : PRIVACY_FR);
   const heading = lang === "en" ? title.en : title.fr;
+
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.slice(1);
+    const scroll = () => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    const timer = setTimeout(scroll, 120);
+    return () => clearTimeout(timer);
+  }, [hash, html]);
 
   return (
     <div className="bg-cream text-ink" data-testid={`legal-${variant}`}>
@@ -97,7 +112,7 @@ const LegalPage = ({ variant }) => {
         />
       </section>
       <style>{`
-        .prose-legal h2 { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.875rem; font-weight:400; margin-top:2.5rem; margin-bottom:0.75rem; color:#3b312b; }
+        .prose-legal h2 { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.875rem; font-weight:400; margin-top:2.5rem; margin-bottom:0.75rem; color:#3b312b; scroll-margin-top:130px; }
         .prose-legal h3 { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; margin-top:1.5rem; margin-bottom:0.5rem; color:#3b312b; }
         .prose-legal p, .prose-legal li { font-family:'Outfit',sans-serif; font-size:0.95rem; line-height:1.7; color:rgba(59,49,43,0.85); margin-bottom:0.75rem; }
         .prose-legal ul { padding-left:1.25rem; list-style:disc; margin-bottom:1rem; }

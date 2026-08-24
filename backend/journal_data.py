@@ -775,7 +775,7 @@ JOURNAL_ARTICLES = [
             "en": "Dijon-Prenois circuit: where to stay near the racetrack?",
         },
         "excerpt": {
-            "fr": "Vous venez pour un week-end automobile, un track day ou une course au circuit de Dijon-Prenois ? Voici où dormir tout près, dans le calme de la vallée de l'Ouche.",
+            "fr": "Vous venez pour un week-end automobile, un track day ou une course au circuit de Dijon-Prenois ? Voici où dormir près, dans le calme de la vallée de l'Ouche.",
             "en": "Coming for a track day, a race or a motoring weekend at the Dijon-Prenois circuit? Here's where to stay nearby, in the quiet of the Ouche valley.",
         },
         "cover": "/images/PHOTO_21.jpg",
