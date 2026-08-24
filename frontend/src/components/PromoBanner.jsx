@@ -1,16 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 
 const KEY = "ps_promo_closed_until";
+const ALLOWED = ["/", "/reserver"]; // banner shows only on Home & Reservation
 
 // Discreet, premium fixed promo banner above the navbar. Pushes the navbar down
 // via the CSS var --promo-h (read by Navbar) so there is no layout jump.
 const PromoBanner = () => {
   const { lang } = useLang();
+  const { pathname } = useLocation();
   const fr = lang !== "en";
+  const show = ALLOWED.includes(pathname);
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const ref = useRef(null);
 
   // Restore state (closed for 1 day)
@@ -22,16 +26,24 @@ const PromoBanner = () => {
     if (!until || Date.now() > until) setOpen(true);
   }, []);
 
-  // Keep --promo-h in sync with the actual rendered height (handles wrapping / language)
+  // Slight transparency once the page is scrolled
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Keep --promo-h in sync with the actual rendered height (handles wrapping / language / route)
   useEffect(() => {
     const apply = () => {
-      const h = open && ref.current ? ref.current.offsetHeight : 0;
+      const h = show && open && ref.current ? ref.current.offsetHeight : 0;
       document.documentElement.style.setProperty("--promo-h", `${h}px`);
     };
     apply();
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
-  }, [open, lang]);
+  }, [open, lang, show, pathname]);
 
   const close = () => {
     setOpen(false);
@@ -40,6 +52,8 @@ const PromoBanner = () => {
       localStorage.setItem(KEY, String(Date.now() + 24 * 60 * 60 * 1000));
     } catch (e) { /* ignore */ }
   };
+
+  if (!show) return null;
 
   const anchor = fr ? "/cgv#offre-semaine10" : "/cgv#long-stay-semaine10";
 
@@ -51,7 +65,12 @@ const PromoBanner = () => {
         open ? "translate-y-0" : "-translate-y-full pointer-events-none"
       }`}
     >
-      <div ref={ref} className="bg-terracotta text-cream">
+      <div
+        ref={ref}
+        className={`text-cream transition-colors duration-300 ${
+          scrolled ? "bg-terracotta/85 backdrop-blur-sm" : "bg-terracotta"
+        }`}
+      >
         <div className="relative max-w-7xl mx-auto px-9 md:px-12 py-2 md:py-2.5">
           <p className="text-center font-sans text-[10.5px] md:text-xs leading-snug tracking-[0.01em] pr-6">
             <span>
@@ -64,7 +83,7 @@ const PromoBanner = () => {
                 to={anchor}
                 data-testid="promo-asterisk"
                 aria-label={fr ? "Conditions de l'offre" : "Offer terms"}
-                className="underline underline-offset-2 decoration-cream/60 hover:decoration-cream"
+                className="no-underline hover:opacity-70 transition-opacity"
               >
                 *
               </Link>
