@@ -77,8 +77,7 @@ const PromoBanner = () => {
               {fr ? "Prenez le temps de découvrir la Bourgogne." : "Take the time to discover Burgundy."}
             </span>{" "}
             <span className="whitespace-normal">
-              {fr ? "–10 % dès 6 nuits avec le code " : "10% off stays of 6 nights or more with code "}
-              <span className="font-semibold">SEMAINE10</span>{" "}
+              {fr ? "–10 % dès 6 nuits jusqu'au 31 janvier 2027 " : "10% off stays of 6 nights or more until 31 January 2027 "}
               <Link
                 to={anchor}
                 data-testid="promo-asterisk"
