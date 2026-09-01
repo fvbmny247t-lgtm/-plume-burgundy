@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Expand } from "lucide-react";
 import Lightbox from "./Lightbox";
+import Img from "./Img";
 
 const SuiteGallery = ({ images, slug }) => {
   const ref = useRef(null);
@@ -109,13 +110,12 @@ const SuiteGallery = ({ images, slug }) => {
             data-slide
             className="snap-start shrink-0 w-[82vw] md:w-[46vw] lg:w-[33vw] aspect-[4/5] overflow-hidden relative group"
           >
-            <img
+            <Img
               src={g}
               alt={`Suite ${slug} — Plume Suites, Bourgogne`}
               draggable={false}
               onClick={() => { if (!drag.current.moved) setLb(idx); }}
               className="w-full h-full object-cover cursor-zoom-in transition-transform duration-700 group-hover:scale-[1.03]"
-              loading="lazy"
             />
             <span className="absolute bottom-4 right-4 w-9 h-9 bg-ink/45 text-cream flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
               <Expand size={15} />

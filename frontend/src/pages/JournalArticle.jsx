@@ -6,6 +6,7 @@ import { useLang } from "../context/LanguageContext";
 import Seo from "../components/Seo";
 import NotFound from "./NotFound";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Img from "../components/Img";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -83,7 +84,7 @@ const JournalArticle = () => {
 
         <section className="px-6 md:px-12 mb-16 md:mb-24">
           <div className="max-w-6xl mx-auto aspect-[16/9] overflow-hidden">
-            <img src={article.cover} alt={article.title[lang]} className="w-full h-full object-cover" />
+            <Img src={article.cover} alt={article.title[lang]} priority className="w-full h-full object-cover" />
           </div>
         </section>
 
@@ -147,7 +148,7 @@ const JournalArticle = () => {
               {related.map((a) => (
                 <Link key={a.slug} to={`/journal/${a.slug}`} className="group block" data-testid={`related-${a.slug}`}>
                   <div className="aspect-[16/10] overflow-hidden mb-6">
-                    <img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
+                    <Img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
                   </div>
                   <span className="ps-overline text-terracotta">{a.category[lang]}</span>
                   <h3 className="font-serif italic text-3xl md:text-4xl mt-3 leading-snug">{a.title[lang]}</h3>

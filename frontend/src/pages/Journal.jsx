@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { JOURNAL_PAGE } from "../data/content";
 import Seo from "../components/Seo";
+import Img from "../components/Img";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -54,7 +55,7 @@ const Journal = () => {
                   className={`group block ${span}`}
                 >
                   <div className={`${aspect} overflow-hidden mb-5`}>
-                    <img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
+                    <Img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
                   </div>
                   <div className="flex items-center gap-4 mb-2">
                     <span className="ps-overline text-terracotta">{a.category[lang]}</span>

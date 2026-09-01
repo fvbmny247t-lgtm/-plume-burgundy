@@ -2,6 +2,7 @@ import React from "react";
 import { useLang } from "../context/LanguageContext";
 import { ART_BLOCKS, ARTDEVIVRE_PAGE, IMAGES, HOME } from "../data/content";
 import Seo from "../components/Seo";
+import Img from "../components/Img";
 
 const ArtDeVivre = () => {
   const { t } = useLang();
@@ -17,7 +18,7 @@ const ArtDeVivre = () => {
       />
       {/* HERO */}
       <section className="relative h-[80vh] overflow-hidden">
-        <img src={IMAGES.artDeVivreHeader} alt="Vignobles de Bourgogne à l'automne, dans la vallée de l'Ouche" className="absolute inset-0 w-full h-full object-cover kenburns" />
+        <Img src={IMAGES.artDeVivreHeader} alt="Vignobles de Bourgogne à l'automne, dans la vallée de l'Ouche" priority className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
           <p className="ps-overline opacity-90 mb-4">— {t(ARTDEVIVRE_PAGE.heroOverline)}</p>
@@ -45,7 +46,7 @@ const ArtDeVivre = () => {
           className={`grid grid-cols-1 md:grid-cols-12 ${i % 2 === 1 ? "bg-ink text-cream" : "bg-cream text-ink"}`}
         >
           <div className={`md:col-span-7 h-[70vh] overflow-hidden ${i % 2 === 1 ? "md:order-2" : ""}`}>
-            <img src={b.image} alt={t(b.title)} className="w-full h-full object-cover" />
+            <Img src={b.image} alt={t(b.title)} className="w-full h-full object-cover" />
           </div>
           <div className={`md:col-span-5 px-6 md:px-16 py-16 md:py-0 flex flex-col justify-center ${i % 2 === 1 ? "md:order-1" : ""}`}>
             <p className="ps-overline opacity-70">{t(b.overline)}</p>

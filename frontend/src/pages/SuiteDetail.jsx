@@ -5,6 +5,7 @@ import { SUITES, NAV } from "../data/content";
 import Seo from "../components/Seo";
 import SuiteGallery from "../components/SuiteGallery";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Img from "../components/Img";
 
 // Trim a string to a clean meta-description length (<=160) at a word boundary.
 const metaClamp = (s, max = 158) => {
@@ -52,7 +53,7 @@ const SuiteDetail = () => {
       />
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">
-        <img src={suite.cover} alt={t(suite.name)} className="absolute inset-0 w-full h-full object-cover kenburns" />
+        <Img src={suite.cover} alt={t(suite.name)} priority className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 px-6 md:px-12 pt-32 pb-16 flex flex-col justify-end text-cream">
           <p className="ps-overline opacity-90 mb-4">— Plume Suites Collection</p>
@@ -102,7 +103,7 @@ const SuiteDetail = () => {
 
       {/* FULLSCREEN OVERLAY */}
       <section className="relative h-[85vh] overflow-hidden" data-testid={`suite-overlay-${slug}`}>
-        <img
+        <Img
           src={suite.gallery[1]}
           alt={t(suite.name)}
           className="absolute inset-0 w-full h-full object-cover"

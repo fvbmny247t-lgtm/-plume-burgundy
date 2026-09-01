@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { X, ArrowLeft, ArrowRight } from "lucide-react";
+import Img from "./Img";
 
 // Fullscreen image viewer with prev/next, keyboard + swipe support.
 const Lightbox = ({ images = [], index = 0, onClose, onChange }) => {
@@ -76,10 +77,11 @@ const Lightbox = ({ images = [], index = 0, onClose, onChange }) => {
         </>
       )}
 
-      <img
+      <Img
         key={index}
         src={images[index]}
         alt=""
+        priority
         draggable={false}
         onClick={(e) => e.stopPropagation()}
         className="max-h-[88vh] max-w-[92vw] object-contain fade-in shadow-2xl"

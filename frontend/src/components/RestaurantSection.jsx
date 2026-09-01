@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { RESTAURANT } from "../data/content";
 import Lightbox from "./Lightbox";
+import Img from "./Img";
 
 const RestaurantSection = () => {
   const { t } = useLang();
@@ -51,7 +52,7 @@ const RestaurantSection = () => {
             data-testid="restaurant-img-0"
             aria-label="Agrandir"
           >
-            <img src={imgs[0]} alt={RESTAURANT.name} className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" loading="lazy" />
+            <Img src={imgs[0]} alt={RESTAURANT.name} className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
           </button>
           {imgs.slice(1, 3).map((src, i) => (
             <button
@@ -61,7 +62,7 @@ const RestaurantSection = () => {
               data-testid={`restaurant-img-${i + 1}`}
               aria-label="Agrandir"
             >
-              <img src={src} alt={RESTAURANT.name} className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" loading="lazy" />
+              <Img src={src} alt={RESTAURANT.name} className="w-full h-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
             </button>
           ))}
         </div>

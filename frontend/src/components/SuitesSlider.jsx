@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ArrowLeft, ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { SUITES, HOME } from "../data/content";
+import Img from "./Img";
 
 const SuitesSlider = () => {
   const { t } = useLang();
@@ -33,7 +34,7 @@ const SuitesSlider = () => {
 
         {/* Big visual — DESKTOP: overlay content; MOBILE: just image + title */}
         <div className="relative h-[60vh] md:h-[85vh] overflow-hidden">
-          <img
+          <Img
             key={suite.slug + "-img"}
             src={suite.cover}
             alt={t(suite.name)}

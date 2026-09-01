@@ -7,6 +7,7 @@ import Seo from "../components/Seo";
 import SuitesSlider from "../components/SuitesSlider";
 import RestaurantSection from "../components/RestaurantSection";
 import ExperiencesSection from "../components/ExperiencesSection";
+import Img from "../components/Img";
 
 const Home = () => {
   const { t, lang } = useLang();
@@ -45,11 +46,12 @@ const Home = () => {
         <div className="absolute inset-0">
           <video
             src={IMAGES.heroVideo}
+            poster={IMAGES.heroPoster}
             autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             className="w-full h-full object-cover"
             data-testid="hero-video"
           />
@@ -151,7 +153,7 @@ const Home = () => {
                   "md:col-span-7 h-[50vh]"
                 }`}
               >
-                <img
+                <Img
                   src={b.image}
                   alt={t(b.title)}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"
@@ -203,13 +205,13 @@ const Home = () => {
           <div className="md:col-span-7">
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div className="col-span-2 aspect-[16/10] overflow-hidden">
-                <img src={IMAGES.villageFleurey1} alt="Fleurey-sur-Ouche — La Grande Rue, carte postale ancienne" className="w-full h-full object-cover" loading="lazy" />
+                <Img src={IMAGES.villageFleurey1} alt="Fleurey-sur-Ouche — La Grande Rue, carte postale ancienne" className="w-full h-full object-cover" />
               </div>
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={IMAGES.villageFleurey2} alt="Fleurey-sur-Ouche — Le canal de Bourgogne, carte postale ancienne" className="w-full h-full object-cover" loading="lazy" />
+                <Img src={IMAGES.villageFleurey2} alt="Fleurey-sur-Ouche — Le canal de Bourgogne, carte postale ancienne" className="w-full h-full object-cover" />
               </div>
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={IMAGES.villageVineyard} alt="Dijon, scène de soir dans le centre historique" className="w-full h-full object-cover" loading="lazy" />
+                <Img src={IMAGES.villageVineyard} alt="Dijon, scène de soir dans le centre historique" className="w-full h-full object-cover" />
               </div>
             </div>
             <p className="ps-overline text-ink/50 mt-4">
@@ -221,7 +223,7 @@ const Home = () => {
 
       {/* COSTA DEL SOL */}
       <section className="relative h-[85vh] overflow-hidden" data-testid="costa-section">
-        <img src={IMAGES.costa} alt="Costa del Sol 2027" className="absolute inset-0 w-full h-full object-cover" />
+        <Img src={IMAGES.costa} alt="Costa del Sol 2027" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/65 via-ink/35 to-ink/20" />
         <div className="relative h-full w-full flex flex-col justify-center px-6 md:px-12 text-cream">
           <div className="max-w-3xl">
@@ -239,7 +241,7 @@ const Home = () => {
         </div>
         {/* Secondary detail image bottom-right */}
         <div className="hidden md:block absolute bottom-10 right-10 w-64 h-40 overflow-hidden shadow-2xl border-2 border-cream/30">
-          <img src={IMAGES.costaBg} alt="Costa del Sol, Andalousie — future adresse Plume Suites" className="w-full h-full object-cover" />
+          <Img src={IMAGES.costaBg} alt="Costa del Sol, Andalousie — future adresse Plume Suites" className="w-full h-full object-cover" />
         </div>
       </section>
 
@@ -288,7 +290,7 @@ const JournalPreview = () => {
           className="group block"
         >
           <div className="aspect-[4/5] overflow-hidden mb-5">
-            <img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
+            <Img src={a.cover} alt={a.title[lang]} className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105" />
           </div>
           <p className="ps-overline text-ink/60">{a.category[lang]}</p>
           <h3 className="font-serif italic text-2xl md:text-3xl mt-2 leading-snug">{a.title[lang]}</h3>

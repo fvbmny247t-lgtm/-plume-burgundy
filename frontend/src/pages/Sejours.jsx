@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import { SEJOURS_PAGE, SUITES } from "../data/content";
 import Seo from "../components/Seo";
+import Img from "../components/Img";
 
 const Sejours = () => {
   const { t } = useLang();
@@ -39,7 +40,7 @@ const Sejours = () => {
           >
             <div className={`grid grid-cols-1 md:grid-cols-12 gap-0 ${i % 2 === 1 ? "md:[direction:rtl]" : ""}`}>
               <div className="md:col-span-7 h-[60vh] md:h-[85vh] overflow-hidden md:[direction:ltr]">
-                <img
+                <Img
                   src={s.cover}
                   alt={t(s.name)}
                   className="w-full h-full object-cover transition-transform duration-[1500ms] group-hover:scale-105"

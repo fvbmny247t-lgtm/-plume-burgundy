@@ -4,7 +4,7 @@
 Boutique hotel website for Plume Suites (Bourgogne, France + Costa del Sol 2027). Editorial magazine style inspired by Sabor Del Mar webflow template. Bilingual FR/EN, mobile responsive. Two suites: "Plume Suites — Douceur" and "Plume Suites — L'Envolée". Smoobu booking link + contact form.
 
 ## Architecture
-- Frontend: React 19 + Tailwind CSS, React Router 7, Google Fonts (Cormorant Garamond + Outfit)
+- Frontend: React 19 + Tailwind CSS, React Router 7, self-hosted fonts (Cormorant Garamond + Outfit, font-display:swap)
 - Backend: FastAPI + MongoDB (Motor), endpoints under /api
 - i18n: React Context (FR/EN), persisted in localStorage
 - Colors: #f5f1ea (cream), #3b312b (ink), #b9785d (terracotta)
@@ -35,6 +35,14 @@ Boutique hotel website for Plume Suites (Bourgogne, France + Costa del Sol 2027)
 - Menu mobile: hamburger animé → croix, ouverture/fermeture fluides
 - FR/EN complet sur toutes les nouvelles sections + parité mobile vérifiée
 - EN ATTENTE: PHOTO_3, PHOTO_4 (Douceur), PHOTO_12, PHOTO_13 (plats resto) — placeholders temporaires (keys content.js: douceurPhoto3/4, plat1/2)
+
+## Update (Juin 2026) — Performance / PageSpeed / Google Search Console
+Objectif: scores Lighthouse verts SANS modifier le design. Testé frontend 100% (iteration_5.json), toutes les pages + interactions OK, aucune régression visuelle.
+- Vidéo hero: compressée 72 Mo → 2,8 Mo (H.264 1280p, faststart, sans audio) + `preload="metadata"` + poster
+- Images: toutes les photos locales converties en WebP + JPEG réoptimisés (max 1920px, qualité 82). Scripts: /app/scripts/optimize_images.py
+- Nouveau composant responsive `src/components/Img.jsx`: `<picture display:contents><source webp/><img jpeg fallback/></picture>`, lazy-loading par défaut, `priority` (eager + fetchPriority=high) sur les images LCP (héros suites/art-de-vivre/lightbox). Remplace tous les `<img>` du site.
+- Polices auto-hébergées: /public/fonts/*.woff2 (latin + latin-ext) + /public/fonts.css (font-display:swap), lien + preload dans index.html. Suppression des requêtes Google Fonts bloquantes + police Inter inutilisée. Script: /app/scripts/localize_fonts.py
+- ABANDONNÉ: code-splitting React.lazy (cassait toutes les routes non-home → écran blanc Suspense). App.js repassé en imports directs.
 
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)

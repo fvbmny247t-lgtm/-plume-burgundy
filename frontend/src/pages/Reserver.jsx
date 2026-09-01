@@ -5,6 +5,7 @@ import BookingIframe from "../components/BookingIframe";
 import ExperiencesSection from "../components/ExperiencesSection";
 import { useLang } from "../context/LanguageContext";
 import { IMAGES } from "../data/content";
+import Img from "../components/Img";
 
 const Reserver = () => {
   const { t } = useLang();
@@ -51,7 +52,7 @@ const Reserver = () => {
       <section className="relative pt-32 md:pt-40 pb-12 md:pb-16 px-6 md:px-12 overflow-hidden">
         {/* Subtle decorative image strip */}
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-[0.08] pointer-events-none">
-          <img src={IMAGES.envolee} alt="Suite Plume Suites au bord du canal de Bourgogne, Fleurey-sur-Ouche" className="w-full h-full object-cover" />
+          <Img src={IMAGES.envolee} alt="Suite Plume Suites au bord du canal de Bourgogne, Fleurey-sur-Ouche" className="w-full h-full object-cover" />
         </div>
         <div className="relative max-w-7xl mx-auto">
           <p className="ps-overline text-terracotta">— {t({ fr: "Réservation directe", en: "Direct booking" })}</p>
