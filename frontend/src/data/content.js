@@ -2,7 +2,7 @@
 export const IMAGES = {
   // Hero video + poster fallback
   heroVideo: "/media/pw8xl9qs_12583104_1920_1080_30fps.mp4",
-  heroPoster: "/media/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+  heroPoster: "/media/hero_poster.jpg",
 
   // Plume Suites — Douceur (chaleureux, cocon, 2 lits, suspensions cuivre, pierre)
   douceur: "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG",
@@ -79,7 +79,7 @@ export const SMOOBU = {
 export const SITE = {
   name: "Plume Suites",
   url: "https://plumesuites.fr",
-  defaultImage: "/media/gawj27vm_sven-wilhelm-2cRXSWyMHA8-unsplash.jpg",
+  defaultImage: "/og-image.jpg",
 };
 
 export const NAV = {

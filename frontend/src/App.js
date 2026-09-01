@@ -14,27 +14,41 @@ import Contact from "./pages/Contact";
 import Reserver from "./pages/Reserver";
 import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/AdminLogin";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
         <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/sejours" element={<Sejours />} />
-              <Route path="/sejours/:slug" element={<SuiteDetail />} />
-              <Route path="/art-de-vivre" element={<ArtDeVivre />} />
-              <Route path="/journal" element={<Journal />} />
-              <Route path="/journal/:slug" element={<JournalArticle />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/reserver" element={<Reserver />} />
-              <Route path="/cgv" element={<LegalPage variant="cgv" />} />
-              <Route path="/confidentialite" element={<LegalPage variant="privacy" />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+          <Routes>
+            {/* Admin — hors du Layout marketing */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<Admin />} />
+
+            {/* Site public */}
+            <Route
+              path="/*"
+              element={
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/sejours" element={<Sejours />} />
+                    <Route path="/sejours/:slug" element={<SuiteDetail />} />
+                    <Route path="/art-de-vivre" element={<ArtDeVivre />} />
+                    <Route path="/journal" element={<Journal />} />
+                    <Route path="/journal/:slug" element={<JournalArticle />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/reserver" element={<Reserver />} />
+                    <Route path="/cgv" element={<LegalPage variant="cgv" />} />
+                    <Route path="/confidentialite" element={<LegalPage variant="privacy" />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Layout>
+              }
+            />
+          </Routes>
         </BrowserRouter>
       </LanguageProvider>
     </HelmetProvider>

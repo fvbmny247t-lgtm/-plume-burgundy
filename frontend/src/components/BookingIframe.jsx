@@ -46,7 +46,7 @@ const BookingIframe = () => {
     <div
       id="apartmentIframeAll"
       data-testid="smoobu-booking-iframe"
-      className="bg-cream min-h-[600px]"
+      className="bg-white min-h-[600px]"
     />
   );
 };

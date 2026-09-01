@@ -44,11 +44,17 @@ Objectif: scores Lighthouse verts SANS modifier le design. Testé frontend 100% 
 - Polices auto-hébergées: /public/fonts/*.woff2 (latin + latin-ext) + /public/fonts.css (font-display:swap), lien + preload dans index.html. Suppression des requêtes Google Fonts bloquantes + police Inter inutilisée. Script: /app/scripts/localize_fonts.py
 - ABANDONNÉ: code-splitting React.lazy (cassait toutes les routes non-home → écran blanc Suspense). App.js repassé en imports directs.
 
+## Update (Juin 2026) — Partage social + Espace admin
+- Image de partage (Open Graph): /public/og-image.jpg (1200x630) = vrai logo Plume Suites (détouré, PLUME crème + SUITES terracotta) sur photo vignoble Bourgogne. Balises OG/Twitter écrites EN DUR dans public/index.html (lues par les robots WhatsApp/Instagram/Facebook qui n'exécutent pas le JS) + SITE.defaultImage → og-image.jpg. Scripts: /app/scripts/make_og.py
+- Hero vidéo: le poster = PREMIÈRE IMAGE de la vidéo elle-même (/media/hero_poster.jpg extraite via ffmpeg) → image figée puis lecture au chargement, transition invisible (remplace l'ancienne photo Unsplash qui ne correspondait pas).
+- Widget Smoobu (/reserver): conteneur passé de bg-cream à bg-white → plus de délimitation visible quand le calendrier n'est pas ouvert (BookingIframe.jsx).
+- ESPACE ADMIN PRIVÉ (JWT, compte unique): /admin/login + /admin (hors du Layout marketing). Backend server.py: bcrypt + PyJWT HS256 (12h), seed_admin idempotent (ADMIN_EMAIL/ADMIN_PASSWORD), routes POST /api/admin/login, GET /api/admin/me, GET /api/admin/messages (protégé), GET /api/contact désormais protégé. Frontend: token Bearer en localStorage. Collection Mongo `admins`. Identifiants: /app/memory/test_credentials.md. Testé 100% (iteration_6.json).
+- Logo: TOUJOURS privilégier le vrai logo Plume Suites (SVG existants via composant PlumeLogo + PNG détouré pour l'OG). Pages admin mises à jour pour utiliser PlumeLogo.
+- Smoobu allemand: l'URL passe bien /fr/ ; l'affichage allemand vient du réglage de langue du COMPTE Smoobu / locale navigateur (à régler côté compte Smoobu), pas du code.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)
 - Optionally connect Resend for contact email notifications
-- Admin panel for journal articles + view contact submissions (currently public GET — lock down)
 - Real Plume Suites SVG logo file (currently rendered as styled wordmark)
-- Open Graph / SEO meta tags + sitemap
 - Costa del Sol page when address opens (2027)

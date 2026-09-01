@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -8,7 +8,9 @@ from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 import uuid
-from datetime import datetime, timezone
+import bcrypt
+import jwt as pyjwt
+from datetime import datetime, timezone, timedelta
 
 from journal_data import JOURNAL_ARTICLES
 try:
@@ -28,6 +30,58 @@ db = client[os.environ.get('DB_NAME', 'test_database')]
 
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
+
+logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Auth (single admin, JWT Bearer)
+# ---------------------------------------------------------------------------
+JWT_SECRET = os.environ.get("JWT_SECRET", "dev-secret-change-me")
+JWT_ALG = "HS256"
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
+
+
+def hash_password(pw: str) -> str:
+    return bcrypt.hashpw(pw.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(pw: str, hashed: str) -> bool:
+    try:
+        return bcrypt.checkpw(pw.encode("utf-8"), hashed.encode("utf-8"))
+    except Exception:
+        return False
+
+
+def create_access_token(email: str) -> str:
+    payload = {
+        "sub": email,
+        "role": "admin",
+        "type": "access",
+        "exp": datetime.now(timezone.utc) + timedelta(hours=12),
+    }
+    return pyjwt.encode(payload, JWT_SECRET, algorithm=JWT_ALG)
+
+
+async def get_current_admin(authorization: Optional[str] = Header(None)):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Non authentifié")
+    token = authorization[7:]
+    try:
+        payload = pyjwt.decode(token, JWT_SECRET, algorithms=[JWT_ALG])
+    except pyjwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Session expirée, reconnectez-vous")
+    except pyjwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Token invalide")
+    admin = await db.admins.find_one({"email": payload.get("sub")})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Compte introuvable")
+    return {"email": admin["email"]}
+
+
+class AdminLogin(BaseModel):
+    email: EmailStr
+    password: str
 
 
 class ContactMessageCreate(BaseModel):
@@ -51,6 +105,27 @@ class ContactMessage(BaseModel):
 @api_router.get("/")
 async def root():
     return {"message": "Plume Suites API"}
+
+
+# ---- Admin auth routes ----
+@api_router.post("/admin/login")
+async def admin_login(payload: AdminLogin):
+    admin = await db.admins.find_one({"email": payload.email.lower()})
+    if not admin or not verify_password(payload.password, admin["password_hash"]):
+        raise HTTPException(status_code=401, detail="Identifiants incorrects")
+    token = create_access_token(admin["email"])
+    return {"token": token, "email": admin["email"]}
+
+
+@api_router.get("/admin/me")
+async def admin_me(admin: dict = Depends(get_current_admin)):
+    return admin
+
+
+@api_router.get("/admin/messages")
+async def admin_messages(admin: dict = Depends(get_current_admin)):
+    items = await db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    return items
 
 
 @api_router.post("/contact", response_model=ContactMessage)
@@ -77,7 +152,7 @@ async def create_contact_message(payload: ContactMessageCreate):
 
 
 @api_router.get("/contact", response_model=List[ContactMessage])
-async def list_contact_messages():
+async def list_contact_messages(admin: dict = Depends(get_current_admin)):
     items = await db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     for it in items:
         if isinstance(it.get('created_at'), str):
@@ -114,7 +189,24 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logger = logging.getLogger(__name__)
+
+
+@app.on_event("startup")
+async def seed_admin():
+    email = ADMIN_EMAIL.lower()
+    existing = await db.admins.find_one({"email": email})
+    if existing is None:
+        await db.admins.insert_one({
+            "email": email,
+            "password_hash": hash_password(ADMIN_PASSWORD),
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+        logger.info("Seeded admin account: %s", email)
+    elif not verify_password(ADMIN_PASSWORD, existing["password_hash"]):
+        await db.admins.update_one(
+            {"email": email}, {"$set": {"password_hash": hash_password(ADMIN_PASSWORD)}}
+        )
+        logger.info("Updated admin password for: %s", email)
 
 
 @app.on_event("shutdown")
