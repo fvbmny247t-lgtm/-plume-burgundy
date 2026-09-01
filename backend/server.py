@@ -84,6 +84,10 @@ class AdminLogin(BaseModel):
     password: str
 
 
+class MessageReadUpdate(BaseModel):
+    read: bool
+
+
 class ContactMessageCreate(BaseModel):
     name: str
     email: EmailStr
@@ -125,7 +129,23 @@ async def admin_me(admin: dict = Depends(get_current_admin)):
 @api_router.get("/admin/messages")
 async def admin_messages(admin: dict = Depends(get_current_admin)):
     items = await db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    for it in items:
+        it.setdefault("read", False)
     return items
+
+
+@api_router.patch("/admin/messages/{message_id}")
+async def update_message_read(
+    message_id: str,
+    payload: MessageReadUpdate,
+    admin: dict = Depends(get_current_admin),
+):
+    res = await db.contact_messages.update_one(
+        {"id": message_id}, {"$set": {"read": payload.read}}
+    )
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Message introuvable")
+    return {"id": message_id, "read": payload.read}
 
 
 @api_router.post("/contact", response_model=ContactMessage)
