@@ -21,24 +21,43 @@ const SuiteDetail = () => {
   const suite = SUITES[slug];
   if (!suite) return <Navigate to="/sejours" replace />;
 
-  const lodgingLd = {
+  const origin = "https://plumesuites.fr";
+  const sizeVal = parseInt(String(suite.stats.size), 10) || undefined;
+  const roomLd = {
     "@context": "https://schema.org",
-    "@type": "Accommodation",
+    "@type": "HotelRoom",
+    "@id": `${origin}/sejours/${slug}#room`,
     name: suite.name[lang],
     description: suite.intro[lang],
-    image: suite.cover,
-    bed: { "@type": "BedDetails", typeOfBed: slug === "envolee" ? "King" : "Double" },
-    occupancy: { "@type": "QuantitativeValue", maxValue: suite.stats.guests },
-    containedInPlace: {
-      "@type": "LodgingBusiness",
-      name: "Plume Suites Collection",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Fleurey-sur-Ouche",
-        addressRegion: "Bourgogne-Franche-Comté",
-        addressCountry: "FR",
-      },
-    },
+    image: suite.cover.startsWith("http") ? suite.cover : `${origin}${suite.cover}`,
+    url: `${origin}/sejours/${slug}`,
+    occupancy: { "@type": "QuantitativeValue", maxValue: suite.stats.guests, unitText: "person" },
+    bed: { "@type": "BedDetails", typeOfBed: slug === "envolee" ? "King" : "Double", numberOfBeds: 1 },
+    ...(sizeVal ? { floorSize: { "@type": "QuantitativeValue", value: sizeVal, unitCode: "MTK" } } : {}),
+    amenityFeature: suite.details.map((d) => ({
+      "@type": "LocationFeatureSpecification",
+      name: d.fr,
+      value: true,
+    })),
+    containedInPlace: { "@type": "LodgingBusiness", "@id": `${origin}/#lodging`, name: "Plume Suites" },
+    ...(suite.priceFrom
+      ? {
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "EUR",
+            price: suite.priceFrom,
+            availability: "https://schema.org/InStock",
+            url: `${origin}/reserver`,
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: suite.priceFrom,
+              priceCurrency: "EUR",
+              unitText: "nuit",
+              referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "DAY" },
+            },
+          },
+        }
+      : {}),
   };
 
   return (
@@ -49,7 +68,7 @@ const SuiteDetail = () => {
         image={suite.cover}
         path={`/sejours/${slug}`}
         type="article"
-        jsonLd={lodgingLd}
+        jsonLd={roomLd}
       />
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">

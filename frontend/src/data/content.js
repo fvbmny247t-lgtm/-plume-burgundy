@@ -82,6 +82,58 @@ export const SITE = {
   defaultImage: "/og-image.jpg",
 };
 
+export const FAQ = [
+  {
+    q: { fr: "Où se situe Plume Suites ?", en: "Where is Plume Suites located?" },
+    a: {
+      fr: "Plume Suites se trouve au 8 Rue des Vieilles Carrières, à Fleurey-sur-Ouche (21410), en Bourgogne — à une quinzaine de minutes de Dijon, au bord du canal de Bourgogne.",
+      en: "Plume Suites is at 8 Rue des Vieilles Carrières, in Fleurey-sur-Ouche (21410), Burgundy — about fifteen minutes from Dijon, alongside the Burgundy canal.",
+    },
+  },
+  {
+    q: { fr: "Comment réserver une suite ?", en: "How do I book a suite?" },
+    a: {
+      fr: "Vous pouvez réserver directement en ligne depuis la page Réserver, ou nous contacter par téléphone au +33 6 95 48 87 60 ou par email à hello@plumesuites.fr.",
+      en: "You can book directly online from the Booking page, or reach us by phone at +33 6 95 48 87 60 or by email at hello@plumesuites.fr.",
+    },
+  },
+  {
+    q: { fr: "Combien de personnes peuvent séjourner ?", en: "How many guests can stay?" },
+    a: {
+      fr: "Chaque suite accueille 2 personnes. L'Envolée, notre suite signature, offre 55 m² avec chambre, salon et coin bureau.",
+      en: "Each suite hosts 2 guests. L'Envolée, our signature suite, offers 55 m² with a bedroom, lounge and writing corner.",
+    },
+  },
+  {
+    q: { fr: "Y a-t-il un restaurant sur place ?", en: "Is there a restaurant on site?" },
+    a: {
+      fr: "Oui — le restaurant Ô P'tit Repère du Goût se trouve juste en dessous des suites : une cuisine 100 % maison mêlant la France et l'Espagne.",
+      en: "Yes — the Ô P'tit Repère du Goût restaurant is right below the suites: fully homemade cuisine blending France and Spain.",
+    },
+  },
+  {
+    q: { fr: "Quels équipements sont inclus ?", en: "What amenities are included?" },
+    a: {
+      fr: "Wi-Fi haut débit, climatisation, literie haut de gamme, café Nespresso et une sélection raffinée d'attentions dans chaque suite.",
+      en: "High-speed Wi-Fi, air conditioning, premium bedding, Nespresso coffee and a curated selection of thoughtful touches in every suite.",
+    },
+  },
+  {
+    q: { fr: "Que faire aux alentours ?", en: "What is there to do nearby?" },
+    a: {
+      fr: "Dijon et Beaune, la route des vins de Bourgogne, les climats classés à l'UNESCO, et de belles balades à pied ou à vélo le long du canal (véloroute EuroVelo 6).",
+      en: "Dijon and Beaune, the Burgundy wine route, the UNESCO-listed climats, and lovely walks or bike rides along the canal (EuroVelo 6 cycle route).",
+    },
+  },
+  {
+    q: { fr: "Proposez-vous des offres pour les longs séjours ?", en: "Do you offer deals for longer stays?" },
+    a: {
+      fr: "Oui — profitez de -10 % dès 6 nuits (offre en cours). Les détails et conditions figurent sur la page de réservation.",
+      en: "Yes — enjoy -10% from 6 nights (current offer). Details and conditions are shown on the booking page.",
+    },
+  },
+];
+
 export const NAV = {
   artDeVivre: { fr: "Art de vivre", en: "Lifestyle" },
   sejours: { fr: "Séjours", en: "Stays" },

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { CONTACT_PAGE, FOOTER, NAV } from "../data/content";
+import { CONTACT_PAGE, FOOTER, NAV, FAQ } from "../data/content";
 import Seo from "../components/Seo";
+import Faq from "../components/Faq";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -11,6 +12,16 @@ const Contact = () => {
   const { t, lang } = useLang();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [state, setState] = useState({ loading: false, ok: false, err: false });
+
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q[lang],
+      acceptedAnswer: { "@type": "Answer", text: f.a[lang] },
+    })),
+  };
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -35,6 +46,7 @@ const Contact = () => {
           en: "Contact Plume Suites — character suites by the Burgundy canal, Fleurey-sur-Ouche.",
         })}
         path="/contact"
+        jsonLd={faqLd}
       />
       <section className="pt-36 md:pt-44 pb-12 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
@@ -150,6 +162,8 @@ const Contact = () => {
           </aside>
         </div>
       </section>
+
+      <Faq items={FAQ} />
     </div>
   );
 };
