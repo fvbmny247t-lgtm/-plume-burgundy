@@ -72,6 +72,13 @@ Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perple
 - Prix ajoutés dans SUITES (content.js): envolee priceFrom 130 €, douceur priceFrom 110 € → schéma HotelRoom inclut désormais offers (Offer/UnitPriceSpecification, EUR, /nuit).
 - FAQ enrichie (5 nouvelles Q/R, faits fournis par le client): horaires (arrivée 15h / départ 11h), arrivée autonome (self check-in), parking gratuit dans la rue/à proximité, animaux acceptés sur demande, accès (Dijon ~15 min, gare Dijon-Ville). FAQPage JSON-LD auto-généré depuis content.js.
 
+### Update — FAQ (sans tirets) + SEO blog (Juin 2026)
+- RÈGLE CLIENT: ne jamais utiliser de tiret cadratin « — » dans la FAQ. Toutes les réponses/questions + le libellé eyebrow nettoyés (Faq.jsx, content.js). Vérifié iteration_8.json (100%).
+- FAQ enrichie: Comment venir (circuit Dijon-Prenois ~10 min, axe autoroutier vers Paris, gare Dijon-Ville ~15 min), équipements (climatisation + chauffage, linge fourni, ménage avant chaque arrivée seulement), parking gratuit, horaires 15h/11h, arrivée autonome, animaux sur demande. 12 entrées FAQ au total.
+- Prix suites: envolee 130 €, douceur 110 € (priceFrom) -> offers dans HotelRoom.
+- SEO blog: JournalArticle jsonLd passé de Article à BlogPosting complet (image URL absolue, datePublished/dateModified, mainEntityOfPage, author/publisher 'Plume Suites' + logo).
+- DIAGNOSTIC indexation Google: pages secondaires rendues avec title/meta/contenu UNIQUES en prod (vérifié via crawl) -> indexables. Le fait que seule l'accueil ressorte = site récent + à soumettre dans Search Console (actions client: GSC sitemap + demande d'indexation, backlinks fiche Google/Instagram/annuaires). Non codable.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

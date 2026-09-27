@@ -10,7 +10,7 @@ export const Faq = ({ items, title }) => {
   return (
     <section className="bg-cream text-ink px-6 md:px-12 pb-28 md:pb-32" data-testid="faq-section">
       <div className="max-w-4xl mx-auto">
-        <p className="ps-overline text-ink/60 mb-4">— FAQ</p>
+        <p className="ps-overline text-ink/60 mb-4">FAQ</p>
         <h2 className="font-serif italic text-4xl md:text-6xl font-light leading-[1.05] mb-12">
           {title || t({ fr: "Questions fréquentes", en: "Frequently asked questions" })}
         </h2>
