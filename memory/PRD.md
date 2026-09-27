@@ -68,6 +68,10 @@ Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perple
 - Google Business Profile: déjà existant côté client (pas d'action).
 - Correctif: FAQ capacité alignée sur les données réelles (L'Envolée 2 pers., Douceur jusqu'à 4).
 
+### Update — Prix suites + FAQ enrichie (Juin 2026)
+- Prix ajoutés dans SUITES (content.js): envolee priceFrom 130 €, douceur priceFrom 110 € → schéma HotelRoom inclut désormais offers (Offer/UnitPriceSpecification, EUR, /nuit).
+- FAQ enrichie (5 nouvelles Q/R, faits fournis par le client): horaires (arrivée 15h / départ 11h), arrivée autonome (self check-in), parking gratuit dans la rue/à proximité, animaux acceptés sur demande, accès (Dijon ~15 min, gare Dijon-Ville). FAQPage JSON-LD auto-généré depuis content.js.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

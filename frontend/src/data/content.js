@@ -126,6 +126,41 @@ export const FAQ = [
     },
   },
   {
+    q: { fr: "À quelle heure peut-on arriver et repartir ?", en: "What are the check-in and check-out times?" },
+    a: {
+      fr: "L'arrivée se fait à partir de 15h et le départ jusqu'à 11h. Grâce à l'arrivée autonome, vous pouvez arriver à l'heure qui vous convient.",
+      en: "Check-in is from 3 p.m. and check-out until 11 a.m. Thanks to self check-in, you can arrive whenever it suits you.",
+    },
+  },
+  {
+    q: { fr: "Proposez-vous une arrivée autonome ?", en: "Do you offer self check-in?" },
+    a: {
+      fr: "Oui. Nous proposons une arrivée autonome : vous recevez avant votre séjour les instructions et le code d'accès pour entrer en toute simplicité, à l'heure souhaitée.",
+      en: "Yes. We offer self check-in: before your stay you receive the instructions and access code to get in easily, at the time you wish.",
+    },
+  },
+  {
+    q: { fr: "Y a-t-il un parking ?", en: "Is there parking?" },
+    a: {
+      fr: "Oui — un stationnement gratuit est disponible dans la rue et à proximité immédiate des suites.",
+      en: "Yes — free parking is available on the street and in the immediate vicinity of the suites.",
+    },
+  },
+  {
+    q: { fr: "Les animaux sont-ils acceptés ?", en: "Are pets allowed?" },
+    a: {
+      fr: "Les animaux de compagnie sont acceptés sur demande. Merci de nous en informer avant votre réservation.",
+      en: "Pets are welcome on request. Please let us know before booking.",
+    },
+  },
+  {
+    q: { fr: "Comment venir à Plume Suites ?", en: "How do I get to Plume Suites?" },
+    a: {
+      fr: "Plume Suites est facilement accessible en voiture, à une quinzaine de minutes de Dijon. La gare la plus proche est Dijon-Ville, à environ 15 minutes en voiture.",
+      en: "Plume Suites is easily reached by car, about fifteen minutes from Dijon. The nearest train station is Dijon-Ville, roughly 15 minutes away by car.",
+    },
+  },
+  {
     q: { fr: "Proposez-vous des offres pour les longs séjours ?", en: "Do you offer deals for longer stays?" },
     a: {
       fr: "Oui — profitez de -10 % dès 6 nuits (offre en cours). Les détails et conditions figurent sur la page de réservation.",
@@ -270,6 +305,7 @@ export const ART_BLOCKS = [
 export const SUITES = {
   envolee: {
     slug: "envolee",
+    priceFrom: 130,
     name: { fr: "Plume Suites — L'Envolée", en: "Plume Suites — L'Envolée" },
     short: { fr: "L'Envolée", en: "L'Envolée" },
     tier: { fr: "Signature", en: "Signature" },
@@ -331,6 +367,7 @@ export const SUITES = {
   },
   douceur: {
     slug: "douceur",
+    priceFrom: 110,
     name: { fr: "Plume Suites — Douceur", en: "Plume Suites — Douceur" },
     short: { fr: "Douceur", en: "Douceur" },
     tier: { fr: "Famille & amis", en: "Family & friends" },
