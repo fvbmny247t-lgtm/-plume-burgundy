@@ -119,7 +119,7 @@ const Navbar = () => {
             <span className="sr-only">Menu</span>
             <span
               className={`absolute block h-[2px] w-6 bg-current transition-all duration-300 ease-out ${
-                open ? "rotate-45 translate-y-0" : "-translate-y-[6px]"
+                open ? "rotate-45 translate-y-0 !bg-cream" : "-translate-y-[6px]"
               }`}
             />
             <span
@@ -129,7 +129,7 @@ const Navbar = () => {
             />
             <span
               className={`absolute block h-[2px] w-6 bg-current transition-all duration-300 ease-out ${
-                open ? "-rotate-45 translate-y-0" : "translate-y-[6px]"
+                open ? "-rotate-45 translate-y-0 !bg-cream" : "translate-y-[6px]"
               }`}
             />
           </button>
