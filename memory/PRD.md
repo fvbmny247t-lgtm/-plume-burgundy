@@ -62,6 +62,12 @@ Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perple
 - Constat: le site déployé est rendu en HTML complet (bon pour crawlers + IA).
 - RESTE À FAIRE (recommandé): section FAQ visible + FAQPage schema (top AEO), Google Business Profile (action côté client), schéma HotelRoom+prix par suite, backlinks/annuaires, hreflang (nécessiterait des URL /en séparées).
 
+### Update — Schéma suites + FAQ (Juin 2026)
+- FAQ élégante (accordéon) sur /contact + balisage FAQPage JSON-LD (7 Q/R bilingues FR/EN) — composant components/Faq.jsx, données FAQ dans content.js. Testé 100% (iteration_7.json).
+- Schéma HotelRoom par suite (SuiteDetail.jsx): occupancy, bed, floorSize (m²), amenityFeature (depuis details), containedInPlace #lodging. Prix (offers) prêt côté code via suite.priceFrom mais EN ATTENTE des tarifs fournis par le client.
+- Google Business Profile: déjà existant côté client (pas d'action).
+- Correctif: FAQ capacité alignée sur les données réelles (L'Envolée 2 pers., Douceur jusqu'à 4).
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

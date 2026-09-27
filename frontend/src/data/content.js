@@ -100,8 +100,8 @@ export const FAQ = [
   {
     q: { fr: "Combien de personnes peuvent séjourner ?", en: "How many guests can stay?" },
     a: {
-      fr: "Chaque suite accueille 2 personnes. L'Envolée, notre suite signature, offre 55 m² avec chambre, salon et coin bureau.",
-      en: "Each suite hosts 2 guests. L'Envolée, our signature suite, offers 55 m² with a bedroom, lounge and writing corner.",
+      fr: "L'Envolée, notre suite signature (55 m²), accueille 2 personnes ; la suite Douceur peut recevoir jusqu'à 4 personnes.",
+      en: "L'Envolée, our signature suite (55 m²), hosts 2 guests; the Douceur suite can host up to 4 guests.",
     },
   },
   {
