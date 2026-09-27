@@ -93,8 +93,8 @@ export const FAQ = [
   {
     q: { fr: "Comment réserver une suite ?", en: "How do I book a suite?" },
     a: {
-      fr: "Vous pouvez réserver directement en ligne depuis la page Réserver, ou nous contacter par téléphone au +33 6 95 48 87 60 ou par email à hello@plumesuites.fr.",
-      en: "You can book directly online from the Booking page, or reach us by phone at +33 6 95 48 87 60 or by email at hello@plumesuites.fr.",
+      fr: "Vous pouvez réserver directement en ligne depuis la page Réserver. Vous pouvez aussi nous contacter par téléphone au +33 6 95 48 87 60 ou par email à hello@plumesuites.fr.",
+      en: "You can book directly online from the Booking page. You can also reach us by phone at +33 6 95 48 87 60 or by email at hello@plumesuites.fr.",
     },
   },
   {
@@ -107,8 +107,8 @@ export const FAQ = [
   {
     q: { fr: "Y a-t-il un restaurant sur place ?", en: "Is there a restaurant on site?" },
     a: {
-      fr: "Oui, le restaurant Ô P'tit Repère du Goût se trouve juste en dessous des suites. Vous y dégustez une cuisine 100 % maison mêlant la France et l'Espagne.",
-      en: "Yes, the Ô P'tit Repère du Goût restaurant is right below the suites. You can enjoy fully homemade cuisine blending France and Spain.",
+      fr: "Oui, le restaurant Ô P'tit Repère du Goût se trouve juste en dessous des suites. Vous y dégustez une cuisine 100 % maison mêlant la France à l'Espagne.",
+      en: "Yes, the Ô P'tit Repère du Goût restaurant is right below the suites. You can enjoy fully homemade cuisine blending France with Spain.",
     },
   },
   {
@@ -158,6 +158,27 @@ export const FAQ = [
     a: {
       fr: "Plume Suites est facilement accessible en voiture, à une quinzaine de minutes de Dijon et à environ 10 minutes du circuit de Dijon-Prenois. Nous sommes idéalement situés sur l'axe autoroutier vers Paris. La gare la plus proche est Dijon-Ville, à environ 15 minutes en voiture.",
       en: "Plume Suites is easily reached by car, about fifteen minutes from Dijon and roughly 10 minutes from the Dijon-Prenois racing circuit. We sit conveniently on the motorway route to Paris. The nearest train station is Dijon-Ville, about 15 minutes away by car.",
+    },
+  },
+  {
+    q: { fr: "Y a-t-il un séjour minimum ?", en: "Is there a minimum stay?" },
+    a: {
+      fr: "Aucun séjour minimum n'est imposé : vous pouvez réserver dès une seule nuit.",
+      en: "There is no minimum stay: you can book from a single night.",
+    },
+  },
+  {
+    q: { fr: "Le petit-déjeuner est-il proposé ?", en: "Is breakfast provided?" },
+    a: {
+      fr: "Nous ne proposons pas de petit-déjeuner, mais une boulangerie se situe à proximité immédiate, dans le village.",
+      en: "We do not serve breakfast, but a bakery is located right nearby, in the village.",
+    },
+  },
+  {
+    q: { fr: "Proposez-vous des bons cadeaux ?", en: "Do you offer gift vouchers?" },
+    a: {
+      fr: "Oui, des bons cadeaux sont disponibles pour offrir un séjour. Contactez-nous par email à hello@plumesuites.fr ou par téléphone au +33 6 95 48 87 60.",
+      en: "Yes, gift vouchers are available to offer a stay. Contact us by email at hello@plumesuites.fr or by phone at +33 6 95 48 87 60.",
     },
   },
   {

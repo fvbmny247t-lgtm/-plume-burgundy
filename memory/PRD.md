@@ -74,7 +74,7 @@ Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perple
 
 ### Update — FAQ (sans tirets) + SEO blog (Juin 2026)
 - RÈGLE CLIENT: ne jamais utiliser de tiret cadratin « — » dans la FAQ. Toutes les réponses/questions + le libellé eyebrow nettoyés (Faq.jsx, content.js). Vérifié iteration_8.json (100%).
-- FAQ enrichie: Comment venir (circuit Dijon-Prenois ~10 min, axe autoroutier vers Paris, gare Dijon-Ville ~15 min), équipements (climatisation + chauffage, linge fourni, ménage avant chaque arrivée seulement), parking gratuit, horaires 15h/11h, arrivée autonome, animaux sur demande. 12 entrées FAQ au total.
+- FAQ enrichie: Comment venir (circuit Dijon-Prenois ~10 min, axe autoroutier vers Paris, gare Dijon-Ville ~15 min), équipements (climatisation + chauffage, linge fourni, ménage avant chaque arrivée seulement), parking gratuit, horaires 15h/11h, arrivée autonome, animaux sur demande. 15 entrées FAQ au total (ajout: séjour minimum=aucun, petit-déjeuner=non mais boulangerie à proximité, bons cadeaux=oui). Corrections copie: point après 'page Réserver', 'la France à l'Espagne'.
 - Prix suites: envolee 130 €, douceur 110 € (priceFrom) -> offers dans HotelRoom.
 - SEO blog: JournalArticle jsonLd passé de Article à BlogPosting complet (image URL absolue, datePublished/dateModified, mainEntityOfPage, author/publisher 'Plume Suites' + logo).
 - DIAGNOSTIC indexation Google: pages secondaires rendues avec title/meta/contenu UNIQUES en prod (vérifié via crawl) -> indexables. Le fait que seule l'accueil ressorte = site récent + à soumettre dans Search Console (actions client: GSC sitemap + demande d'indexation, backlinks fiche Google/Instagram/annuaires). Non codable.
