@@ -1,17 +1,19 @@
-"""Transactional email sending for Plume Suites contact form (Resend)."""
+"""Branded transactional emails for Plume Suites (contact form + Carnet Plume).
+
+All sending goes through email_provider.send_email so the mail provider
+(Infomaniak SMTP) can change without touching call sites.
+"""
 import os
-import asyncio
 import logging
 import html as html_lib
-import resend
+
+from email_provider import send_email
 
 logger = logging.getLogger(__name__)
 
-resend.api_key = os.environ.get("RESEND_API_KEY", "")
-SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "hello@plumesuites.fr")
+SENDER_EMAIL = os.environ.get("FROM_EMAIL", "hello@plumesuites.fr")
 CONTACT_INBOX = os.environ.get("CONTACT_INBOX", "hello@plumesuites.fr")
 LOGO_URL = os.environ.get("EMAIL_LOGO_URL", "")
-FROM = f"Plume Suites <{SENDER_EMAIL}>"
 
 INK = "#3b312b"
 CREAM = "#f5f1ea"
@@ -22,7 +24,7 @@ def _esc(value: str) -> str:
     return html_lib.escape(value or "").replace("\n", "<br/>")
 
 
-def _shell(inner_html: str) -> str:
+def _shell(inner_html: str, unsubscribe_url: str = "") -> str:
     """Wrap content in the branded Plume Suites email shell (email-safe inline CSS)."""
     logo_block = (
         f'<img src="{LOGO_URL}" alt="Plume Suites" width="150" '
@@ -30,6 +32,10 @@ def _shell(inner_html: str) -> str:
         if LOGO_URL else
         f'<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:24px;letter-spacing:6px;color:{INK};font-weight:400;">PLUME</div>'
         f'<div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:5px;color:{TERRA};margin-top:4px;">SUITES</div>'
+    )
+    unsub = (
+        f'<br/><a href="{unsubscribe_url}" style="color:{TERRA};text-decoration:none;">Se désinscrire de La Lettre de Marie</a>'
+        if unsubscribe_url else ""
     )
     return f"""<!DOCTYPE html>
 <html lang="fr">
@@ -52,6 +58,7 @@ def _shell(inner_html: str) -> str:
               8 Rue des Vieilles Carrieres, 21410 Fleurey-sur-Ouche, Bourgogne<br/>
               +33 6 95 48 87 60 &nbsp;&middot;&nbsp;
               <a href="mailto:hello@plumesuites.fr" style="color:{TERRA};text-decoration:none;">hello@plumesuites.fr</a>
+              {unsub}
             </td></tr>
           </table>
         </td></tr>
@@ -70,15 +77,33 @@ def _para(text: str) -> str:
     return f'<p style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.7;color:rgba(59,49,43,0.85);margin:0 0 16px 0;">{text}</p>'
 
 
+def _button(url: str, label: str) -> str:
+    return (
+        f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 24px 0;"><tr>'
+        f'<td style="background-color:{TERRA};"><a href="{url}" '
+        f'style="display:inline-block;padding:14px 30px;font-family:Arial,Helvetica,sans-serif;'
+        f'font-size:12px;letter-spacing:2px;text-transform:uppercase;color:{CREAM};text-decoration:none;">{label}</a>'
+        f'</td></tr></table>'
+    )
+
+
+def _signature(lang: str) -> str:
+    who = "Marie, Plume Suites" if lang != "en" else "Marie, Plume Suites"
+    return _para(f'Avec toute mon attention,<br/><span style="font-style:italic;">{who}</span>') if lang != "en" \
+        else _para(f'With my warmest regards,<br/><span style="font-style:italic;">{who}</span>')
+
+
+# ---------------------------------------------------------------------------
+# Contact form
+# ---------------------------------------------------------------------------
 def _customer_html(name: str, message: str, lang: str) -> str:
     safe_name = html_lib.escape(name or "")
     if lang == "en":
         inner = (
             _heading("Thank you, we've received your message.")
             + _para(f"Dear {safe_name},")
-            + _para("Your message has reached us and we will reply to you personally as soon as possible. "
-                    "In the meantime, we wanted to confirm that your request has been received and is being taken care of.")
-            + _para("With our warmest regards,<br/><span style=\"font-style:italic;\">The Plume Suites team</span>")
+            + _para("Your message has reached us and we will reply to you personally as soon as possible.")
+            + _signature("en")
             + f'<div style="margin:24px 0;padding:18px 20px;background-color:{CREAM};border-left:2px solid {TERRA};">'
             + '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Your message</p>'
             + f'<p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:{INK};margin:0;line-height:1.6;">{_esc(message)}</p></div>'
@@ -87,9 +112,8 @@ def _customer_html(name: str, message: str, lang: str) -> str:
         inner = (
             _heading("Merci, nous avons bien reçu votre message.")
             + _para(f"Bonjour {safe_name},")
-            + _para("Votre message nous est bien parvenu et nous y répondrons personnellement dans les meilleurs délais. "
-                    "Nous tenions à vous confirmer que votre demande a bien été prise en charge.")
-            + _para("Avec toute notre attention,<br/><span style=\"font-style:italic;\">L'équipe Plume Suites</span>")
+            + _para("Votre message nous est bien parvenu et nous y répondrons personnellement dans les meilleurs délais.")
+            + _signature("fr")
             + f'<div style="margin:24px 0;padding:18px 20px;background-color:{CREAM};border-left:2px solid {TERRA};">'
             + '<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">Votre message</p>'
             + f'<p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:{INK};margin:0;line-height:1.6;">{_esc(message)}</p></div>'
@@ -119,48 +143,151 @@ def _notification_html(name: str, email: str, subject: str, message: str, lang: 
     return _shell(inner)
 
 
-async def _send(params: dict):
-    return await asyncio.to_thread(resend.Emails.send, params)
-
-
 async def send_contact_emails(name: str, email: str, subject: str, message: str, lang: str = "fr") -> dict:
     """Send the internal notification and the customer auto-reply. Errors are logged, not raised."""
     result = {"notification": None, "confirmation": None, "error": None}
-    if not resend.api_key:
-        logger.warning("RESEND_API_KEY missing; skipping contact emails")
-        result["error"] = "missing_api_key"
-        return result
-
     subj_label = subject or ("Demande de contact" if lang != "en" else "Contact request")
 
-    # 1) Notification to the business inbox
     try:
-        notif = await _send({
-            "from": FROM,
-            "to": [CONTACT_INBOX],
-            "reply_to": email,
-            "subject": f"Nouveau message — {name} ({subj_label})",
-            "html": _notification_html(name, email, subject, message, lang),
-        })
-        result["notification"] = notif.get("id") if isinstance(notif, dict) else str(notif)
+        await send_email(
+            CONTACT_INBOX,
+            f"Nouveau message — {name} ({subj_label})",
+            _notification_html(name, email, subject, message, lang),
+            reply_to=email,
+        )
+        result["notification"] = "sent"
     except Exception as e:  # noqa: BLE001
         logger.error(f"Contact notification email failed: {e}")
         result["error"] = str(e)
 
-    # 2) Branded confirmation to the customer
     try:
         confirm_subject = "We've received your message — Plume Suites" if lang == "en" \
             else "Nous avons bien reçu votre message — Plume Suites"
-        conf = await _send({
-            "from": FROM,
-            "to": [email],
-            "reply_to": CONTACT_INBOX,
-            "subject": confirm_subject,
-            "html": _customer_html(name, message, lang),
-        })
-        result["confirmation"] = conf.get("id") if isinstance(conf, dict) else str(conf)
+        await send_email(
+            email, confirm_subject, _customer_html(name, message, lang), reply_to=CONTACT_INBOX,
+        )
+        result["confirmation"] = "sent"
     except Exception as e:  # noqa: BLE001
         logger.error(f"Contact confirmation email failed: {e}")
         result["error"] = str(e)
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# Carnet Plume — account + newsletter emails
+# ---------------------------------------------------------------------------
+async def send_verification_email(to: str, first_name: str, verify_url: str, lang: str = "fr") -> None:
+    name = html_lib.escape(first_name or "")
+    if lang == "en":
+        inner = (
+            _heading("Confirm your email address")
+            + _para(f"Hello {name},")
+            + _para("Thank you for opening your Carnet Plume. Please confirm your email address to activate it.")
+            + _button(verify_url, "Confirm my email")
+            + _para('If you did not create this account, you can simply ignore this message.')
+            + _signature("en")
+        )
+        subject = "Confirm your email — Plume Suites"
+    else:
+        inner = (
+            _heading("Confirmez votre adresse email")
+            + _para(f"Bonjour {name},")
+            + _para("Merci d'avoir ouvert votre Carnet Plume. Confirmez votre adresse email pour l'activer.")
+            + _button(verify_url, "Confirmer mon email")
+            + _para("Si vous n'êtes pas à l'origine de cette inscription, vous pouvez ignorer ce message.")
+            + _signature("fr")
+        )
+        subject = "Confirmez votre email — Plume Suites"
+    await send_email(to, subject, _shell(inner))
+
+
+async def send_welcome_carnet_email(to: str, first_name: str, carnet_url: str, lang: str = "fr") -> None:
+    name = html_lib.escape(first_name or "")
+    if lang == "en":
+        inner = (
+            _heading("Welcome to your Carnet Plume")
+            + _para(f"Hello {name},")
+            + _para("Your Carnet is now open. It quietly gathers your story with Plume and the little attentions that come with it.")
+            + _button(carnet_url, "Open my Carnet")
+            + _signature("en")
+        )
+        subject = "Your Carnet Plume is open — Plume Suites"
+    else:
+        inner = (
+            _heading("Bienvenue dans votre Carnet Plume")
+            + _para(f"Bonjour {name},")
+            + _para("Votre Carnet est désormais ouvert. Il rassemble en toute discrétion votre histoire avec Plume et les attentions qui l'accompagnent.")
+            + _button(carnet_url, "Ouvrir mon Carnet")
+            + _signature("fr")
+        )
+        subject = "Votre Carnet Plume est ouvert — Plume Suites"
+    await send_email(to, subject, _shell(inner))
+
+
+async def send_reset_password_email(to: str, first_name: str, reset_url: str, lang: str = "fr") -> None:
+    name = html_lib.escape(first_name or "")
+    if lang == "en":
+        inner = (
+            _heading("Reset your password")
+            + _para(f"Hello {name},")
+            + _para("You asked to reset your password. This link is valid for one hour.")
+            + _button(reset_url, "Choose a new password")
+            + _para("If you did not make this request, you can ignore this message.")
+            + _signature("en")
+        )
+        subject = "Reset your password — Plume Suites"
+    else:
+        inner = (
+            _heading("Réinitialisez votre mot de passe")
+            + _para(f"Bonjour {name},")
+            + _para("Vous avez demandé à réinitialiser votre mot de passe. Ce lien est valable une heure.")
+            + _button(reset_url, "Choisir un nouveau mot de passe")
+            + _para("Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.")
+            + _signature("fr")
+        )
+        subject = "Réinitialisez votre mot de passe — Plume Suites"
+    await send_email(to, subject, _shell(inner))
+
+
+async def send_password_changed_email(to: str, first_name: str, lang: str = "fr") -> None:
+    name = html_lib.escape(first_name or "")
+    if lang == "en":
+        inner = (
+            _heading("Your password has been changed")
+            + _para(f"Hello {name},")
+            + _para("This is a confirmation that your password was just changed. If this was not you, please contact us right away.")
+            + _signature("en")
+        )
+        subject = "Your password has been changed — Plume Suites"
+    else:
+        inner = (
+            _heading("Votre mot de passe a été modifié")
+            + _para(f"Bonjour {name},")
+            + _para("Nous vous confirmons que votre mot de passe vient d'être modifié. Si vous n'êtes pas à l'origine de ce changement, contactez-nous sans attendre.")
+            + _signature("fr")
+        )
+        subject = "Votre mot de passe a été modifié — Plume Suites"
+    await send_email(to, subject, _shell(inner))
+
+
+async def send_newsletter_confirm_email(to: str, confirm_url: str, unsubscribe_url: str, lang: str = "fr") -> None:
+    if lang == "en":
+        inner = (
+            _heading("Confirm your subscription to La Lettre de Marie")
+            + _para("A few times a year, La Lettre de Marie shares news from the house, quiet ideas and small attentions.")
+            + _para("Please confirm your subscription to start receiving it.")
+            + _button(confirm_url, "Confirm my subscription")
+            + _signature("en")
+        )
+        subject = "Confirm your subscription — La Lettre de Marie"
+    else:
+        inner = (
+            _heading("Confirmez votre inscription à La Lettre de Marie")
+            + _para("Quelques fois par an, La Lettre de Marie partage des nouvelles de la maison, des idées discrètes et de petites attentions.")
+            + _para("Confirmez votre inscription pour commencer à la recevoir.")
+            + _button(confirm_url, "Confirmer mon inscription")
+            + _signature("fr")
+        )
+        subject = "Confirmez votre inscription — La Lettre de Marie"
+    await send_email(to, subject, _shell(inner, unsubscribe_url=unsubscribe_url))

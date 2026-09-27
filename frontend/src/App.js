@@ -16,11 +16,21 @@ import LegalPage from "./pages/LegalPage";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import Admin from "./pages/Admin";
+import { CarnetAuthProvider } from "./context/CarnetAuthContext";
+import CarnetLogin from "./pages/carnet/CarnetLogin";
+import CarnetRegister from "./pages/carnet/CarnetRegister";
+import CarnetForgot from "./pages/carnet/CarnetForgot";
+import CarnetReset from "./pages/carnet/CarnetReset";
+import CarnetVerify from "./pages/carnet/CarnetVerify";
+import Carnet from "./pages/carnet/Carnet";
+import CarnetAccount from "./pages/carnet/CarnetAccount";
+import NewsletterAction from "./pages/carnet/NewsletterAction";
 
 function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
+        <CarnetAuthProvider>
         <BrowserRouter>
           <Routes>
             {/* Admin — hors du Layout marketing */}
@@ -43,6 +53,19 @@ function App() {
                     <Route path="/reserver" element={<Reserver />} />
                     <Route path="/cgv" element={<LegalPage variant="cgv" />} />
                     <Route path="/confidentialite" element={<LegalPage variant="privacy" />} />
+
+                    {/* Carnet Plume — espace client */}
+                    <Route path="/carnet" element={<Carnet />} />
+                    <Route path="/carnet/connexion" element={<CarnetLogin />} />
+                    <Route path="/carnet/inscription" element={<CarnetRegister />} />
+                    <Route path="/carnet/mot-de-passe-oublie" element={<CarnetForgot />} />
+                    <Route path="/carnet/reinitialiser" element={<CarnetReset />} />
+                    <Route path="/carnet/verifier" element={<CarnetVerify mode="verify" />} />
+                    <Route path="/carnet/confirmer-email" element={<CarnetVerify mode="change" />} />
+                    <Route path="/carnet/compte" element={<CarnetAccount />} />
+                    <Route path="/lettre/confirmer" element={<NewsletterAction mode="confirm" />} />
+                    <Route path="/lettre/desinscription" element={<NewsletterAction mode="unsubscribe" />} />
+
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </Layout>
@@ -50,6 +73,7 @@ function App() {
             />
           </Routes>
         </BrowserRouter>
+        </CarnetAuthProvider>
       </LanguageProvider>
     </HelmetProvider>
   );

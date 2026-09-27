@@ -196,6 +196,7 @@ export const NAV = {
   journal: { fr: "Journal", en: "Journal" },
   contact: { fr: "Contact", en: "Contact" },
   book: { fr: "Réserver", en: "Book" },
+  carnet: { fr: "Mon Carnet", en: "My Carnet" },
 };
 
 export const HOME = {

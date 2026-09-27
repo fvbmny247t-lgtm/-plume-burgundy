@@ -13,6 +13,7 @@ import jwt as pyjwt
 from datetime import datetime, timezone, timedelta
 
 from journal_data import JOURNAL_ARTICLES
+import carnet
 try:
     from email_service import send_contact_emails
 except Exception as _e:  # never let email layer block server startup
@@ -195,6 +196,9 @@ async def get_journal_article(slug: str):
     raise HTTPException(status_code=404, detail="Article not found")
 
 
+carnet.configure(db, JWT_SECRET)
+api_router.include_router(carnet.router)
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -227,6 +231,7 @@ async def seed_admin():
             {"email": email}, {"$set": {"password_hash": hash_password(ADMIN_PASSWORD)}}
         )
         logger.info("Updated admin password for: %s", email)
+    await carnet.ensure_indexes()
 
 
 @app.on_event("shutdown")
