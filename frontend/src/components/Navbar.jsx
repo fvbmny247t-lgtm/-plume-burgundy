@@ -48,7 +48,7 @@ const Navbar = () => {
     >
       {/* Navbar always transparent — content color changes on scroll */}
       <div
-        className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ${open ? "bg-ink text-cream" : textColor}`}
+        className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 ${open ? "bg-ink text-cream" : `transition-colors duration-500 ${textColor}`}`}
       >
         <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
           <PlumeLogo variant={open ? "white" : logoVariant} size="sm" />
