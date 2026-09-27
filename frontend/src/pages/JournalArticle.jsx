@@ -46,13 +46,20 @@ const JournalArticle = () => {
         type="article"
         jsonLd={{
           "@context": "https://schema.org",
-          "@type": "Article",
+          "@type": "BlogPosting",
           headline: article.title[lang],
           description: article.excerpt[lang],
-          image: article.cover,
+          image: article.cover.startsWith("http") ? article.cover : `https://plumesuites.fr${article.cover}`,
           datePublished: article.date,
-          author: { "@type": "Organization", name: "Plume Suites Collection" },
-          publisher: { "@type": "Organization", name: "Plume Suites Collection" },
+          dateModified: article.date,
+          inLanguage: lang,
+          mainEntityOfPage: { "@type": "WebPage", "@id": `https://plumesuites.fr/journal/${article.slug}` },
+          author: { "@type": "Organization", name: "Plume Suites", url: "https://plumesuites.fr" },
+          publisher: {
+            "@type": "Organization",
+            name: "Plume Suites",
+            logo: { "@type": "ImageObject", url: "https://plumesuites.fr/images/plume_logo_email.png" },
+          },
         }}
       />
       <article>

@@ -86,8 +86,8 @@ export const FAQ = [
   {
     q: { fr: "Où se situe Plume Suites ?", en: "Where is Plume Suites located?" },
     a: {
-      fr: "Plume Suites se trouve au 8 Rue des Vieilles Carrières, à Fleurey-sur-Ouche (21410), en Bourgogne — à une quinzaine de minutes de Dijon, au bord du canal de Bourgogne.",
-      en: "Plume Suites is at 8 Rue des Vieilles Carrières, in Fleurey-sur-Ouche (21410), Burgundy — about fifteen minutes from Dijon, alongside the Burgundy canal.",
+      fr: "Plume Suites se trouve au 8 Rue des Vieilles Carrières, à Fleurey-sur-Ouche (21410), en Bourgogne, à une quinzaine de minutes de Dijon, au bord du canal de Bourgogne.",
+      en: "Plume Suites is at 8 Rue des Vieilles Carrières, in Fleurey-sur-Ouche (21410), Burgundy, about fifteen minutes from Dijon, alongside the Burgundy canal.",
     },
   },
   {
@@ -107,15 +107,15 @@ export const FAQ = [
   {
     q: { fr: "Y a-t-il un restaurant sur place ?", en: "Is there a restaurant on site?" },
     a: {
-      fr: "Oui — le restaurant Ô P'tit Repère du Goût se trouve juste en dessous des suites : une cuisine 100 % maison mêlant la France et l'Espagne.",
-      en: "Yes — the Ô P'tit Repère du Goût restaurant is right below the suites: fully homemade cuisine blending France and Spain.",
+      fr: "Oui, le restaurant Ô P'tit Repère du Goût se trouve juste en dessous des suites. Vous y dégustez une cuisine 100 % maison mêlant la France et l'Espagne.",
+      en: "Yes, the Ô P'tit Repère du Goût restaurant is right below the suites. You can enjoy fully homemade cuisine blending France and Spain.",
     },
   },
   {
     q: { fr: "Quels équipements sont inclus ?", en: "What amenities are included?" },
     a: {
-      fr: "Wi-Fi haut débit, climatisation, literie haut de gamme, café Nespresso et une sélection raffinée d'attentions dans chaque suite.",
-      en: "High-speed Wi-Fi, air conditioning, premium bedding, Nespresso coffee and a curated selection of thoughtful touches in every suite.",
+      fr: "Chaque suite dispose de la climatisation et du chauffage, du Wi-Fi haut débit, d'un café Nespresso, ainsi que d'une literie et d'un linge de maison haut de gamme fournis. Le ménage est réalisé avant chaque arrivée : fidèles à l'esprit d'une maison d'hôtes plutôt que d'un hôtel, nous ne proposons pas de ménage quotidien.",
+      en: "Each suite features air conditioning and heating, high-speed Wi-Fi, a Nespresso machine, and premium bedding and linen provided. Housekeeping is done before each arrival: true to the spirit of a guesthouse rather than a hotel, we do not offer daily housekeeping.",
     },
   },
   {
@@ -142,8 +142,8 @@ export const FAQ = [
   {
     q: { fr: "Y a-t-il un parking ?", en: "Is there parking?" },
     a: {
-      fr: "Oui — un stationnement gratuit est disponible dans la rue et à proximité immédiate des suites.",
-      en: "Yes — free parking is available on the street and in the immediate vicinity of the suites.",
+      fr: "Oui. Un stationnement gratuit est disponible dans la rue et à proximité immédiate des suites.",
+      en: "Yes. Free parking is available on the street and in the immediate vicinity of the suites.",
     },
   },
   {
@@ -156,15 +156,15 @@ export const FAQ = [
   {
     q: { fr: "Comment venir à Plume Suites ?", en: "How do I get to Plume Suites?" },
     a: {
-      fr: "Plume Suites est facilement accessible en voiture, à une quinzaine de minutes de Dijon. La gare la plus proche est Dijon-Ville, à environ 15 minutes en voiture.",
-      en: "Plume Suites is easily reached by car, about fifteen minutes from Dijon. The nearest train station is Dijon-Ville, roughly 15 minutes away by car.",
+      fr: "Plume Suites est facilement accessible en voiture, à une quinzaine de minutes de Dijon et à environ 10 minutes du circuit de Dijon-Prenois. Nous sommes idéalement situés sur l'axe autoroutier vers Paris. La gare la plus proche est Dijon-Ville, à environ 15 minutes en voiture.",
+      en: "Plume Suites is easily reached by car, about fifteen minutes from Dijon and roughly 10 minutes from the Dijon-Prenois racing circuit. We sit conveniently on the motorway route to Paris. The nearest train station is Dijon-Ville, about 15 minutes away by car.",
     },
   },
   {
     q: { fr: "Proposez-vous des offres pour les longs séjours ?", en: "Do you offer deals for longer stays?" },
     a: {
-      fr: "Oui — profitez de -10 % dès 6 nuits (offre en cours). Les détails et conditions figurent sur la page de réservation.",
-      en: "Yes — enjoy -10% from 6 nights (current offer). Details and conditions are shown on the booking page.",
+      fr: "Oui. Profitez de 10 % de remise dès 6 nuits (offre en cours). Les détails et conditions figurent sur la page de réservation.",
+      en: "Yes. Enjoy 10% off from 6 nights (current offer). Details and conditions are shown on the booking page.",
     },
   },
 ];
