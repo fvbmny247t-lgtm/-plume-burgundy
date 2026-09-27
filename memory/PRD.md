@@ -91,14 +91,21 @@ Spec complète: /app/memory/CARNET_PLUME_SPEC.md (37 points). Construction multi
 - Vocabulaire respecté: "Carnet", "Plumes", "attentions", "La Lettre de Marie" (jamais points/cashback/VIP/fidélité).
 - Bonus 100 Plumes (à la confirmation de la Lettre) et ledger: DÉFÉRÉ (hook TODO dans newsletter_confirm) -> Phases ultérieures.
 
+## Update (Juin 2026) — Carnet Plume PHASES 2-4 + Bonus 100 (Smoobu + Plumes) — TESTÉ (iteration_13: 18/18 backend, dashboard OK)
+- E-mails RÉELS actifs: SMTP_PASSWORD Infomaniak fourni et validé (envoi confirmé). Contact + Carnet passent par Infomaniak SMTP.
+- Smoobu HMAC LIVE: `smoobu_client.py` — signature HMAC-SHA256 (X-API-Key/X-Timestamp/X-Nonce/X-Signature), canonical `METHOD\nPATH\nQUERY\nTS\nNONCE\nBODY_SHA256\nAPI_KEY`. Validé en réel (GET /apartments 200). Logements: Douceur (2026163), L'envolée (2026160).
+- `smoobu_sync.py`: sync réservations (339 importées), classification canaux éditable (`smoobu_channels`): Direct booking (3040403) + Website (3040406) = DIRECT éligible; Booking.com/Expedia/Airbnb = OTA; Blocked = ignoré. Rattachement par email vérifié. Plumes = floor(price - city_tax) pour DIRECT éligible; taxe séjour (`city-tax`) exclue. "À venir" (pending) puis "crédité" au check-out (`credit_due_stays`). Règle anti-rétroactif: séjour déjà terminé AVANT création du compte non crédité auto. `plumes_ledger` (idempotent), balances sur `carnet_users` (plumes_balance/plumes_pending).
+- Bonus +100 Plumes UNE fois à la confirmation de La Lettre (idempotency_key `newsletter_bonus:<user_id>`).
+- Endpoints admin (JWT admin): POST /api/admin/smoobu/sync, GET /api/admin/smoobu/state, GET /api/admin/smoobu/apartments, GET/PATCH /api/admin/smoobu/channels/{id}. Endpoint client: GET /api/carnet/stays.
+- Cron quotidien `.emergent/crons.yml` (smoobu-reconcile, 03:15 UTC) -> POST /api/cron/smoobu-reconcile (Bearer WEBHOOK_CRON_SECRET, ack immédiat + BackgroundTasks: re-sync incrémental + crédit des séjours passés).
+- Frontend dashboard `/carnet`: solde réel, "Plumes à venir", "Mes séjours" (badge Direct/OTA, statut, Plumes), prochain séjour. Vocabulaire respecté.
+
 ## RESTE À FAIRE — Carnet Plume (ordre spec §36)
-- P0 Phase 2: Connexion sécurisée Smoobu (HMAC) — utiliser integration_expert. Clés déjà dans backend/.env.
-- P0 Phase 3: Sync réservations + rattachement résa<->compte (email + manuel).
-- P0 Phase 4: Distinction direct/OTA (table canaux) + Ledger Plumes (1€ direct = 1 Plume, taxe séjour exclue, "à venir" -> crédité au check-out, idempotence). Bonus 100 Plumes à la confirmation Lettre (une seule fois).
-- P0 Phase 5: Interface Carnet enrichie (progression, prochaine attention, Mes séjours réels).
-- P1 Phase 6: Système d'attentions + Administration Carnet (fiche client, +/- Plumes avec motif, audit, tableau de bord, export CSV abonnés).
-- P1 Phase 7: Éditeur d'emails par blocs + automatisations (emails 6/7/8: 100 premières Plumes, nouvelles Plumes après séjour, nouvelle attention).
-- Fournir le mot de passe d'application Infomaniak (SMTP_PASSWORD) pour activer l'envoi réel des emails.
+- [FAIT] Phase 1 Auth & comptes ; Phase 2 Smoobu HMAC ; Phase 3 Sync ; Phase 4 Rattachement + direct/OTA + Ledger ; Bonus 100 Plumes.
+- P0 Phase 5: Interface Carnet enrichie (progression vers prochaine attention, prochaine attention affichée).
+- P1 Phase 6: Système d'attentions (modèle + statuts + seuils 300/600/1000/1500/2000) + Administration Carnet (fiche client, +/- Plumes avec motif, rattachement manuel, audit, tableau de bord, export CSV abonnés, bouton "Synchroniser maintenant" + édition table canaux dans l'UI admin).
+- P1 Phase 7: Éditeur d'e-mails par blocs + automatisations (emails 6/7/8: 100 premières Plumes, nouvelles Plumes après séjour, nouvelle attention). Journal d'envois.
+- Webhooks Smoobu temps réel (aujourd'hui: pull + cron quotidien). NB: pas de signature webhook documentée -> re-fetch par ID + idempotence.
 
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
