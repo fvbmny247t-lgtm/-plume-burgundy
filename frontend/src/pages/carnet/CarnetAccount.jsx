@@ -28,11 +28,12 @@ const CarnetAccount = () => {
     if (user) setProfile({ first_name: user.first_name, last_name: user.last_name });
   }, [user]);
 
-  if (user === undefined) return <div className="min-h-[70vh] bg-cream" data-testid="carnet-account-loading" />;
-  if (user === null) {
-    navigate("/carnet/connexion", { replace: true });
-    return <div className="min-h-[70vh] bg-cream" />;
-  }
+  useEffect(() => {
+    if (user === null) navigate("/carnet/connexion", { replace: true });
+  }, [user, navigate]);
+
+  if (user === undefined || user === null)
+    return <div className="min-h-[70vh] bg-cream" data-testid="carnet-account-loading" />;
 
   const setNote = (k, type, text) => setMsg((m) => ({ ...m, [k]: { type, text } }));
   const Note = ({ k, okKey, okText }) => {

@@ -79,6 +79,27 @@ Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perple
 - SEO blog: JournalArticle jsonLd passé de Article à BlogPosting complet (image URL absolue, datePublished/dateModified, mainEntityOfPage, author/publisher 'Plume Suites' + logo).
 - DIAGNOSTIC indexation Google: pages secondaires rendues avec title/meta/contenu UNIQUES en prod (vérifié via crawl) -> indexables. Le fait que seule l'accueil ressorte = site récent + à soumettre dans Search Console (actions client: GSC sitemap + demande d'indexation, backlinks fiche Google/Instagram/annuaires). Non codable.
 
+## Update (Juin 2026) — Carnet Plume PHASE 1 (comptes clients + La Lettre de Marie)
+Spec complète: /app/memory/CARNET_PLUME_SPEC.md (37 points). Construction multi-phases. Phase 1 livrée et testée (iteration_12.json: backend 20/20, frontend 100%).
+- Email: MIGRATION Resend -> Infomaniak SMTP. Nouveau `backend/email_provider.py` (abstraction send_email(to,subject,html,reply_to)), `email_service.py` réécrit dessus (contact + emails Carnet). Variables backend/.env: SMTP_HOST/PORT/USER/PASSWORD, FROM_EMAIL, FROM_NAME="Marie, Plume Suites", REPLY_TO, PUBLIC_BASE_URL. NOTE: SMTP_PASSWORD VIDE tant que le client n'a pas fourni le mot de passe d'application Infomaniak -> emails non envoyés (échec silencieux journalisé), flux fonctionnels via tokens en base.
+- Backend `carnet.py` (router /api/carnet, monté dans api_router). Collection `carnet_users` (role "user", DISTINCTE de `admins`), + carnet_email_tokens / carnet_reset_tokens / carnet_login_attempts / carnet_newsletter. JWT Bearer role "user" (7j), séparation stricte admin/client (cross-auth -> 401). bcrypt. Brute-force login (5 tentatives/15 min, identifiant basé X-Forwarded-For). Index uniques sur startup.
+- Endpoints: register, login, me, logout, verify-email, resend-verification, forgot-password, reset-password, change-password, change-email, verify-email-change, PATCH /profile, DELETE /account ; newsletter/subscribe (double opt-in), newsletter/confirm, newsletter/unsubscribe (consentement historisé: opt_in_at, confirmed_at, source, text_version, unsubscribe_token).
+- 5 emails Carnet brandés (shell existant): vérif email, bienvenue Carnet, reset mdp, confirmation changement mdp, confirmation Lettre (double opt-in). Ton "Marie", pas de tiret cadratin dans le corps.
+- Frontend: `context/CarnetAuthContext.jsx` (token localStorage "plume_carnet_token"), `components/carnet/carnetUi.jsx`, pages sous `pages/carnet/`: CarnetLogin, CarnetRegister, CarnetForgot, CarnetReset, CarnetVerify (verify + change-email), Carnet (dashboard protégé), CarnetAccount (compte), NewsletterAction (confirmer/désinscription). Routes dans App.js (dans le Layout marketing). Provider CarnetAuthProvider autour du Router.
+- Navbar: icône "Mon Carnet" desktop (nav-carnet) + lien mobile (mobile-carnet-link). NAV.carnet ajouté dans content.js.
+- CORRECTIF menu mobile: la barre du haut passait en ink instantanément alors que l'overlay glissait en 500ms -> ajout transition-colors duration-500 sur la barre pour synchroniser l'apparition.
+- Vocabulaire respecté: "Carnet", "Plumes", "attentions", "La Lettre de Marie" (jamais points/cashback/VIP/fidélité).
+- Bonus 100 Plumes (à la confirmation de la Lettre) et ledger: DÉFÉRÉ (hook TODO dans newsletter_confirm) -> Phases ultérieures.
+
+## RESTE À FAIRE — Carnet Plume (ordre spec §36)
+- P0 Phase 2: Connexion sécurisée Smoobu (HMAC) — utiliser integration_expert. Clés déjà dans backend/.env.
+- P0 Phase 3: Sync réservations + rattachement résa<->compte (email + manuel).
+- P0 Phase 4: Distinction direct/OTA (table canaux) + Ledger Plumes (1€ direct = 1 Plume, taxe séjour exclue, "à venir" -> crédité au check-out, idempotence). Bonus 100 Plumes à la confirmation Lettre (une seule fois).
+- P0 Phase 5: Interface Carnet enrichie (progression, prochaine attention, Mes séjours réels).
+- P1 Phase 6: Système d'attentions + Administration Carnet (fiche client, +/- Plumes avec motif, audit, tableau de bord, export CSV abonnés).
+- P1 Phase 7: Éditeur d'emails par blocs + automatisations (emails 6/7/8: 100 premières Plumes, nouvelles Plumes après séjour, nouvelle attention).
+- Fournir le mot de passe d'application Infomaniak (SMTP_PASSWORD) pour activer l'envoi réel des emails.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

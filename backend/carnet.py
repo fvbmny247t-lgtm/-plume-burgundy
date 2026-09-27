@@ -266,7 +266,11 @@ async def _bruteforce_clear(identifier: str):
 
 
 def _client_id(request: Request, email: str) -> str:
-    ip = request.client.host if request.client else "?"
+    xff = request.headers.get("x-forwarded-for")
+    if xff:
+        ip = xff.split(",")[0].strip()
+    else:
+        ip = request.headers.get("x-real-ip") or (request.client.host if request.client else "?")
     return f"{ip}:{email.lower()}"
 
 

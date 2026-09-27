@@ -17,11 +17,11 @@ const Carnet = () => {
   const navigate = useNavigate();
   const [resent, setResent] = useState(false);
 
-  if (user === undefined) return <Loader />;
-  if (user === null) {
-    navigate("/carnet/connexion", { replace: true });
-    return <Loader />;
-  }
+  React.useEffect(() => {
+    if (user === null) navigate("/carnet/connexion", { replace: true });
+  }, [user, navigate]);
+
+  if (user === undefined || user === null) return <Loader />;
 
   const resend = async () => {
     try {
