@@ -18,6 +18,85 @@
         <meta name="twitter:title" content="Plume Suites — Suites de charme en Bourgogne, près de Dijon" />
         <meta name="twitter:description" content="Deux suites de charme en Bourgogne, à Fleurey-sur-Ouche près de Dijon, au-dessus du restaurant Ô P'tit Repère du Goût." />
         <meta name="twitter:image" content="https://plumesuites.fr/og-image.jpg" />
+        <!-- Géolocalisation (SEO local) -->
+        <meta name="author" content="Plume Suites" />
+        <meta name="geo.region" content="FR-21" />
+        <meta name="geo.placename" content="Fleurey-sur-Ouche, Bourgogne" />
+        <meta name="geo.position" content="47.2942;4.8675" />
+        <meta name="ICBM" content="47.2942, 4.8675" />
+        <!-- Données structurées globales (Google rich results + moteurs IA). Lues par tous les robots, même sans JS. -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://plumesuites.fr/#organization",
+              "name": "Plume Suites",
+              "url": "https://plumesuites.fr",
+              "logo": "https://plumesuites.fr/images/plume_logo_email.png",
+              "image": "https://plumesuites.fr/og-image.jpg",
+              "email": "hello@plumesuites.fr",
+              "telephone": "+33695488760",
+              "sameAs": ["https://www.instagram.com/plumesuites/"]
+            },
+            {
+              "@type": ["LodgingBusiness", "BedAndBreakfast"],
+              "@id": "https://plumesuites.fr/#lodging",
+              "name": "Plume Suites",
+              "description": "Deux suites de charme en Bourgogne, à Fleurey-sur-Ouche près de Dijon, au bord du canal de Bourgogne et au-dessus du restaurant Ô P'tit Repère du Goût. Séjours calmes entre vignobles et gastronomie.",
+              "url": "https://plumesuites.fr",
+              "image": "https://plumesuites.fr/og-image.jpg",
+              "telephone": "+33695488760",
+              "email": "hello@plumesuites.fr",
+              "priceRange": "€€€",
+              "currenciesAccepted": "EUR",
+              "numberOfRooms": 2,
+              "inLanguage": ["fr", "en"],
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "8 Rue des Vieilles Carrières",
+                "addressLocality": "Fleurey-sur-Ouche",
+                "postalCode": "21410",
+                "addressRegion": "Côte-d'Or",
+                "addressCountry": "FR"
+              },
+              "geo": { "@type": "GeoCoordinates", "latitude": 47.2942, "longitude": 4.8675 },
+              "hasMap": "https://www.google.com/maps/search/?api=1&query=8%20Rue%20des%20Vieilles%20Carri%C3%A8res%2021410%20Fleurey-sur-Ouche",
+              "areaServed": ["Dijon", "Beaune", "Côte-d'Or", "Bourgogne"],
+              "amenityFeature": [
+                { "@type": "LocationFeatureSpecification", "name": "Wi-Fi gratuit", "value": true },
+                { "@type": "LocationFeatureSpecification", "name": "Climatisation", "value": true },
+                { "@type": "LocationFeatureSpecification", "name": "Restaurant sur place", "value": true }
+              ],
+              "sameAs": ["https://www.instagram.com/plumesuites/"],
+              "parentOrganization": { "@id": "https://plumesuites.fr/#organization" }
+            },
+            {
+              "@type": "Restaurant",
+              "@id": "https://plumesuites.fr/#restaurant",
+              "name": "Ô P'tit Repère du Goût",
+              "url": "https://www.optitreperedugout.fr",
+              "servesCuisine": ["Française", "Espagnole"],
+              "priceRange": "€€",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Fleurey-sur-Ouche",
+                "postalCode": "21410",
+                "addressCountry": "FR"
+              }
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://plumesuites.fr/#website",
+              "url": "https://plumesuites.fr",
+              "name": "Plume Suites",
+              "inLanguage": "fr-FR",
+              "publisher": { "@id": "https://plumesuites.fr/#organization" }
+            }
+          ]
+        }
+        </script>
         <!-- meta description gérée par page via react-helmet-async (composant Seo) -->
         <link rel="preload" href="/fonts/Outfit-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
         <link rel="preload" href="/fonts/CormorantGaramond-400-italic-latin.woff2" as="font" type="font/woff2" crossorigin />

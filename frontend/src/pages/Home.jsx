@@ -14,19 +14,25 @@ const Home = () => {
 
   const lodgingLd = {
     "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    name: "Plume Suites Collection",
+    "@type": ["LodgingBusiness", "BedAndBreakfast"],
+    "@id": "https://plumesuites.fr/#lodging",
+    name: "Plume Suites",
+    url: "https://plumesuites.fr",
     description: lang === "fr"
-      ? "Suites de caractère au bord du canal de Bourgogne, à Fleurey-sur-Ouche."
-      : "Character suites by the Burgundy canal in Fleurey-sur-Ouche.",
-    image: IMAGES.heroPoster,
+      ? "Deux suites de charme en Bourgogne, à Fleurey-sur-Ouche près de Dijon, au bord du canal de Bourgogne, au-dessus du restaurant Ô P'tit Repère du Goût."
+      : "Two character suites in Burgundy, in Fleurey-sur-Ouche near Dijon, by the canal and above the Ô P'tit Repère du Goût restaurant.",
+    image: "https://plumesuites.fr/og-image.jpg",
+    telephone: "+33695488760",
+    email: "hello@plumesuites.fr",
     priceRange: "€€€",
+    numberOfRooms: 2,
+    sameAs: ["https://www.instagram.com/plumesuites/"],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Au-dessus du restaurant Ô P'tit Repère du Goût",
+      streetAddress: "8 Rue des Vieilles Carrières",
       addressLocality: "Fleurey-sur-Ouche",
       postalCode: "21410",
-      addressRegion: "Bourgogne-Franche-Comté",
+      addressRegion: "Côte-d'Or",
       addressCountry: "FR",
     },
     geo: { "@type": "GeoCoordinates", latitude: 47.2942, longitude: 4.8675 },

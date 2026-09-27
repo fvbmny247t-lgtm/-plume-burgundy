@@ -52,6 +52,16 @@ Objectif: scores Lighthouse verts SANS modifier le design. Testé frontend 100% 
 - Logo: TOUJOURS privilégier le vrai logo Plume Suites (SVG existants via composant PlumeLogo + PNG détouré pour l'OG). Pages admin mises à jour pour utiliser PlumeLogo.
 - Smoobu allemand: l'URL passe bien /fr/ ; l'affichage allemand vient du réglage de langue du COMPTE Smoobu / locale navigateur (à régler côté compte Smoobu), pas du code.
 
+## Update (Juin 2026) — Audit & optimisation SEO / AEO (moteurs IA)
+Objectif: maximiser la visibilité sur Google ET les moteurs IA (ChatGPT, Perplexity, Google AI Overviews). Aucun changement visuel.
+- Données structurées riches en HTML STATIQUE (public/index.html): @graph JSON-LD = Organization + LodgingBusiness/BedAndBreakfast (NAP complet 8 Rue des Vieilles Carrières 21410 Fleurey-sur-Ouche, géo 47.2942/4.8675, tél +33695488760, email, équipements, Instagram) + Restaurant (Ô P'tit Repère du Goût) + WebSite. Validé (json.loads OK).
+- /public/llms.txt créé (fiche factuelle pour moteurs IA).
+- /public/robots.txt: accueille explicitement GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended, Applebot-Extended, Bingbot + sitemap.
+- Balises géo dans index.html (geo.region FR-21, geo.position, ICBM, author).
+- Home.jsx lodgingLd enrichi (vraie adresse, @id #lodging, tél, email, sameAs) → fusionne avec le graphe statique.
+- Constat: le site déployé est rendu en HTML complet (bon pour crawlers + IA).
+- RESTE À FAIRE (recommandé): section FAQ visible + FAQPage schema (top AEO), Google Business Profile (action côté client), schéma HotelRoom+prix par suite, backlinks/annuaires, hreflang (nécessiterait des URL /en séparées).
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)
