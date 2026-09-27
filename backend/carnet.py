@@ -17,6 +17,7 @@ from fastapi import APIRouter, HTTPException, Header, Depends, Request
 from pydantic import BaseModel, EmailStr, Field
 
 import email_service as mail
+import smoobu_sync
 
 logger = logging.getLogger(__name__)
 
@@ -337,6 +338,37 @@ async def me(user: dict = Depends(get_current_user)):
     return _serialize(user)
 
 
+def _serialize_stay(r: dict) -> dict:
+    return {
+        "id": r.get("smoobu_id"),
+        "property": (r.get("apartment") or {}).get("name"),
+        "apartment": (r.get("apartment") or {}).get("name"),
+        "arrival": r.get("arrival"),
+        "departure": r.get("departure"),
+        "channel": (r.get("channel") or {}).get("name"),
+        "source": r.get("source"),
+        "eligible": bool(r.get("eligible")),
+        "price": r.get("price"),
+        "city_tax": r.get("city_tax"),
+        "eligible_amount": r.get("eligible_amount"),
+        "plumes": int(r.get("plumes", 0)),
+        "plumes_status": r.get("plumes_status"),
+        "is_cancelled": bool(r.get("is_cancelled")),
+    }
+
+
+@router.get("/stays")
+async def stays(user: dict = Depends(get_current_user)):
+    cursor = _db.smoobu_reservations.find(
+        {"user_id": user["id"], "is_blocked": {"$ne": True}}
+    ).sort("arrival", -1)
+    items = [_serialize_stay(r) async for r in cursor]
+    today = _now().date().isoformat()
+    upcoming = [s for s in items if (s.get("arrival") or "") >= today and not s.get("is_cancelled")]
+    next_stay = sorted(upcoming, key=lambda s: s.get("arrival") or "")[0] if upcoming else None
+    return {"stays": items, "next_stay": next_stay}
+
+
 @router.post("/verify-email")
 async def verify_email(payload: TokenIn):
     rec = await _db.carnet_email_tokens.find_one({"token": payload.token, "purpose": "verify"})
@@ -350,6 +382,11 @@ async def verify_email(payload: TokenIn):
     await _db.carnet_email_tokens.update_one({"token": payload.token}, {"$set": {"used": True}})
     if not user.get("email_verified"):
         await _db.carnet_users.update_one({"id": user["id"]}, {"$set": {"email_verified": True, "updated_at": _iso(_now())}})
+        fresh = await _db.carnet_users.find_one({"id": user["id"]})
+        try:
+            await smoobu_sync.link_reservations_for_user(fresh)
+        except Exception as e:  # noqa: BLE001
+            logger.error(f"link reservations failed: {e}")
         carnet_url = f"{_public_base()}/carnet"
         try:
             await mail.send_welcome_carnet_email(user["email"], user.get("first_name", ""), carnet_url, user.get("locale", "fr"))
@@ -474,6 +511,11 @@ async def verify_email_change(payload: TokenIn):
         {"$set": {"email": new_email, "pending_email": None, "email_verified": True, "updated_at": _iso(_now())}},
     )
     await _db.carnet_email_tokens.update_one({"token": payload.token}, {"$set": {"used": True}})
+    fresh = await _db.carnet_users.find_one({"id": rec["user_id"]})
+    try:
+        await smoobu_sync.link_reservations_for_user(fresh)
+    except Exception as e:  # noqa: BLE001
+        logger.error(f"relink after email change failed: {e}")
     return {"ok": True}
 
 
@@ -523,7 +565,10 @@ async def newsletter_confirm(payload: TokenIn):
             await _db.carnet_users.update_one(
                 {"id": rec["user_id"]}, {"$set": {"newsletter_status": "confirmed"}}
             )
-            # TODO Phase 6/7: crediter le bonus unique de 100 Plumes (ledger).
+            try:
+                await smoobu_sync.award_newsletter_bonus(rec["user_id"])
+            except Exception as e:  # noqa: BLE001
+                logger.error(f"newsletter bonus failed: {e}")
     return {"ok": True, "status": "confirmed"}
 
 

@@ -12,16 +12,48 @@ const Loader = () => (
 );
 
 const Carnet = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { user, logout, refreshMe, client } = useCarnet();
   const navigate = useNavigate();
   const [resent, setResent] = useState(false);
+  const [stays, setStays] = useState(null);
+  const [nextStay, setNextStay] = useState(null);
 
   React.useEffect(() => {
     if (user === null) navigate("/carnet/connexion", { replace: true });
   }, [user, navigate]);
 
+  React.useEffect(() => {
+    if (user && typeof user === "object") {
+      client
+        .get("/stays")
+        .then(({ data }) => {
+          setStays(data.stays || []);
+          setNextStay(data.next_stay || null);
+        })
+        .catch(() => setStays([]));
+    }
+  }, [user, client]);
+
   if (user === undefined || user === null) return <Loader />;
+
+  const fmtDate = (d) => {
+    if (!d) return "";
+    try {
+      return new Date(d + "T00:00:00").toLocaleDateString(lang === "en" ? "en-GB" : "fr-FR", {
+        day: "numeric", month: "short", year: "numeric",
+      });
+    } catch {
+      return d;
+    }
+  };
+
+  const statusLabel = {
+    pending: t({ fr: "À venir", en: "Upcoming" }),
+    credited: t({ fr: "Crédité", en: "Credited" }),
+    cancelled: t({ fr: "Annulé", en: "Cancelled" }),
+    blocked: "",
+  };
 
   const resend = async () => {
     try {
@@ -94,22 +126,65 @@ const Carnet = () => {
             </div>
             <div className="bg-white border border-ink/10 p-8 md:col-span-2 flex flex-col justify-center">
               <p className="font-serif italic text-2xl font-light mb-3">{t({ fr: "Votre histoire avec Plume", en: "Your story with Plume" })}</p>
-              <p className="font-sans text-sm text-ink/60 leading-relaxed">
-                {t({
-                  fr: "Vos séjours réservés en direct nourrissent doucement votre Carnet. Ils apparaîtront ici dès que la connexion à nos réservations sera active.",
-                  en: "Your directly booked stays gently nourish your Carnet. They will appear here as soon as our reservations connection is active.",
-                })}
-              </p>
+              {nextStay ? (
+                <p className="font-sans text-sm text-ink/70 leading-relaxed" data-testid="carnet-next-stay">
+                  {t({ fr: "Votre prochain séjour", en: "Your next stay" })} : <span className="text-ink">{nextStay.apartment}</span>
+                  {" — "}{fmtDate(nextStay.arrival)} → {fmtDate(nextStay.departure)}
+                </p>
+              ) : (
+                <p className="font-sans text-sm text-ink/60 leading-relaxed">
+                  {t({
+                    fr: "Vos séjours réservés en direct nourrissent doucement votre Carnet.",
+                    en: "Your directly booked stays gently nourish your Carnet.",
+                  })}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="mb-12">
             <h2 className="ps-overline text-ink/50 mb-4">{t({ fr: "Mes séjours", en: "My stays" })}</h2>
-            <div className="bg-white border border-ink/10 p-8 text-center" data-testid="carnet-stays-empty">
-              <p className="font-sans text-sm text-ink/50">
-                {t({ fr: "Vos séjours apparaîtront ici.", en: "Your stays will appear here." })}
-              </p>
-            </div>
+            {stays === null ? (
+              <div className="bg-white border border-ink/10 p-8 text-center" data-testid="carnet-stays-loading">
+                <p className="font-sans text-sm text-ink/40">…</p>
+              </div>
+            ) : stays.length === 0 ? (
+              <div className="bg-white border border-ink/10 p-8 text-center" data-testid="carnet-stays-empty">
+                <p className="font-sans text-sm text-ink/50">
+                  {user.email_verified
+                    ? t({ fr: "Vos séjours apparaîtront ici dès votre première réservation.", en: "Your stays will appear here after your first booking." })
+                    : t({ fr: "Confirmez votre email pour retrouver vos séjours ici.", en: "Confirm your email to see your stays here." })}
+                </p>
+              </div>
+            ) : (
+              <div className="bg-white border border-ink/10 divide-y divide-ink/10" data-testid="carnet-stays-list">
+                {stays.map((s) => (
+                  <div key={s.id} className="p-5 md:p-6 flex flex-wrap items-center gap-x-6 gap-y-2" data-testid={`carnet-stay-${s.id}`}>
+                    <div className="flex-1 min-w-[180px]">
+                      <p className="font-serif text-lg text-ink">{s.apartment || "—"}</p>
+                      <p className="font-sans text-xs text-ink/55 mt-1">{fmtDate(s.arrival)} → {fmtDate(s.departure)}</p>
+                    </div>
+                    <div className="text-left">
+                      <span className={`inline-block px-2.5 py-1 text-[10px] uppercase tracking-[0.15em] ${s.source === "DIRECT" ? "bg-terracotta/12 text-terracotta" : "bg-ink/8 text-ink/60"}`}>
+                        {s.source === "DIRECT" ? t({ fr: "Direct", en: "Direct" }) : (s.channel || t({ fr: "Partenaire", en: "Partner" }))}
+                      </span>
+                    </div>
+                    <div className="text-right min-w-[120px]">
+                      {s.plumes > 0 && s.plumes_status !== "cancelled" ? (
+                        <p className="font-serif text-xl text-ink">
+                          {s.plumes} <span className="text-xs text-ink/50 font-sans">{t({ fr: "Plumes", en: "Plumes" })}</span>
+                        </p>
+                      ) : (
+                        <p className="font-sans text-xs text-ink/40">{t({ fr: "Aucune Plume", en: "No Plumes" })}</p>
+                      )}
+                      <p className={`font-sans text-[11px] mt-0.5 ${s.plumes_status === "pending" ? "text-terracotta" : s.plumes_status === "cancelled" ? "text-ink/40 line-through" : "text-ink/50"}`}>
+                        {statusLabel[s.plumes_status]}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div>

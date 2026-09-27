@@ -1,9 +1,10 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header, Request, BackgroundTasks
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import hmac
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
@@ -14,6 +15,8 @@ from datetime import datetime, timezone, timedelta
 
 from journal_data import JOURNAL_ARTICLES
 import carnet
+import smoobu_sync
+import smoobu_client
 try:
     from email_service import send_contact_emails
 except Exception as _e:  # never let email layer block server startup
@@ -199,6 +202,79 @@ async def get_journal_article(slug: str):
 carnet.configure(db, JWT_SECRET)
 api_router.include_router(carnet.router)
 
+smoobu_sync.configure(db)
+
+
+class ChannelUpdate(BaseModel):
+    category: str
+    eligible: bool
+
+
+@api_router.post("/admin/smoobu/sync")
+async def admin_smoobu_sync(full: bool = False, admin: dict = Depends(get_current_admin)):
+    state = await db.smoobu_sync_state.find_one({"_id": "state"})
+    modified_from = None
+    if not full and state and state.get("last_sync_at"):
+        modified_from = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%d")
+    result = await smoobu_sync.sync_reservations(modified_from=modified_from, full=full)
+    credited = await smoobu_sync.credit_due_stays()
+    result["stays_credited_users"] = credited
+    return result
+
+
+@api_router.get("/admin/smoobu/state")
+async def admin_smoobu_state(admin: dict = Depends(get_current_admin)):
+    state = await db.smoobu_sync_state.find_one({"_id": "state"}, {"_id": 0})
+    total = await db.smoobu_reservations.count_documents({})
+    linked = await db.smoobu_reservations.count_documents({"user_id": {"$ne": None}})
+    return {"state": state or {}, "reservations_total": total, "reservations_linked": linked}
+
+
+@api_router.get("/admin/smoobu/apartments")
+async def admin_smoobu_apartments(admin: dict = Depends(get_current_admin)):
+    return await smoobu_client.get_apartments()
+
+
+@api_router.get("/admin/smoobu/channels")
+async def admin_smoobu_channels(admin: dict = Depends(get_current_admin)):
+    items = await db.smoobu_channels.find({}, {"_id": 0}).to_list(200)
+    return items
+
+
+@api_router.patch("/admin/smoobu/channels/{channel_id}")
+async def admin_update_channel(channel_id: int, payload: ChannelUpdate, admin: dict = Depends(get_current_admin)):
+    await db.smoobu_channels.update_one(
+        {"channel_id": channel_id},
+        {"$set": {"category": payload.category, "eligible": payload.eligible}},
+        upsert=True,
+    )
+    return {"channel_id": channel_id, "category": payload.category, "eligible": payload.eligible}
+
+
+WEBHOOK_CRON_SECRET = os.environ.get("WEBHOOK_CRON_SECRET")
+
+
+async def _run_smoobu_reconcile():
+    try:
+        modified_from = (datetime.now(timezone.utc) - timedelta(days=14)).strftime("%Y-%m-%d")
+        await smoobu_sync.sync_reservations(modified_from=modified_from)
+        await smoobu_sync.credit_due_stays()
+        logger.info("Smoobu reconcile cron completed")
+    except Exception as e:  # noqa: BLE001
+        logger.error("Smoobu reconcile cron failed: %s", e)
+
+
+@api_router.post("/cron/smoobu-reconcile")
+async def cron_smoobu_reconcile(request: Request, background_tasks: BackgroundTasks):
+    # Cron endpoints must ack 2xx immediately; enqueue/background the actual work.
+    auth = request.headers.get("authorization", "")
+    token = auth[7:] if auth.startswith("Bearer ") else ""
+    if not WEBHOOK_CRON_SECRET or not hmac.compare_digest(token, WEBHOOK_CRON_SECRET):
+        raise HTTPException(status_code=401, detail="unauthorized")
+    background_tasks.add_task(_run_smoobu_reconcile)
+    return {"accepted": True}
+
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -232,6 +308,7 @@ async def seed_admin():
         )
         logger.info("Updated admin password for: %s", email)
     await carnet.ensure_indexes()
+    await smoobu_sync.ensure_indexes()
 
 
 @app.on_event("shutdown")
