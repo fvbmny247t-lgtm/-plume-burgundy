@@ -115,12 +115,11 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="bg-ink">
                 {/* photo au format portrait, qui reste visible pendant qu'on lit le texte (au lieu d'être étirée sur toute la hauteur) */}
-                <div className="md:sticky md:top-0 relative">
-                  <div className="aspect-[4/5] overflow-hidden">
+                <div className="md:sticky md:top-0">
+                  {/* la photo devient elle-même transparente vers le bas : elle se fond dans le brun sans calque ni limite visible */}
+                  <div style={{ "--photo-fade": "linear-gradient(to bottom, #000 0%, #000 22%, rgba(0,0,0,.94) 34%, rgba(0,0,0,.8) 46%, rgba(0,0,0,.6) 58%, rgba(0,0,0,.4) 69%, rgba(0,0,0,.22) 80%, rgba(0,0,0,.09) 90%, rgba(0,0,0,.02) 96%, transparent 100%)" }} className="aspect-[4/5] overflow-hidden md:[mask-image:var(--photo-fade)] md:[-webkit-mask-image:var(--photo-fade)]">
                     <Img src={mainImg} alt={coffret.name[lang] || coffret.name.fr} loading="eager" className="w-full h-full object-cover" />
                   </div>
-                  {/* fondu vers le brun du panneau, pour ne pas étirer la photo sur toute la hauteur */}
-                  <div aria-hidden="true" className="hidden md:block pointer-events-none absolute inset-x-0 -bottom-px h-1/2 bg-gradient-to-b from-ink/0 via-ink/55 to-ink" />
                 </div>
               </div>
               <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
@@ -165,7 +164,12 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                         </li>
                       ))}
                     </ul>
-                    <p className="font-serif italic text-sm text-ink/50 mt-5">
+                    <a href="https://www.optitreperedugout.fr" target="_blank" rel="noreferrer" data-testid="gc-restaurant-submark"
+                      aria-label={t({ fr: "Découvrir le restaurant Ô P'tit Repère du Goût", en: "Discover the Ô P'tit Repère du Goût restaurant" })}
+                      className="mt-12 inline-block opacity-90 hover:opacity-100 transition-opacity">
+                      <Img src="/images/submark-repere-du-gout.png" alt="Ô P'tit Repère du Goût" className="h-14 w-auto mx-auto" />
+                    </a>
+                    <p className="font-serif italic text-sm text-ink/50 mt-6 max-w-xs mx-auto">
                       {t({
                         fr: "Ce menu est donné à titre d'exemple : il change avec les saisons. Contactez-nous pour connaître celui prévu à vos dates.",
                         en: "This menu is only an example, as it changes with the seasons. Contact us to find out the menu for your dates.",
