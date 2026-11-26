@@ -235,22 +235,21 @@ const CartesCadeaux = () => {
 
   return (
     <>
-      <Seo title={t({ fr: "Cartes cadeaux — Offrir une expérience Plume", en: "Gift cards — Offer a Plume experience" })}
-        description={t({ fr: "Offrez une parenthèse en Bourgogne : nos coffrets expérience à offrir, une nuit d'exception ou un instant de gastronomie.", en: "Offer a Burgundy escape: our experience gift cards, an exceptional night or a gastronomic moment." })} path="/cartes-cadeaux" />
+      <Seo title={t({ fr: "Cartes cadeaux — Offrir une expérience Plume Suites", en: "Gift cards — Offer a Plume Suites experience" })}
+        description={t({ fr: "Offrez une parenthèse en Bourgogne : nos cartes cadeaux, une nuit en suite ou une table imaginée par le chef.", en: "Offer a Burgundy escape: our gift cards, a night in a suite or a table imagined by the chef." })} path="/cartes-cadeaux" />
 
       {/* HERO — immersive fullscreen photography */}
       <section className="relative h-[92vh] min-h-[560px] w-full overflow-hidden bg-ink" data-testid="gc-hero">
         <Img src={HERO_IMG} alt="" loading="eager" className="absolute inset-0 w-full h-full object-cover kenburns" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/70" />
         <div className="relative h-full w-full flex flex-col items-center justify-center text-center px-6 text-cream">
-          <p className="ps-overline text-cream/75 mb-6 fade-in">{t({ fr: "Plume Suites · Cartes cadeaux", en: "Plume Suites · Gift cards" })}</p>
-          <h1 className="font-serif italic font-light text-4xl sm:text-6xl lg:text-7xl leading-[1.05] max-w-3xl fade-in">
-            {t({ fr: "Offrez un moment d'exception", en: "Offer an exceptional moment" })}
+          <h1 className="font-serif italic font-light text-4xl sm:text-6xl lg:text-7xl leading-[1.05] max-w-3xl fade-in whitespace-pre-line">
+            {t({ fr: "Offrir le temps\nde s'arrêter.", en: "Give the time\nto pause." })}
           </h1>
-          <p className="font-sans text-sm md:text-base text-cream/80 max-w-lg mx-auto leading-relaxed mt-7 fade-in">
+          <p className="font-sans text-sm md:text-base text-cream/80 max-w-lg mx-auto leading-relaxed mt-8 fade-in">
             {t({
-              fr: "Les plus beaux cadeaux sont ceux qui se vivent — une nuit en suite, une table imaginée par le chef, une parenthèse hors du temps.",
-              en: "The finest gifts are the ones you live — a night in a suite, a table imagined by the chef, a moment out of time.",
+              fr: "Une nuit dans nos suites, une table imaginée par le chef, un instant que l'on offre à ceux que l'on aime.",
+              en: "A night in our suites, a table imagined by the chef, a moment to offer those you love.",
             })}
           </p>
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 ps-scroll-cue">
@@ -262,90 +261,63 @@ const CartesCadeaux = () => {
       {/* STATEMENT — editorial scroll reveal */}
       <section className="bg-cream text-ink py-28 md:py-40 px-6" data-testid="gc-statement">
         <div className="max-w-4xl mx-auto text-center">
-          <Reveal className="ps-overline text-terracotta mb-10">{t({ fr: "L'art d'offrir", en: "The art of giving" })}</Reveal>
-          <Reveal as="p" delay={120} className="font-serif italic font-light text-3xl sm:text-4xl lg:text-5xl leading-[1.25] tracking-tight">
+          <Reveal as="p" className="font-serif italic font-light text-3xl sm:text-4xl lg:text-5xl leading-[1.25] tracking-tight">
             {t({
-              fr: "Offrir une carte Plume, c'est offrir du temps. Celui que l'on prend pour soi, pour l'autre, loin du bruit — au bord du canal de Bourgogne, entre deux suites et une table d'exception.",
-              en: "To give a Plume card is to give time. The kind you keep for yourself, for the other, far from the noise — by the Burgundy canal, between two suites and an exceptional table.",
+              fr: "Offrir une carte Plume Suites, c'est offrir du temps. Celui que l'on prend pour soi, pour l'autre, loin du bruit, au bord du canal de Bourgogne.",
+              en: "To give a Plume Suites card is to give time. The kind you keep for yourself, for the other, far from the noise, by the Burgundy canal.",
             })}
           </Reveal>
         </div>
       </section>
 
-      {/* EXPERIENCES — alternating editorial rows */}
+      {/* EXPERIENCES — card grid */}
       <section className="bg-cream text-ink pb-28 md:pb-40 px-6" data-testid="gc-coffrets">
-        <div className="max-w-6xl mx-auto space-y-28 md:space-y-40">
-          {coffrets.map((c, idx) => {
-            const reversed = idx % 2 === 1;
-            return (
-              <article key={c.id} data-testid={`gc-coffret-${c.slug}`}
-                className="group grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                {/* Image */}
-                <Reveal
-                  onClick={() => open(c, "detail")}
-                  className={`relative cursor-pointer overflow-hidden rounded-2xl ${reversed ? "lg:order-2" : ""}`}>
-                  <div className="aspect-[4/5] md:aspect-[5/4] overflow-hidden">
-                    <Img src={c.image_url} alt={c.name[lang] || c.name.fr} loading="eager"
-                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                </Reveal>
-
-                {/* Text */}
-                <Reveal delay={140} className={`flex flex-col ${reversed ? "lg:order-1" : ""}`}>
-                  <div className="flex items-center gap-4 mb-5">
-                    <span className="font-serif italic text-2xl text-terracotta/70">{String(idx + 1).padStart(2, "0")}</span>
-                    <span className="h-px flex-1 max-w-[52px] bg-ink/20" />
-                    <span className="ps-overline text-ink/45">{c.tagline[lang] || c.tagline.fr}</span>
-                  </div>
-
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-7 lg:gap-9">
+          {coffrets.map((c, idx) => (
+            <Reveal key={c.id} delay={idx * 110} className="h-full">
+              <article data-testid={`gc-coffret-${c.slug}`}
+                className="group h-full flex flex-col bg-white border border-ink/10 rounded-lg overflow-hidden transition-shadow duration-500 hover:shadow-[0_26px_55px_-30px_rgba(59,49,43,0.45)]">
+                <button onClick={() => open(c, "detail")} aria-label={c.name[lang] || c.name.fr}
+                  className="relative aspect-[4/3] overflow-hidden">
+                  <Img src={c.image_url} alt={c.name[lang] || c.name.fr} loading="eager"
+                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]" />
+                  <span className="absolute top-4 right-4 bg-cream/95 text-ink font-serif italic text-base px-3 py-1.5 leading-none">
+                    {c.from_price && <span className="font-sans not-italic text-[9px] uppercase tracking-[0.12em] text-ink/55 block mb-0.5">{t({ fr: "à partir de", en: "from" })}</span>}
+                    {fmtPrice(c.price)}
+                  </span>
+                </button>
+                <div className="p-6 md:p-7 flex flex-col flex-1">
+                  <p className="font-serif italic text-sm text-terracotta mb-1.5">{c.tagline[lang] || c.tagline.fr}</p>
                   <h2 onClick={() => open(c, "detail")}
-                    className="font-serif italic font-light text-4xl lg:text-5xl leading-[1.05] mb-5 cursor-pointer hover:text-terracotta transition-colors">
+                    className="font-serif italic font-light text-2xl md:text-3xl leading-snug cursor-pointer hover:text-terracotta transition-colors">
                     {c.name[lang] || c.name.fr}
                   </h2>
-
-                  <p className="font-sans text-base text-ink/65 leading-relaxed max-w-md mb-7">
-                    {(c.long_description && (c.long_description[lang] || c.long_description.fr)) || (c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
+                  <p className="font-sans text-sm text-ink/70 leading-relaxed mt-3 flex-1">
+                    {(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
                   </p>
-
-                  <ul className="space-y-2.5 mb-8">
-                    {c.includes.slice(0, 4).map((inc, i) => (
-                      <li key={i} className="font-sans text-sm text-ink/70 flex items-start gap-3">
-                        <Check size={15} strokeWidth={2} className="text-terracotta mt-0.5 shrink-0" /> {inc[lang] || inc.fr}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="flex items-center gap-6 flex-wrap pt-6 border-t border-ink/10">
-                    <span className="font-serif text-3xl">
-                      {c.from_price && <span className="text-[10px] uppercase tracking-[0.15em] text-ink/45 mr-2 align-middle">{t({ fr: "dès", en: "from" })}</span>}
-                      {fmtPrice(c.price)}
-                    </span>
-                    <div className="flex items-center gap-3 flex-wrap ml-auto">
-                      <button onClick={() => open(c, "detail")} data-testid={`gc-discover-${c.slug}`}
-                        className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-ink/70 hover:text-terracotta transition-colors">
-                        {t({ fr: "Découvrir", en: "Discover" })} <ArrowRight size={14} strokeWidth={1.5} />
-                      </button>
-                      <button onClick={(e) => { e.stopPropagation(); open(c, "personalize"); }} data-testid={`gc-offer-${c.slug}`}
-                        className="bg-ink text-cream px-7 py-3.5 rounded-full uppercase text-[11px] tracking-[0.2em] hover:bg-terracotta transition-colors">
-                        {t({ fr: "Offrir", en: "Gift this" })}
-                      </button>
-                    </div>
+                  <div className="flex items-center justify-between gap-4 mt-6 pt-5 border-t border-ink/10">
+                    <button onClick={() => open(c, "detail")} data-testid={`gc-discover-${c.slug}`}
+                      className="text-ink hover:text-terracotta transition-colors uppercase text-[11px] tracking-[0.26em] border-b border-ink/30 hover:border-terracotta pb-1">
+                      {t({ fr: "Découvrir", en: "Discover" })}
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); open(c, "personalize"); }} data-testid={`gc-offer-${c.slug}`}
+                      className="bg-terracotta hover:bg-terracottaDark text-cream transition-colors px-6 py-3 uppercase text-[11px] tracking-[0.28em]">
+                      {t({ fr: "Offrir", en: "Gift this" })}
+                    </button>
                   </div>
-                </Reveal>
+                </div>
               </article>
-            );
-          })}
+            </Reveal>
+          ))}
         </div>
 
         {/* REDEMPTION */}
         <Reveal className="max-w-2xl mx-auto text-center mt-32 md:mt-44 border-t border-ink/10 pt-16">
-          <p className="ps-overline text-terracotta mb-4">{t({ fr: "Déjà reçu une carte ?", en: "Already received a card?" })}</p>
-          <p className="font-serif italic font-light text-2xl md:text-3xl leading-snug mb-7">
-            {t({ fr: "Profitez de l'expérience qui vous a été offerte.", en: "Enjoy the experience you were given." })}
+          <p className="font-serif italic font-light text-2xl md:text-3xl leading-snug mb-8">
+            {t({ fr: "Vous avez reçu une carte cadeau Plume Suites ? Profitez de l'expérience qui vous a été offerte.", en: "Received a Plume Suites gift card? Enjoy the experience you were given." })}
           </p>
           <Link to="/reserver" data-testid="gc-use-link"
-            className="inline-flex items-center gap-2 border border-ink text-ink px-8 py-3.5 rounded-full uppercase text-[11px] tracking-[0.2em] hover:bg-ink hover:text-cream transition-colors">
+            className="inline-flex items-center gap-3 border border-ink text-ink px-8 py-3.5 uppercase text-[11px] tracking-[0.3em] hover:bg-ink hover:text-cream transition-colors">
             {t({ fr: "Utiliser ma carte cadeau", en: "Use my gift card" })} <ArrowRight size={14} strokeWidth={1.5} />
           </Link>
         </Reveal>

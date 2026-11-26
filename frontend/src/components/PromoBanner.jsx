@@ -55,8 +55,6 @@ const PromoBanner = () => {
 
   if (!show) return null;
 
-  const anchor = fr ? "/cgv#offre-semaine10" : "/cgv#long-stay-semaine10";
-
   return (
     <div
       aria-hidden={!open}
@@ -74,20 +72,15 @@ const PromoBanner = () => {
         <div className="relative max-w-7xl mx-auto px-9 md:px-12 py-2 md:py-2.5">
           <p className="text-center font-sans text-[10.5px] md:text-xs leading-snug tracking-[0.01em] pr-6">
             <span>
-              {fr ? "Prenez le temps de découvrir la Bourgogne." : "Take the time to discover Burgundy."}
+              {fr ? "Offrir Plume Suites, c'est offrir du temps." : "A Plume Suites gift is the gift of time."}
             </span>{" "}
-            <span className="whitespace-normal">
-              <span className="font-semibold">{fr ? "–10 %" : "10%"}</span>
-              {fr ? " dès 6 nuits jusqu'au 31 janvier 2027 " : " off stays of 6 nights or more until 31 January 2027 "}
-              <Link
-                to={anchor}
-                data-testid="promo-asterisk"
-                aria-label={fr ? "Conditions de l'offre" : "Offer terms"}
-                className="no-underline hover:opacity-70 transition-opacity"
-              >
-                *
-              </Link>
-            </span>
+            <Link
+              to="/cartes-cadeaux"
+              data-testid="promo-giftcards-link"
+              className="underline underline-offset-2 decoration-cream/50 hover:decoration-cream transition-colors"
+            >
+              {fr ? "Découvrir nos cartes cadeaux" : "Discover our gift cards"}
+            </Link>
           </p>
           <button
             type="button"

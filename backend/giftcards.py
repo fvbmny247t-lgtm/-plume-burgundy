@@ -99,14 +99,14 @@ DEFAULT_COFFRETS = [
     {
         "slug": "echappee-gourmande",
         "name": {"fr": "L'Échappée Gourmande", "en": "The Gourmet Escape"},
-        "tagline": {"fr": "Une nuit, une table d'exception", "en": "A night, an exceptional table"},
+        "tagline": {"fr": "Une nuit, une table imaginée par le chef", "en": "A night, a table imagined by the chef"},
         "short_description": {
             "fr": "Une nuit en suite et une expérience gastronomique imaginée par le chef, rien que pour vous.",
             "en": "A night in a suite and a gourmet experience imagined by the chef, just for you.",
         },
         "long_description": {
-            "fr": "L'alliance d'une nuit en suite et d'une table d'exception. Pour les bénéficiaires de cette carte, le chef du restaurant Ô P'tit Repère du Goût imagine une expérience gastronomique dédiée : un apéritif, un menu signé de sa main et un accord mets et vins. Choisissez votre suite, nous nous occupons du reste.",
-            "en": "The union of a night in a suite and an exceptional table. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant imagines a dedicated gourmet experience: an aperitif, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
+            "fr": "L'alliance d'une nuit en suite et d'une table imaginée par le chef. Pour les bénéficiaires de cette carte, le chef du restaurant Ô P'tit Repère du Goût compose une expérience gastronomique dédiée : un apéritif, un menu signé de sa main et un accord mets et vins. Choisissez votre suite, nous nous occupons du reste.",
+            "en": "The union of a night in a suite and a table imagined by the chef. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant composes a dedicated gourmet experience: an aperitif, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
         },
         "usage": {
             "fr": "Valable 12 mois. Le bénéficiaire réserve via le formulaire « Utiliser ma carte cadeau ». L'expérience gastronomique est dédiée aux porteurs de cette carte et convenue ensemble selon les disponibilités.",
@@ -114,8 +114,9 @@ DEFAULT_COFFRETS = [
         },
         "price": 350.0,
         "from_price": True,
-        "image_url": "/images/6r50xqk9_PHOTO_1__chef_.jpg",
+        "image_url": "/media/echappee-collage.jpg",
         "images": [
+            "/media/echappee-collage.jpg",
             "/images/6r50xqk9_PHOTO_1__chef_.jpg",
             "/images/PHOTO_13.jpg",
             "/images/PHOTO_12.jpg",
