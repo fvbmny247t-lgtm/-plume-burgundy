@@ -17,6 +17,7 @@ from journal_data import JOURNAL_ARTICLES
 import carnet
 import smoobu_sync
 import smoobu_client
+import giftcards
 try:
     from email_service import send_contact_emails
 except Exception as _e:  # never let email layer block server startup
@@ -275,6 +276,70 @@ async def cron_smoobu_reconcile(request: Request, background_tasks: BackgroundTa
     return {"accepted": True}
 
 
+# ---- Gift cards (coffrets) ----
+giftcards.configure(db, get_current_admin)
+api_router.include_router(giftcards.router)
+
+
+class CoffretIn(BaseModel):
+    slug: str
+    name: dict
+    tagline: dict | None = None
+    description: dict | None = None
+    price: float
+    image_url: str | None = None
+    includes: list = []
+    active: bool = True
+    sort_order: int = 99
+
+
+class RedemptionUpdate(BaseModel):
+    status: str
+    admin_note: str | None = None
+
+
+@api_router.post("/stripe/webhook")
+async def stripe_webhook(request: Request):
+    payload = await request.body()
+    sig = request.headers.get("stripe-signature", "")
+    return await giftcards.handle_webhook(payload, sig)
+
+
+@api_router.get("/admin/giftcards/coffrets")
+async def admin_gc_coffrets(admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_list_coffrets()
+
+
+@api_router.post("/admin/giftcards/coffrets")
+async def admin_gc_create(payload: CoffretIn, admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_upsert_coffret(payload.model_dump())
+
+
+@api_router.put("/admin/giftcards/coffrets/{coffret_id}")
+async def admin_gc_update(coffret_id: str, payload: CoffretIn, admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_upsert_coffret(payload.model_dump(), coffret_id)
+
+
+@api_router.delete("/admin/giftcards/coffrets/{coffret_id}")
+async def admin_gc_delete(coffret_id: str, admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_delete_coffret(coffret_id)
+
+
+@api_router.get("/admin/giftcards/cards")
+async def admin_gc_cards(admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_list_cards()
+
+
+@api_router.get("/admin/giftcards/redemptions")
+async def admin_gc_redemptions(admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_list_redemptions()
+
+
+@api_router.patch("/admin/giftcards/redemptions/{redemption_id}")
+async def admin_gc_update_redemption(redemption_id: str, payload: RedemptionUpdate, admin: dict = Depends(get_current_admin)):
+    return await giftcards.admin_update_redemption(redemption_id, payload.status, payload.admin_note)
+
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -309,6 +374,7 @@ async def seed_admin():
         logger.info("Updated admin password for: %s", email)
     await carnet.ensure_indexes()
     await smoobu_sync.ensure_indexes()
+    await giftcards.ensure_indexes_and_seed()
 
 
 @app.on_event("shutdown")

@@ -25,6 +25,12 @@ import CarnetVerify from "./pages/carnet/CarnetVerify";
 import Carnet from "./pages/carnet/Carnet";
 import CarnetAccount from "./pages/carnet/CarnetAccount";
 import NewsletterAction from "./pages/carnet/NewsletterAction";
+import CartesCadeaux from "./pages/CartesCadeaux";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
+import Voucher from "./pages/Voucher";
+import RedeemGift from "./pages/RedeemGift";
+import AdminGiftCards from "./pages/AdminGiftCards";
 
 function App() {
   return (
@@ -36,6 +42,7 @@ function App() {
             {/* Admin — hors du Layout marketing */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/cartes-cadeaux" element={<AdminGiftCards />} />
 
             {/* Site public */}
             <Route
@@ -65,6 +72,13 @@ function App() {
                     <Route path="/carnet/compte" element={<CarnetAccount />} />
                     <Route path="/lettre/confirmer" element={<NewsletterAction mode="confirm" />} />
                     <Route path="/lettre/desinscription" element={<NewsletterAction mode="unsubscribe" />} />
+
+                    {/* Cartes cadeaux */}
+                    <Route path="/cartes-cadeaux" element={<CartesCadeaux />} />
+                    <Route path="/paiement/succes" element={<PaymentSuccess />} />
+                    <Route path="/paiement/annule" element={<PaymentCancel />} />
+                    <Route path="/bon/:code" element={<Voucher />} />
+                    <Route path="/utiliser-mon-bon" element={<RedeemGift />} />
 
                     <Route path="*" element={<NotFound />} />
                   </Routes>

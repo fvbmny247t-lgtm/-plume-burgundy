@@ -197,6 +197,7 @@ export const NAV = {
   contact: { fr: "Contact", en: "Contact" },
   book: { fr: "Réserver", en: "Book" },
   carnet: { fr: "Mon Carnet", en: "My Carnet" },
+  giftcards: { fr: "Cartes cadeaux", en: "Gift cards" },
 };
 
 export const HOME = {

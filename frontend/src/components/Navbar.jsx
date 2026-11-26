@@ -25,6 +25,7 @@ const Navbar = () => {
     { to: "/art-de-vivre", label: NAV.artDeVivre },
     { to: "/sejours", label: NAV.sejours },
     { to: "/journal", label: NAV.journal },
+    { to: "/cartes-cadeaux", label: NAV.giftcards },
     { to: "/contact", label: NAV.contact },
   ];
 
@@ -46,15 +47,19 @@ const Navbar = () => {
       style={{ top: "var(--promo-h, 0px)" }}
       data-testid="main-navbar"
     >
-      {/* Navbar always transparent — content color changes on scroll */}
+      {/* Navbar transparent — un seul calque de fond (opacity) synchronisé avec l'overlay */}
       <div
-        className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ease-out ${open ? "bg-ink text-cream" : textColor}`}
+        className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ease-out ${open ? "text-cream" : textColor}`}
       >
-        <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="block">
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 bg-ink transition-opacity duration-500 ease-out ${open ? "opacity-100" : "opacity-0"}`}
+        />
+        <Link to="/" data-testid="nav-home-link" aria-label="Plume Suites" className="relative z-10 block">
           <PlumeLogo variant={open ? "white" : logoVariant} size="sm" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-9">
+        <nav className="relative z-10 hidden lg:flex items-center gap-9">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -71,7 +76,7 @@ const Navbar = () => {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4 md:gap-5">
+        <div className="relative z-10 flex items-center gap-4 md:gap-5">
           <div className="hidden md:flex items-center text-[11px] uppercase tracking-[0.3em] font-sans">
             <button
               data-testid="lang-switch-fr"
@@ -147,8 +152,8 @@ const Navbar = () => {
 
       {/* Mobile menu — fullscreen overlay, animated open/close */}
       <div
-        className={`lg:hidden fixed inset-0 z-40 bg-ink text-cream pt-24 px-6 pb-12 overflow-y-auto transition-[opacity,transform] duration-500 ease-out ${
-          open ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-4 pointer-events-none"
+        className={`lg:hidden fixed inset-0 z-40 bg-ink text-cream pt-24 px-6 pb-12 overflow-y-auto transition-opacity duration-500 ease-out ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         data-testid="mobile-menu"
         aria-hidden={!open}

@@ -291,3 +291,114 @@ async def send_newsletter_confirm_email(to: str, confirm_url: str, unsubscribe_u
         )
         subject = "Confirmez votre inscription — La Lettre de Marie"
     await send_email(to, subject, _shell(inner, unsubscribe_url=unsubscribe_url))
+
+
+# ---------------------------------------------------------------------------
+# Carnet Plume — cartes cadeaux (coffrets expérience)
+# ---------------------------------------------------------------------------
+def _fmt_date(iso_str: str, lang: str = "fr") -> str:
+    try:
+        from datetime import datetime as _dt
+        d = _dt.fromisoformat(iso_str)
+        months_fr = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+        if lang == "en":
+            return d.strftime("%d %B %Y")
+        return f"{d.day} {months_fr[d.month - 1]} {d.year}"
+    except Exception:
+        return iso_str or ""
+
+
+async def send_giftcard_email(to, buyer_name, coffret_name, code, recipient_name, message, expires_at, voucher_url, lang="fr"):
+    name = html_lib.escape(buyer_name or "")
+    coffret = html_lib.escape(coffret_name or "")
+    recip = html_lib.escape(recipient_name or "")
+    valid = _fmt_date(expires_at, lang)
+    code_block = (
+        f'<div style="margin:8px 0 24px 0;padding:22px;text-align:center;background-color:{CREAM};border:1px dashed {TERRA};">'
+        f'<p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(59,49,43,0.55);margin:0 0 8px 0;">'
+        + ("Your gift code" if lang == "en" else "Votre code cadeau") + "</p>"
+        f'<p style="font-family:Georgia,serif;font-size:26px;letter-spacing:3px;color:{INK};margin:0;">{html_lib.escape(code)}</p></div>'
+    )
+    msg_block = (
+        f'<div style="margin:0 0 20px 0;padding:16px 18px;background-color:{CREAM};border-left:2px solid {TERRA};">'
+        f'<p style="font-family:Georgia,serif;font-style:italic;font-size:15px;color:{INK};margin:0;line-height:1.6;">« {html_lib.escape(message)} »</p></div>'
+        if message else ""
+    )
+    if lang == "en":
+        inner = (
+            _heading("Your gift card is ready")
+            + _para(f"Hello {name},")
+            + _para(f"Thank you. Your gift card for the <strong>{coffret}</strong> experience is ready to be offered"
+                    + (f" to {recip}" if recip else "") + ".")
+            + code_block + msg_block
+            + _para(f"Valid until <strong>{valid}</strong>. To use it, the recipient simply fills in the short form on our site.")
+            + (_button(voucher_url, "View the gift voucher") if voucher_url else "")
+            + _signature("en")
+        )
+        subject = "Your Plume Suites gift card"
+    else:
+        inner = (
+            _heading("Votre carte cadeau est prête")
+            + _para(f"Bonjour {name},")
+            + _para(f"Merci. Votre carte cadeau pour le coffret <strong>{coffret}</strong> est prête à être offerte"
+                    + (f" à {recip}" if recip else "") + ".")
+            + code_block + msg_block
+            + _para(f"Valable jusqu'au <strong>{valid}</strong>. Pour l'utiliser, le bénéficiaire remplit simplement le court formulaire sur notre site.")
+            + (_button(voucher_url, "Voir le bon cadeau") if voucher_url else "")
+            + _signature("fr")
+        )
+        subject = "Votre carte cadeau Plume Suites"
+    await send_email(to, subject, _shell(inner))
+
+
+async def send_redemption_admin_email(req: dict):
+    rows = [
+        ("Code", req.get("code")),
+        ("Coffret", req.get("coffret_name")),
+        ("Nom", req.get("guest_name")),
+        ("Email", req.get("guest_email")),
+        ("Téléphone", req.get("guest_phone") or "—"),
+        ("Dates souhaitées", req.get("desired_dates")),
+        ("Voyageurs", req.get("nb_guests")),
+        ("Suite souhaitée", req.get("suite_pref") or "—"),
+    ]
+    rows_html = "".join(
+        f'<tr><td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(59,49,43,0.55);padding:6px 16px 6px 0;white-space:nowrap;vertical-align:top;">{html_lib.escape(str(k))}</td>'
+        f'<td style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:{INK};padding:6px 0;">{html_lib.escape(str(v))}</td></tr>'
+        for k, v in rows
+    )
+    msg = req.get("message")
+    msg_block = (
+        f'<div style="padding:16px 18px;background-color:{CREAM};border-left:2px solid {TERRA};">'
+        f'<p style="font-family:Georgia,serif;font-size:15px;color:{INK};margin:0;line-height:1.6;">{_esc(msg)}</p></div>'
+        if msg else ""
+    )
+    inner = (
+        _heading("Demande d'utilisation d'un bon cadeau")
+        + f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">{rows_html}</table>'
+        + msg_block
+        + _para("Pensez à valider le séjour dans Smoobu, puis à marquer la demande comme traitée dans l'administration.")
+    )
+    await send_email(CONTACT_INBOX, f"Bon cadeau à traiter — {req.get('code')}", _shell(inner), reply_to=req.get("guest_email"))
+
+
+async def send_redemption_guest_email(to, guest_name, coffret_name, code, lang="fr"):
+    name = html_lib.escape(guest_name or "")
+    coffret = html_lib.escape(coffret_name or "")
+    if lang == "en":
+        inner = (
+            _heading("We've received your request")
+            + _para(f"Hello {name},")
+            + _para(f"Thank you. We've received your request to use your gift card (<strong>{coffret}</strong>, code {html_lib.escape(code)}). We will get back to you very soon to arrange the dates of your stay.")
+            + _signature("en")
+        )
+        subject = "Your gift card request — Plume Suites"
+    else:
+        inner = (
+            _heading("Nous avons bien reçu votre demande")
+            + _para(f"Bonjour {name},")
+            + _para(f"Merci. Nous avons bien reçu votre demande d'utilisation de votre carte cadeau (<strong>{coffret}</strong>, code {html_lib.escape(code)}). Nous revenons vers vous très vite pour convenir des dates de votre séjour.")
+            + _signature("fr")
+        )
+        subject = "Votre demande de bon cadeau — Plume Suites"
+    await send_email(to, subject, _shell(inner))

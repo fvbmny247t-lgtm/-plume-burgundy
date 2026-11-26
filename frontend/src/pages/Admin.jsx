@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { LogOut, Mail, Inbox, RefreshCw, Search, Circle, CheckCircle2 } from "lucide-react";
 import { TOKEN_KEY } from "./AdminLogin";
@@ -85,6 +85,13 @@ const Admin = () => {
             <p className="ps-overline text-terracotta mt-2">Messages de contact</p>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              to="/admin/cartes-cadeaux"
+              data-testid="admin-giftcards-link"
+              className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-ink/70 border border-ink/15 px-4 py-2.5 hover:border-terracotta hover:text-terracotta transition-colors"
+            >
+              Cartes cadeaux
+            </Link>
             <button
               onClick={load}
               data-testid="admin-refresh-btn"

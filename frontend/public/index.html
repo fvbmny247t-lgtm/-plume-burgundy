@@ -100,6 +100,8 @@
         <!-- meta description gérée par page via react-helmet-async (composant Seo) -->
         <link rel="preload" href="/fonts/Outfit-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
         <link rel="preload" href="/fonts/CormorantGaramond-400-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+        <!-- Préchargement de l'image LCP (poster de la vidéo hero) -->
+        <link rel="preload" as="image" href="/media/hero_poster.jpg" fetchpriority="high" />
         <link rel="stylesheet" href="/fonts.css" />
         <!--
         manifest.json provides metadata used when your web app is installed on a
