@@ -119,3 +119,9 @@ html { overflow-x: hidden; }
   from { transform: scale(1.02); }
   to   { transform: scale(1.12); }
 }
+
+/* Impression (carte cadeau) : on n'imprime que le contenu de la page */
+@media print {
+  [data-testid="promo-banner"], [data-testid="main-navbar"], [data-testid="main-footer"] { display: none !important; }
+  @page { margin: 16mm; }
+}
