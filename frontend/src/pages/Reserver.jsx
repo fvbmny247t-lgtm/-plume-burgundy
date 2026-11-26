@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Check, Lock, Sparkles, Tag } from "lucide-react";
+import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import GiftRedeemSheet from "../components/GiftRedeemSheet";
 import Seo from "../components/Seo";
 import BookingIframe from "../components/BookingIframe";
 import ExperiencesSection from "../components/ExperiencesSection";
@@ -10,10 +10,26 @@ import Img from "../components/Img";
 
 const Reserver = () => {
   const { t } = useLang();
+  const [params, setParams] = useSearchParams();
+  // ?carte=1 ouvre directement le panneau (liens depuis la page cartes cadeaux et les emails)
+  const [giftOpen, setGiftOpen] = useState(params.get("carte") === "1");
+  const onGiftChange = (v) => {
+    setGiftOpen(v);
+    if (!v && params.get("carte")) { params.delete("carte"); setParams(params, { replace: true }); }
+  };
+
+  const GiftLink = ({ className = "" }) => (
+    <button type="button" onClick={() => setGiftOpen(true)} data-testid="reserver-use-giftcard"
+      className={`group inline-flex items-baseline gap-2 font-serif italic text-lg md:text-xl text-ink hover:text-terracotta transition-colors ${className}`}>
+      <span className="border-b border-terracotta/60 group-hover:border-terracotta pb-0.5">
+        {t({ fr: "J'ai une carte cadeau", en: "I have a gift card" })}
+      </span>
+      <span aria-hidden="true" className="text-terracotta transition-transform group-hover:translate-x-1">→</span>
+    </button>
+  );
 
   const benefits = [
     {
-      icon: Tag,
       title: { fr: "Meilleur tarif garanti", en: "Best rate guaranteed" },
       text: {
         fr: "Aucune commission d'intermédiaire — le prix le plus juste, en direct.",
@@ -21,7 +37,6 @@ const Reserver = () => {
       },
     },
     {
-      icon: Lock,
       title: { fr: "Réservation sécurisée", en: "Secure booking" },
       text: {
         fr: "Paiement crypté, confirmation immédiate, conditions transparentes.",
@@ -29,7 +44,6 @@ const Reserver = () => {
       },
     },
     {
-      icon: Sparkles,
       title: { fr: "Attention premium", en: "Premium attention" },
       text: {
         fr: "Une petite intention à l'arrivée pour nos hôtes en direct.",
@@ -66,45 +80,21 @@ const Reserver = () => {
               en: "Book directly with Plume Suites, at the best available rate and with our particular attention.",
             })}
           </p>
+          <GiftLink className="mt-8" />
         </div>
       </section>
 
-      {/* Carte cadeau — espace dédié bien visible */}
-      <section className="px-6 md:px-12 pb-6" data-testid="reserver-giftcard-block">
-        <div className="max-w-7xl mx-auto rounded-2xl bg-ink text-cream px-7 md:px-10 py-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
-          <div className="flex-1">
-            <p className="ps-overline text-terracotta mb-2">{t({ fr: "Carte cadeau", en: "Gift card" })}</p>
-            <h2 className="font-serif italic font-light text-2xl md:text-3xl leading-tight mb-2">
-              {t({ fr: "Vous avez reçu une carte cadeau Plume ?", en: "Received a Plume gift card?" })}
-            </h2>
-            <p className="font-sans text-sm text-cream/70 leading-relaxed max-w-xl">
-              {t({ fr: "Profitez de l'expérience qui vous a été offerte en réservant votre séjour.", en: "Enjoy the experience you were given by booking your stay." })}
-            </p>
-          </div>
-          <Link to="/utiliser-mon-bon" data-testid="reserver-use-giftcard"
-            className="shrink-0 inline-flex items-center justify-center bg-cream text-ink px-7 py-4 rounded-full uppercase text-[11px] tracking-[0.25em] hover:bg-terracotta hover:text-cream transition-colors">
-            {t({ fr: "Utiliser ma carte cadeau", en: "Use my gift card" })}
-          </Link>
-        </div>
-      </section>
 
       {/* BENEFITS strip */}
       <section className="px-6 md:px-12 pb-14 md:pb-16">
         <div className="max-w-7xl mx-auto border-t border-ink/15 pt-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {benefits.map((b, i) => {
-            const Icon = b.icon;
-            return (
-              <div key={i} className="flex items-start gap-5" data-testid={`reserver-benefit-${i}`}>
-                <div className="shrink-0 w-12 h-12 border border-terracotta text-terracotta flex items-center justify-center">
-                  <Icon size={18} strokeWidth={1.5} />
-                </div>
-                <div>
-                  <p className="font-serif italic text-xl md:text-2xl text-ink">{t(b.title)}</p>
-                  <p className="font-sans text-sm text-ink/70 mt-2 leading-relaxed">{t(b.text)}</p>
-                </div>
-              </div>
-            );
-          })}
+          {benefits.map((b, i) => (
+            <div key={i} data-testid={`reserver-benefit-${i}`}>
+              <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta">0{i + 1}</p>
+              <p className="font-serif italic text-xl md:text-2xl text-ink mt-3">{t(b.title)}</p>
+              <p className="font-sans text-sm text-ink/70 mt-2 leading-relaxed max-w-xs">{t(b.text)}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -118,10 +108,7 @@ const Reserver = () => {
                 {t({ fr: "Vérifier les disponibilités", en: "Check availability" })}
               </h2>
             </div>
-            <div className="hidden md:flex items-center gap-2 text-xs font-sans text-ink/60 uppercase tracking-[0.25em]">
-              <Check size={14} className="text-terracotta" />
-              {t({ fr: "Tarif direct", en: "Direct rate" })}
-            </div>
+            <GiftLink className="hidden md:inline-flex" />
           </div>
           <div className="bg-white border border-ink/10 p-2 md:p-4 shadow-sm max-w-3xl mx-auto">
             <BookingIframe />
@@ -132,9 +119,11 @@ const Reserver = () => {
       {/* PROLONGER L'EXPÉRIENCE — présentées lors de la réservation */}
       <ExperiencesSection embedded />
 
+      <GiftRedeemSheet open={giftOpen} onOpenChange={onGiftChange} />
+
       {/* CLOSING editorial line */}
-      <section className="px-6 md:px-12 pb-28 pt-10">
-        <div className="max-w-3xl mx-auto min-h-[40vh] flex items-center justify-center text-center">
+      <section className="px-6 md:px-12 pb-24 pt-16">
+        <div className="max-w-3xl mx-auto text-center">
           <p className="font-serif italic text-2xl md:text-3xl text-ink/85 leading-snug">
             {t({
               fr: "« Une réservation, c'est déjà une attention, la nôtre commence ici. »",
