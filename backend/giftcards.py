@@ -33,56 +33,110 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 
 DEFAULT_COFFRETS = [
     {
-        "slug": "parenthese",
-        "name": {"fr": "Parenthèse Plume", "en": "Plume Interlude"},
-        "tagline": {"fr": "Une nuit suspendue", "en": "One night, suspended in time"},
-        "description": {
-            "fr": "Une nuit en suite de charme et un petit-déjeuner servi avec attention. L'essentiel d'une parenthèse en Bourgogne.",
-            "en": "One night in a character suite with a thoughtfully served breakfast. The essence of a Burgundy escape.",
+        "slug": "parenthese-douceur",
+        "name": {"fr": "Une parenthèse de douceur", "en": "A gentle interlude"},
+        "tagline": {"fr": "L'intimité de la suite Douceur", "en": "The intimacy of the Douceur suite"},
+        "short_description": {
+            "fr": "Une nuit pour deux dans la suite Douceur, pensée comme un refuge feutré.",
+            "en": "One night for two in the Douceur suite, a hushed little refuge.",
         },
-        "price": 190.0,
+        "long_description": {
+            "fr": "Il y a des moments que l'on n'offre pas, que l'on partage. Une parenthèse de douceur, c'est une nuit dans la suite Douceur, la plus intime de la maison, où la lumière se fait tamisée et le temps se suspend. Un cocon pour se retrouver, loin de tout.",
+            "en": "Some moments are not given, they are shared. A gentle interlude is a night in the Douceur suite, the most intimate of the house, where the light softens and time stands still. A cocoon to reconnect, far from everything.",
+        },
+        "usage": {
+            "fr": "Valable 12 mois. Le bénéficiaire réserve ses dates via le formulaire « Utiliser ma carte cadeau », selon les disponibilités de la suite Douceur.",
+            "en": "Valid for 12 months. The recipient books their dates via the \u201cUse my gift card\u201d form, subject to Douceur suite availability.",
+        },
+        "price": 150.0,
+        "from_price": False,
         "image_url": "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG",
-        "includes": [
-            {"fr": "Une nuit en suite", "en": "One night in a suite"},
-            {"fr": "Petit-déjeuner maison", "en": "Homemade breakfast"},
+        "images": [
+            "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG",
+            "/images/PHOTO_2.jpg",
+            "/images/PHOTO_3.jpg",
+            "/media/p7ognvc7_B4C093FA-ECD4-4A9C-8CAC-D3B799C14E1B.JPG",
         ],
+        "includes": [
+            {"fr": "Une nuit pour deux dans la suite Douceur", "en": "One night for two in the Douceur suite"},
+            {"fr": "Une attention de la maison", "en": "A welcome attention from the house"},
+        ],
+        "suite_options": [],
         "active": True, "sort_order": 1,
     },
     {
-        "slug": "gourmande",
-        "name": {"fr": "Échappée Gourmande", "en": "Gourmet Escape"},
-        "tagline": {"fr": "La table en plus", "en": "With a seat at the table"},
-        "description": {
-            "fr": "Une nuit en suite, le petit-déjeuner et un dîner pour deux au restaurant Ô P'tit Repère du Goût, juste en dessous.",
-            "en": "One night in a suite, breakfast and a dinner for two at the Ô P'tit Repère du Goût restaurant, just downstairs.",
+        "slug": "envolee-deux",
+        "name": {"fr": "Une envolée à deux", "en": "A flight for two"},
+        "tagline": {"fr": "La suite signature L'Envolée", "en": "The signature L'Envolée suite"},
+        "short_description": {
+            "fr": "Une nuit pour deux dans la suite L'Envolée, une invitation à s'évader.",
+            "en": "One night for two in the L'Envolée suite, an invitation to escape.",
         },
-        "price": 290.0,
-        "image_url": "/images/6r50xqk9_PHOTO_1__chef_.jpg",
-        "includes": [
-            {"fr": "Une nuit en suite", "en": "One night in a suite"},
-            {"fr": "Petit-déjeuner maison", "en": "Homemade breakfast"},
-            {"fr": "Dîner pour deux au restaurant", "en": "Dinner for two at the restaurant"},
+        "long_description": {
+            "fr": "Une montée en gamme, un souffle. La suite L'Envolée est la plus spacieuse de la maison, baignée de lumière et de volumes généreux. Une envolée à deux, c'est l'invitation à prendre de la hauteur, à s'offrir un moment privilégié, suspendu.",
+            "en": "A step up, a breath of air. The L'Envolée suite is the most spacious of the house, bathed in light and generous volumes. A flight for two is an invitation to rise above it all and share a privileged, suspended moment.",
+        },
+        "usage": {
+            "fr": "Valable 12 mois. Le bénéficiaire réserve ses dates via le formulaire « Utiliser ma carte cadeau », selon les disponibilités de la suite L'Envolée.",
+            "en": "Valid for 12 months. The recipient books their dates via the \u201cUse my gift card\u201d form, subject to L'Envolée suite availability.",
+        },
+        "price": 170.0,
+        "from_price": False,
+        "image_url": "/media/49xdp4zr_F28F0185-183B-4CAC-9287-576C414DD07A.JPG",
+        "images": [
+            "/media/49xdp4zr_F28F0185-183B-4CAC-9287-576C414DD07A.JPG",
+            "/images/x2jgmdrr_PHOTO_7.jpg",
+            "/images/27a8ntzq_PHOTO_8.jpg",
+            "/media/6ompvcnm_7A67B1F7-EFA0-42FE-8054-5C7B83393CB8.JPG",
         ],
+        "includes": [
+            {"fr": "Une nuit pour deux dans la suite L'Envolée", "en": "One night for two in the L'Envolée suite"},
+            {"fr": "Une attention de la maison", "en": "A welcome attention from the house"},
+        ],
+        "suite_options": [],
         "active": True, "sort_order": 2,
     },
     {
-        "slug": "signature",
-        "name": {"fr": "Séjour Signature", "en": "Signature Stay"},
-        "tagline": {"fr": "Deux nuits, tout en douceur", "en": "Two nights, unhurried"},
-        "description": {
-            "fr": "Deux nuits dans la suite signature L'Envolée, petits-déjeuners et attentions de la maison pour un séjour que l'on n'oublie pas.",
-            "en": "Two nights in the signature suite L'Envolée, breakfasts and the house's little attentions for an unforgettable stay.",
+        "slug": "echappee-gourmande",
+        "name": {"fr": "L'Échappée Gourmande", "en": "The Gourmet Escape"},
+        "tagline": {"fr": "Une nuit, une table d'exception", "en": "A night, an exceptional table"},
+        "short_description": {
+            "fr": "Une nuit en suite et une expérience gastronomique imaginée par le chef, rien que pour vous.",
+            "en": "A night in a suite and a gourmet experience imagined by the chef, just for you.",
         },
-        "price": 490.0,
-        "image_url": "/media/49xdp4zr_F28F0185-183B-4CAC-9287-576C414DD07A.JPG",
+        "long_description": {
+            "fr": "L'alliance d'une nuit en suite et d'une table d'exception. Pour les bénéficiaires de cette carte, le chef du restaurant Ô P'tit Repère du Goût imagine une expérience gastronomique dédiée : un apéritif, un menu signé de sa main et un accord mets et vins. Choisissez votre suite, nous nous occupons du reste.",
+            "en": "The union of a night in a suite and an exceptional table. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant imagines a dedicated gourmet experience: an aperitif, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
+        },
+        "usage": {
+            "fr": "Valable 12 mois. Le bénéficiaire réserve via le formulaire « Utiliser ma carte cadeau ». L'expérience gastronomique est dédiée aux porteurs de cette carte et convenue ensemble selon les disponibilités.",
+            "en": "Valid for 12 months. The recipient books via the \u201cUse my gift card\u201d form. The gourmet experience is dedicated to card holders and arranged together, subject to availability.",
+        },
+        "price": 350.0,
+        "from_price": True,
+        "image_url": "/images/6r50xqk9_PHOTO_1__chef_.jpg",
+        "images": [
+            "/images/6r50xqk9_PHOTO_1__chef_.jpg",
+            "/images/PHOTO_13.jpg",
+            "/images/PHOTO_12.jpg",
+        ],
         "includes": [
-            {"fr": "Deux nuits en suite L'Envolée", "en": "Two nights in the L'Envolée suite"},
-            {"fr": "Petits-déjeuners maison", "en": "Homemade breakfasts"},
-            {"fr": "Attentions de la maison", "en": "The house's little attentions"},
+            {"fr": "Une nuit pour deux (suite au choix)", "en": "One night for two (suite of your choice)"},
+            {"fr": "Un apéritif", "en": "An aperitif"},
+            {"fr": "Une expérience gastronomique imaginée par le chef", "en": "A gourmet experience imagined by the chef"},
+            {"fr": "Un accord mets et vins", "en": "A food and wine pairing"},
+            {"fr": "Une attention de la maison", "en": "A welcome attention from the house"},
+        ],
+        "suite_options": [
+            {"key": "douceur", "label": {"fr": "Suite Douceur", "en": "Douceur suite"}, "price": 350.0,
+             "image_url": "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG"},
+            {"key": "envolee", "label": {"fr": "Suite L'Envolée", "en": "L'Envolée suite"}, "price": 370.0,
+             "image_url": "/media/49xdp4zr_F28F0185-183B-4CAC-9287-576C414DD07A.JPG"},
         ],
         "active": True, "sort_order": 3,
     },
 ]
+CURRENT_SLUGS = {c["slug"] for c in DEFAULT_COFFRETS}
 
 
 def configure(db, admin_dependency):
@@ -114,6 +168,14 @@ async def ensure_indexes_and_seed():
         for c in DEFAULT_COFFRETS:
             await _db.giftcard_coffrets.insert_one({"id": str(uuid.uuid4()), **c, "created_at": _iso(_now())})
         logger.info("Seeded default gift coffrets")
+    else:
+        # One-time catalogue refresh: if the new slugs are absent, replace the seed set.
+        has_new = await _db.giftcard_coffrets.find_one({"slug": {"$in": list(CURRENT_SLUGS)}})
+        if not has_new:
+            await _db.giftcard_coffrets.delete_many({"slug": {"$in": ["parenthese", "gourmande", "signature"]}})
+            for c in DEFAULT_COFFRETS:
+                await _db.giftcard_coffrets.insert_one({"id": str(uuid.uuid4()), **c, "created_at": _iso(_now())})
+            logger.info("Refreshed gift coffrets to the new experience set")
 
 
 def _now():
@@ -141,9 +203,16 @@ async def _unique_code() -> str:
 def _coffret_public(c: dict) -> dict:
     return {
         "id": c["id"], "slug": c.get("slug"), "name": c.get("name"),
-        "tagline": c.get("tagline"), "description": c.get("description"),
-        "price": c.get("price"), "image_url": c.get("image_url"),
-        "includes": c.get("includes", []), "active": c.get("active", True),
+        "tagline": c.get("tagline"),
+        "short_description": c.get("short_description") or c.get("description"),
+        "long_description": c.get("long_description") or c.get("description"),
+        "usage": c.get("usage"),
+        "price": c.get("price"), "from_price": bool(c.get("from_price")),
+        "image_url": c.get("image_url"),
+        "images": c.get("images") or ([c.get("image_url")] if c.get("image_url") else []),
+        "includes": c.get("includes", []),
+        "suite_options": c.get("suite_options", []),
+        "active": c.get("active", True),
         "sort_order": c.get("sort_order", 99),
     }
 
@@ -153,6 +222,7 @@ def _coffret_public(c: dict) -> dict:
 # ---------------------------------------------------------------------------
 class CheckoutIn(BaseModel):
     coffret_id: str
+    option_key: Optional[str] = None
     buyer_name: str = Field(min_length=1, max_length=120)
     buyer_email: EmailStr
     recipient_name: Optional[str] = Field(default=None, max_length=120)
@@ -190,9 +260,20 @@ async def create_checkout(payload: CheckoutIn):
     if not coffret:
         raise HTTPException(status_code=404, detail="Coffret introuvable")
     amount = float(coffret["price"])
+    suite_label = None
+    suite_key = None
+    options = coffret.get("suite_options") or []
+    if options:
+        chosen = next((o for o in options if o.get("key") == payload.option_key), None)
+        if not chosen:
+            raise HTTPException(status_code=400, detail="Veuillez choisir une suite")
+        amount = float(chosen["price"])
+        suite_key = chosen.get("key")
+        suite_label = (chosen.get("label") or {}).get("fr")
     if amount <= 0:
         raise HTTPException(status_code=400, detail="Montant invalide")
     name_fr = (coffret.get("name") or {}).get("fr") or "Coffret Plume Suites"
+    product_label = f"Carte cadeau — {name_fr}" + (f" ({suite_label})" if suite_label else "")
 
     import asyncio
     try:
@@ -202,7 +283,7 @@ async def create_checkout(payload: CheckoutIn):
                 line_items=[{
                     "price_data": {
                         "currency": CURRENCY,
-                        "product_data": {"name": f"Carte cadeau — {name_fr}"},
+                        "product_data": {"name": product_label},
                         "unit_amount": int(round(amount * 100)),
                     },
                     "quantity": 1,
@@ -233,7 +314,8 @@ async def create_checkout(payload: CheckoutIn):
         "id": str(uuid.uuid4()),
         "code": None,
         "coffret_id": coffret["id"],
-        "coffret_name": name_fr,
+        "coffret_name": name_fr + (f" — {suite_label}" if suite_label else ""),
+        "suite_key": suite_key,
         "amount": amount,
         "currency": CURRENCY,
         "buyer_name": payload.buyer_name.strip(),

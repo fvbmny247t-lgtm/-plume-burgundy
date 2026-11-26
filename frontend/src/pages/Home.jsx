@@ -185,6 +185,30 @@ const Home = () => {
       {/* PROLONGER L'EXPÉRIENCE */}
       <ExperiencesSection />
 
+      {/* Mise en avant cartes cadeaux */}
+      <section className="relative overflow-hidden" data-testid="giftcard-highlight-section">
+        <div className="absolute inset-0">
+          <Img src={IMAGES.restaurantChef} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-ink/70" />
+        </div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center text-cream px-6 py-28 md:py-40">
+          <p className="ps-overline text-terracotta mb-5">{t({ fr: "L'art d'offrir", en: "The art of giving" })}</p>
+          <h2 className="font-serif italic font-light text-3xl md:text-4xl lg:text-5xl leading-[1.15] mb-6">
+            {t({ fr: "Les plus beaux cadeaux sont ceux qui se vivent", en: "The finest gifts are the ones you live" })}
+          </h2>
+          <p className="font-sans text-base text-cream/75 max-w-xl mx-auto leading-relaxed mb-9">
+            {t({
+              fr: "Cette année, offrez une parenthèse hors du temps, une nuit d'exception ou un instant de gastronomie à partager.",
+              en: "This year, offer a moment out of time, an exceptional night or a gastronomic instant to share.",
+            })}
+          </p>
+          <Link to="/cartes-cadeaux" data-testid="home-giftcard-cta"
+            className="inline-flex items-center gap-2 bg-cream text-ink px-8 py-4 rounded-full uppercase text-[11px] tracking-[0.25em] hover:bg-terracotta hover:text-cream transition-colors">
+            {t({ fr: "Découvrir nos cartes cadeaux", en: "Discover our gift cards" })}
+          </Link>
+        </div>
+      </section>
+
       {/* QUOTE */}
       <section className="bg-terracotta text-cream py-32 md:py-48 px-6 md:px-12" data-testid="quote-section">
         <div className="max-w-5xl mx-auto text-center">

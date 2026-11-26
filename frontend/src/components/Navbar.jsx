@@ -66,9 +66,13 @@ const Navbar = () => {
               to={l.to}
               data-testid={`nav-link-${l.to.replace("/", "")}`}
               className={({ isActive }) =>
-                `font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
-                  isActive ? "opacity-100" : "opacity-90"
-                }`
+                l.to === "/cartes-cadeaux"
+                  ? `font-serif italic text-[13px] tracking-[0.12em] px-3.5 py-1.5 rounded-full border transition-colors ${
+                      open || isActive ? "border-terracotta text-terracotta" : "border-current/40 hover:border-terracotta hover:text-terracotta"
+                    }`
+                  : `font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
+                      isActive ? "opacity-100" : "opacity-90"
+                    }`
               }
             >
               {t(l.label)}

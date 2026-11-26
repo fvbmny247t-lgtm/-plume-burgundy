@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Check, Lock, Sparkles, Tag } from "lucide-react";
 import Seo from "../components/Seo";
 import BookingIframe from "../components/BookingIframe";
@@ -65,6 +66,25 @@ const Reserver = () => {
               en: "Book directly with Plume Suites, at the best available rate and with our particular attention.",
             })}
           </p>
+        </div>
+      </section>
+
+      {/* Carte cadeau — espace dédié bien visible */}
+      <section className="px-6 md:px-12 pb-6" data-testid="reserver-giftcard-block">
+        <div className="max-w-7xl mx-auto rounded-2xl bg-ink text-cream px-7 md:px-10 py-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <div className="flex-1">
+            <p className="ps-overline text-terracotta mb-2">{t({ fr: "Carte cadeau", en: "Gift card" })}</p>
+            <h2 className="font-serif italic font-light text-2xl md:text-3xl leading-tight mb-2">
+              {t({ fr: "Vous avez reçu une carte cadeau Plume ?", en: "Received a Plume gift card?" })}
+            </h2>
+            <p className="font-sans text-sm text-cream/70 leading-relaxed max-w-xl">
+              {t({ fr: "Profitez de l'expérience qui vous a été offerte en réservant votre séjour.", en: "Enjoy the experience you were given by booking your stay." })}
+            </p>
+          </div>
+          <Link to="/utiliser-mon-bon" data-testid="reserver-use-giftcard"
+            className="shrink-0 inline-flex items-center justify-center bg-cream text-ink px-7 py-4 rounded-full uppercase text-[11px] tracking-[0.25em] hover:bg-terracotta hover:text-cream transition-colors">
+            {t({ fr: "Utiliser ma carte cadeau", en: "Use my gift card" })}
+          </Link>
         </div>
       </section>
 

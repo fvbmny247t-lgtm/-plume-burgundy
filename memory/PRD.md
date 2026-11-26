@@ -124,6 +124,19 @@ Testé iteration_14 (parcours complet avec vrai paiement Stripe sandbox). 2 bugs
 - Empêcher plusieurs demandes de rédemption en attente pour un même code.
 - Upload de photos coffrets (object storage) si le client veut ajouter des images hors du site.
 
+## Update (Nov 2026) — Refonte expérience cartes cadeaux
+- Nouveaux coffrets (reseed auto, anciens slugs remplacés) avec PHOTOS MAISON + galeries :
+  - "Une parenthèse de douceur" 150€ (suite Douceur, 1 nuit 2 pers + attention). 
+  - "Une envolée à deux" 170€ (suite L'Envolée, 1 nuit 2 pers + attention).
+  - "L'Échappée Gourmande" dès 350€ : suite au choix (Douceur 350 / L'Envolée 370), + apéritif + expérience gastronomique du chef + accord mets et vins + attention. Prix + photo dynamiques selon la suite. AUCUN petit-déjeuner mentionné nulle part.
+- Schéma coffret étendu: short_description, long_description, usage, images[] (galerie), from_price, suite_options[{key,label,price,image_url}]. Checkout calcule le prix serveur selon option_key (manquant -> 400). _coffret_public rétrocompatible.
+- Frontend refondu (`CartesCadeaux.jsx`): hero épuré (mention "Édition des fêtes" SUPPRIMÉE), cartes arrondies entièrement cliquables (hover raffiné), modal 3 étapes: Détail (galerie + sélecteur de suite dynamique + inclus + modalités) -> Personnalisation (nom bénéficiaire + message + APERÇU live de la carte) -> Récapitulatif (nom/email acheteur) -> paiement Stripe. Bouton "Offrir" rapide conservé.
+- Nav: "Cartes cadeaux" en pilule contour serif distinctive (NavLink spécial dans Navbar).
+- Accueil: section éditoriale immersive cartes cadeaux (photo + overlay + CTA "Découvrir nos cartes cadeaux"), intemporelle.
+- Réserver: bloc dédié BIEN VISIBLE en haut "Vous avez reçu une carte cadeau Plume ?" -> /utiliser-mon-bon.
+- Vérifié: compile OK, flux modal OK, pricing suite (350/370) OK, option manquante 400.
+- ACTION CLIENT: désactiver "Adaptive Pricing" dans le dashboard Stripe (réglage compte, non modifiable par code) pour afficher toujours en EUR. Réclamer le compte Stripe (onboarding) pour passer en live.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)
