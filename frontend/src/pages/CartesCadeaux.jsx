@@ -69,6 +69,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
   const [optionKey, setOptionKey] = useState(hasOptions ? coffret.suite_options[0].key : null);
   const [mainImg, setMainImg] = useState(coffret.image_url);
   const [form, setForm] = useState({ recipient_name: "", message: "", buyer_name: "", buyer_email: "" });
+  const [cgvOk, setCgvOk] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -114,15 +115,18 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
           {step === "detail" && (
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="bg-ink">
-                <div className="aspect-[4/5] md:aspect-auto md:h-full overflow-hidden">
-                  <Img src={mainImg} alt={coffret.name[lang] || coffret.name.fr} loading="eager" className="w-full h-full object-cover" />
-                </div>
-                <div className="hidden md:flex gap-2 p-3 bg-ink">
-                  {gallery.slice(0, 4).map((g, i) => (
-                    <button key={i} onClick={() => setMainImg(g)} className={`w-16 h-16 overflow-hidden border-2 ${mainImg === g ? "border-terracotta" : "border-transparent opacity-70 hover:opacity-100"}`}>
-                      <Img src={g} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
+                {/* photo au format portrait, qui reste visible pendant qu'on lit le texte (au lieu d'être étirée sur toute la hauteur) */}
+                <div className="md:sticky md:top-0">
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <Img src={mainImg} alt={coffret.name[lang] || coffret.name.fr} loading="eager" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="hidden md:flex gap-2 p-3 bg-ink">
+                    {gallery.slice(0, 4).map((g, i) => (
+                      <button key={i} onClick={() => setMainImg(g)} className={`w-16 h-16 overflow-hidden border-2 ${mainImg === g ? "border-terracotta" : "border-transparent opacity-70 hover:opacity-100"}`}>
+                        <Img src={g} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
@@ -249,8 +253,18 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                         className="w-full border-0 border-b border-ink/25 bg-transparent px-0 py-2.5 font-sans text-sm outline-none focus:border-terracotta" />
                       <p className="text-xs text-ink/45 mt-1">{t({ fr: "Vous recevrez le bon cadeau par email.", en: "You will receive the gift card by email." })}</p>
                     </div>
+                    <label className="flex items-start gap-3 mb-5 cursor-pointer font-sans text-xs text-ink/70 leading-relaxed">
+                      <input type="checkbox" required checked={cgvOk} onChange={(e) => setCgvOk(e.target.checked)} data-testid="gc-cgv"
+                        className="mt-0.5 h-4 w-4 shrink-0 accent-terracotta" />
+                      <span>
+                        {t({ fr: "J'ai lu et j'accepte les ", en: "I have read and accept the " })}
+                        <a href={lang === "en" ? "/cgv#gift-cards" : "/cgv#cartes-cadeaux"} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-terracotta">
+                          {t({ fr: "conditions générales de vente", en: "terms and conditions of sale" })}
+                        </a>.
+                      </span>
+                    </label>
                     {error && <p className="text-sm text-red-700 mb-4" data-testid="gc-pay-error">{error}</p>}
-                    <button type="submit" disabled={loading} data-testid="gc-pay-submit"
+                    <button type="submit" disabled={loading || !cgvOk} data-testid="gc-pay-submit"
                       className="w-full bg-ink text-cream py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-terracotta transition-colors disabled:opacity-60">
                       {loading ? "…" : `${t({ fr: "Payer", en: "Pay" })} ${fmtPrice(price)}`}
                     </button>
