@@ -14,37 +14,32 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api/giftcards`;
 
 const fmtPrice = (n) => `${Number(n)} €`;
 
-// La carte elle-même, dessinée comme un carton imprimé : c'est ce que reçoit le bénéficiaire.
-const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang, large = false }) => {
+// La carte telle que la reçoit le bénéficiaire : une bande photo + un carton crème.
+// Mise en page en flux simple (pas d'aspect-ratio ni de position absolue) pour rester stable partout.
+const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) => {
   const { t } = useLang();
   return (
-    <div
-      data-testid="gc-preview"
-      className={`relative bg-[#f8f4ec] text-ink shadow-[0_30px_60px_-35px_rgba(59,49,43,0.55),0_2px_6px_-2px_rgba(59,49,43,0.15)] w-full min-h-[250px] sm:min-h-0 sm:aspect-[7/5] ${large ? "max-w-[560px]" : ""}`}
-    >
-      <div className="absolute inset-3 md:inset-4 border border-terracotta/45 pointer-events-none" />
-      <div className="relative h-full min-h-[inherit] flex flex-col items-center justify-between gap-4 text-center px-8 md:px-12 py-8 md:py-9">
-        <div>
-          <PlumeLogo variant="dark" size="sm" />
+    <div data-testid="gc-preview"
+      className="w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#faf7f1] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
+      <div className="relative min-h-[220px]">
+        <Img src={coffret.image_url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+      </div>
+      <div className="flex flex-col p-4 sm:p-7 border-l-[3px] border-terracotta/70 min-w-0">
+        <div className="flex items-center justify-between gap-3">
+          <PlumeLogo variant="dark" size="sm" className="!h-7" />
+          <span className="hidden sm:inline font-sans text-[9px] uppercase tracking-[0.3em] text-terracotta whitespace-nowrap">{t({ fr: "Carte cadeau", en: "Gift card" })}</span>
         </div>
-        <div className="min-w-0 w-full">
-          <p className="font-sans text-[9px] md:text-[10px] uppercase tracking-[0.35em] text-terracotta mb-2">
-            {t({ fr: "Carte cadeau", en: "Gift card" })}
-          </p>
-          <p className={`font-serif italic font-light leading-tight ${large ? "text-[26px] sm:text-3xl md:text-4xl" : "text-2xl"}`}>
-            {coffret.name[lang] || coffret.name.fr}
-          </p>
+        <div className="my-5 sm:my-6">
+          <p className="font-serif italic font-light text-[22px] sm:text-[26px] leading-tight break-words">{coffret.name[lang] || coffret.name.fr}</p>
           {suiteLabel && <p className="font-sans text-xs text-ink/55 mt-1">{suiteLabel}</p>}
-          {(recipient || message) && (
-            <div className="mt-3 space-y-1">
-              {recipient && <p className="font-serif text-base text-ink/80">{t({ fr: "pour", en: "for" })} {recipient}</p>}
-              {message && <p className="font-serif italic text-sm text-ink/65 leading-snug line-clamp-2 break-words">« {message} »</p>}
-            </div>
-          )}
+          <p className="font-serif text-[15px] text-ink/75 mt-3 break-words">
+            {t({ fr: "Pour", en: "For" })} {recipient || <span className="text-ink/35">…</span>}
+          </p>
+          {message && <p className="font-serif italic text-sm text-ink/60 mt-1.5 leading-snug break-words line-clamp-3">« {message} »</p>}
         </div>
-        <div className="w-full flex items-end justify-between font-sans text-[9px] md:text-[10px] uppercase tracking-[0.25em] text-ink/50">
-          <span>{t({ fr: "Valable 12 mois", en: "Valid 12 months" })}</span>
-          {price != null && <span className="font-serif normal-case tracking-normal text-lg text-ink">{fmtPrice(price)}</span>}
+        <div className="mt-auto pt-3 border-t border-ink/10 flex items-baseline justify-between gap-3">
+          <span className="font-sans text-[9px] uppercase tracking-[0.2em] text-ink/45 whitespace-nowrap">{t({ fr: "Valable 12 mois", en: "Valid 12 months" })}</span>
+          {price != null && <span className="font-serif text-xl whitespace-nowrap">{fmtPrice(price)}</span>}
         </div>
       </div>
     </div>
@@ -96,7 +91,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
       <div className="min-h-full flex items-start md:items-center justify-center p-4 md:p-8">
         <div className="bg-cream w-full max-w-4xl overflow-hidden relative my-4" onClick={(e) => e.stopPropagation()}>
           <button onClick={onClose} data-testid="gc-modal-close" aria-label="Fermer"
-            className="absolute top-3 right-3 z-10 w-10 h-10 bg-cream text-ink flex items-center justify-center hover:bg-terracotta hover:text-cream transition-colors">
+            className="absolute top-3 right-3 z-10 w-10 h-10 bg-cream/90 text-ink flex items-center justify-center hover:text-terracotta transition-colors">
             <X size={18} strokeWidth={1.5} />
           </button>
 
@@ -114,7 +109,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                   ))}
                 </div>
               </div>
-              <div className="p-8 md:p-10 flex flex-col">
+              <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
                 <p className="ps-overline text-terracotta mb-2">{coffret.tagline[lang] || coffret.tagline.fr}</p>
                 <h2 className="font-serif italic font-light text-3xl md:text-4xl leading-tight mb-4">{coffret.name[lang] || coffret.name.fr}</h2>
                 <p className="font-sans text-sm text-ink/70 leading-relaxed mb-6">{coffret.long_description[lang] || coffret.long_description.fr}</p>
@@ -172,7 +167,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                 <GiftPreview coffret={{ ...coffret, image_url: previewImg }} suiteLabel={suiteLabel} recipient={form.recipient_name} message={form.message} price={price} lang={lang} />
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col">
+              <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
                 <button onClick={() => setStep(step === "recap" ? "personalize" : "detail")} className="inline-flex items-center gap-2 text-sm text-ink/55 hover:text-terracotta mb-5">
                   <ArrowLeft size={15} strokeWidth={1.5} /> {t({ fr: "Retour", en: "Back" })}
                 </button>
@@ -280,45 +275,35 @@ const CartesCadeaux = () => {
         </Reveal>
       </section>
 
-      {/* EXPÉRIENCES — une par ligne, comme les pages d'un carnet */}
-      <section className="bg-cream text-ink px-6 md:px-12 pb-24 md:pb-36" data-testid="gc-coffrets">
-        <div className="max-w-6xl mx-auto">
+      {/* EXPÉRIENCES — les trois offres visibles d'un coup */}
+      <section className="bg-cream text-ink px-6 md:px-12 pb-24 md:pb-32" data-testid="gc-coffrets">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-16">
           {coffrets.map((c, idx) => {
             const name = c.name[lang] || c.name.fr;
-            const flip = idx % 2 === 1;
             return (
-              <Reveal key={c.id} as="article" data-testid={`gc-coffret-${c.slug}`}
-                className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14 items-center py-12 md:py-16 border-t border-ink/15 first:border-t-0">
-                <button onClick={() => open(c, "detail")} aria-label={name}
-                  className={`group relative block overflow-hidden aspect-[4/5] md:aspect-[5/6] md:col-span-6 ${flip ? "md:order-2 md:col-start-7" : ""}`}>
+              <Reveal key={c.id} delay={idx * 110} as="article" data-testid={`gc-coffret-${c.slug}`} className="flex flex-col">
+                <button onClick={() => open(c, "detail")} aria-label={name} className="group relative block overflow-hidden aspect-[4/5]">
                   <Img src={c.image_url} alt={name} className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]" />
                 </button>
-                <div className={`md:col-span-5 ${flip ? "md:order-1 md:col-start-1" : "md:col-start-8"}`}>
-                  <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta">0{idx + 1}</p>
-                  <p className="font-serif italic text-lg text-ink/60 mt-4">{c.tagline[lang] || c.tagline.fr}</p>
-                  <h2 className="font-serif italic font-light text-4xl md:text-5xl leading-[1.05] mt-1">{name}</h2>
-                  <p className="font-sans text-[15px] text-ink/75 leading-relaxed mt-5 max-w-md">
-                    {(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
+                <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta mt-7">0{idx + 1}</p>
+                <p className="font-serif italic text-base text-ink/60 mt-3">{c.tagline[lang] || c.tagline.fr}</p>
+                <h2 className="font-serif italic font-light text-3xl lg:text-[34px] leading-[1.1] mt-1">{name}</h2>
+                <p className="font-sans text-[15px] text-ink/75 leading-relaxed mt-4 flex-1">
+                  {(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
+                </p>
+                <div className="mt-7 pt-5 border-t border-ink/15 flex items-center justify-between gap-4">
+                  <p className="font-serif text-2xl leading-none whitespace-nowrap">
+                    {c.from_price && <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-ink/50 mr-1.5 align-middle">{t({ fr: "dès", en: "from" })}</span>}
+                    {fmtPrice(c.price)}
                   </p>
-                  {c.includes?.length > 0 && (
-                    <ul className="mt-6 space-y-1.5 font-sans text-sm text-ink/70">
-                      {c.includes.map((inc, i) => (
-                        <li key={i} className="flex gap-3"><span aria-hidden="true" className="text-terracotta">—</span>{inc[lang] || inc.fr}</li>
-                      ))}
-                    </ul>
-                  )}
-                  <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5">
-                    <p className="font-serif text-3xl leading-none">
-                      {c.from_price && <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-ink/50 mr-2 align-middle">{t({ fr: "dès", en: "from" })}</span>}
-                      {fmtPrice(c.price)}
-                    </p>
-                    <button onClick={() => open(c, "personalize")} data-testid={`gc-offer-${c.slug}`}
-                      className="bg-terracotta hover:bg-terracottaDark text-cream transition-colors px-8 py-3.5 uppercase text-[11px] tracking-[0.3em]">
-                      {t({ fr: "Offrir", en: "Gift this" })}
-                    </button>
+                  <div className="flex items-center gap-5">
                     <button onClick={() => open(c, "detail")} data-testid={`gc-discover-${c.slug}`}
-                      className="font-sans uppercase text-[11px] tracking-[0.3em] text-ink/70 hover:text-terracotta transition-colors border-b border-ink/25 hover:border-terracotta pb-1">
-                      {t({ fr: "En savoir plus", en: "Learn more" })}
+                      className="font-sans uppercase text-[10px] tracking-[0.3em] text-ink/70 hover:text-terracotta transition-colors border-b border-ink/25 hover:border-terracotta pb-1 whitespace-nowrap">
+                      {t({ fr: "Détails", en: "Details" })}
+                    </button>
+                    <button onClick={() => open(c, "personalize")} data-testid={`gc-offer-${c.slug}`}
+                      className="bg-terracotta hover:bg-terracottaDark text-cream transition-colors px-6 py-3 uppercase text-[10px] tracking-[0.3em]">
+                      {t({ fr: "Offrir", en: "Gift this" })}
                     </button>
                   </div>
                 </div>
@@ -328,11 +313,11 @@ const CartesCadeaux = () => {
         </div>
       </section>
 
-      {/* LA CARTE — l'objet que l'on offre */}
+      {/* LA CARTE — l'objet que l'on offre, posé sur une photo de la maison */}
       {coffrets[0] && (
         <section className="bg-sand text-ink px-6 md:px-12 py-24 md:py-32" data-testid="gc-the-card">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
-            <div className="md:col-span-5">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div className="lg:col-span-5">
               <p className="ps-overline text-terracotta mb-4">{t({ fr: "La carte", en: "The card" })}</p>
               <h2 className="font-serif italic font-light text-4xl md:text-5xl leading-[1.05]">
                 {t({ fr: "Une carte à son nom.", en: "A card in their name." })}
@@ -356,11 +341,14 @@ const CartesCadeaux = () => {
                 ))}
               </ol>
             </div>
-            <div className="md:col-span-7 flex justify-center md:justify-end">
-              <div className="w-full max-w-[560px] md:rotate-[-2deg]">
-                <GiftPreview large coffret={coffrets[0]} recipient={t({ fr: "Claire & Antoine", en: "Claire & Antoine" })}
-                  message={t({ fr: "Pour souffler un peu, rien que vous deux.", en: "A little time to breathe, just the two of you." })}
-                  price={coffrets[0].price} lang={lang} />
+            <div className="lg:col-span-7">
+              <div className="relative">
+                <Img src={coffrets[1]?.image_url || coffrets[0].image_url} alt="" className="w-full aspect-[4/3] object-cover" />
+                <div className="relative -mt-24 sm:-mt-32 mx-4 sm:mx-10 lg:mx-0 lg:-ml-12 lg:mr-16">
+                  <GiftPreview coffret={coffrets[0]} recipient="Claire & Antoine"
+                    message={t({ fr: "Pour souffler un peu, rien que vous deux.", en: "A little time to breathe, just the two of you." })}
+                    price={coffrets[0].price} lang={lang} />
+                </div>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Gift, Lock, Tag } from "lucide-react";
 import GiftRedeemSheet from "../components/GiftRedeemSheet";
 import Seo from "../components/Seo";
 import BookingIframe from "../components/BookingIframe";
@@ -30,6 +31,7 @@ const Reserver = () => {
 
   const benefits = [
     {
+      icon: Tag,
       title: { fr: "Meilleur tarif garanti", en: "Best rate guaranteed" },
       text: {
         fr: "Aucune commission d'intermédiaire — le prix le plus juste, en direct.",
@@ -37,6 +39,7 @@ const Reserver = () => {
       },
     },
     {
+      icon: Lock,
       title: { fr: "Réservation sécurisée", en: "Secure booking" },
       text: {
         fr: "Paiement crypté, confirmation immédiate, conditions transparentes.",
@@ -44,7 +47,8 @@ const Reserver = () => {
       },
     },
     {
-      title: { fr: "Attention premium", en: "Premium attention" },
+      icon: Gift,
+      title: { fr: "Une attention de la maison", en: "A little something from us" },
       text: {
         fr: "Une petite intention à l'arrivée pour nos hôtes en direct.",
         en: "A welcome touch on arrival for our direct guests.",
@@ -88,13 +92,20 @@ const Reserver = () => {
       {/* BENEFITS strip */}
       <section className="px-6 md:px-12 pb-14 md:pb-16">
         <div className="max-w-7xl mx-auto border-t border-ink/15 pt-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {benefits.map((b, i) => (
-            <div key={i} data-testid={`reserver-benefit-${i}`}>
-              <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta">0{i + 1}</p>
-              <p className="font-serif italic text-xl md:text-2xl text-ink mt-3">{t(b.title)}</p>
-              <p className="font-sans text-sm text-ink/70 mt-2 leading-relaxed max-w-xs">{t(b.text)}</p>
-            </div>
-          ))}
+          {benefits.map((b, i) => {
+            const Icon = b.icon;
+            return (
+              <div key={i} className="flex items-start gap-5" data-testid={`reserver-benefit-${i}`}>
+                <div className="shrink-0 w-12 h-12 border border-terracotta text-terracotta flex items-center justify-center">
+                  <Icon size={18} strokeWidth={1.5} />
+                </div>
+                <div>
+                  <p className="font-serif italic text-xl md:text-2xl text-ink">{t(b.title)}</p>
+                  <p className="font-sans text-sm text-ink/70 mt-2 leading-relaxed">{t(b.text)}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
