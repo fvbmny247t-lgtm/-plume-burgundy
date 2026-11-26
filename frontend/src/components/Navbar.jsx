@@ -65,20 +65,14 @@ const Navbar = () => {
           <PlumeLogo variant={open ? "white" : logoVariant} size="sm" />
         </Link>
 
-        <nav className="relative z-10 hidden lg:flex items-center gap-6 xl:gap-9">
-          {links.map((l) => (
+        <nav className="relative z-10 hidden xl:flex items-center gap-9">
+          {links.filter((l) => l.to !== "/cartes-cadeaux").map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
               data-testid={`nav-link-${l.to.replace("/", "")}`}
               className={({ isActive }) =>
-                l.to === "/cartes-cadeaux"
-                  ? `whitespace-nowrap font-serif italic text-[17px] leading-none transition-colors ${
-                      isActive ? "text-terracotta" : useDarkContent ? "text-terracotta hover:text-terracottaDark" : "hover:text-terracotta"
-                    }`
-                  : `whitespace-nowrap font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
-                      isActive ? "opacity-100" : "opacity-90"
-                    }`
+                `whitespace-nowrap font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${isActive ? "opacity-100" : "opacity-90"}`
               }
             >
               {t(l.label)}
@@ -106,9 +100,17 @@ const Navbar = () => {
           </div>
 
           <Link
+            to="/cartes-cadeaux"
+            data-testid="nav-giftcard-button"
+            className="hidden md:inline-flex items-center border border-current px-4 py-[7px] uppercase text-[10px] tracking-[0.3em] whitespace-nowrap hover:bg-terracotta hover:border-terracotta hover:text-cream transition-colors"
+          >
+            {t({ fr: "Carte cadeau", en: "Gift card" })}
+          </Link>
+
+          <Link
             to="/reserver"
             data-testid="nav-book-button"
-            className="hidden md:inline-flex items-center bg-terracotta text-cream px-4 py-2 uppercase text-[10px] tracking-[0.3em] hover:bg-terracottaDark transition-colors"
+            className="hidden md:inline-flex items-center bg-terracotta text-cream px-4 py-2 whitespace-nowrap uppercase text-[10px] tracking-[0.3em] hover:bg-terracottaDark transition-colors"
           >
             {t(NAV.book)}
           </Link>
@@ -136,7 +138,7 @@ const Navbar = () => {
           <button
             data-testid="mobile-menu-toggle"
             onClick={() => setOpen((o) => !o)}
-            className="lg:hidden relative w-7 h-7 flex items-center justify-center"
+            className="xl:hidden relative w-7 h-7 flex items-center justify-center"
             aria-label="Menu"
             aria-expanded={open}
           >
@@ -162,7 +164,7 @@ const Navbar = () => {
 
       {/* Mobile menu — fullscreen overlay, animated open/close */}
       <div
-        className={`lg:hidden fixed inset-0 z-40 bg-ink text-cream pt-24 px-6 pb-12 overflow-y-auto transition-opacity duration-500 ease-out ${
+        className={`xl:hidden fixed inset-0 z-40 bg-ink text-cream pt-24 px-6 pb-12 overflow-y-auto transition-opacity duration-500 ease-out ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         data-testid="mobile-menu"
@@ -201,13 +203,22 @@ const Navbar = () => {
             EN
           </button>
         </div>
-        <Link
-          to="/reserver"
-          data-testid="mobile-book-button"
-          className="mt-8 inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
-        >
-          {t(NAV.book)}
-        </Link>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            to="/reserver"
+            data-testid="mobile-book-button"
+            className="inline-flex bg-terracotta text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
+          >
+            {t(NAV.book)}
+          </Link>
+          <Link
+            to="/cartes-cadeaux"
+            data-testid="mobile-giftcard-button"
+            className="inline-flex border border-cream/70 text-cream px-6 py-3 uppercase text-[11px] tracking-[0.3em]"
+          >
+            {t({ fr: "Carte cadeau", en: "Gift card" })}
+          </Link>
+        </div>
         <Link
           to="/carnet"
           data-testid="mobile-carnet-link"
