@@ -21,9 +21,9 @@ const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/s
 // shortcut: codé par slug ; à passer dans l'admin des coffrets si le menu change souvent.
 const SAMPLE_MENUS = {
   "echappee-gourmande": [
-    { course: { fr: "Entrée", en: "Starter" }, dish: { fr: "Ravioles de homard, coulis de gambas, pleurotes", en: "Lobster ravioli, prawn coulis, oyster mushrooms" } },
-    { course: { fr: "Plat", en: "Main" }, dish: { fr: "Bœuf confit 7 heures en croustillant, purée de patates douces, réduction au Pedro Ximénez", en: "Seven-hour confit beef in a crisp shell, sweet potato purée, Pedro Ximénez reduction" } },
-    { course: { fr: "Dessert", en: "Dessert" }, dish: { fr: "Cœur popcorn, maïs torréfié, sablé, crème brûlée", en: "Popcorn heart, roasted corn, shortbread, crème brûlée" } },
+    { name: { fr: "Homard", en: "Lobster" }, detail: { fr: "en ravioles, coulis de gambas, pleurotes", en: "ravioli, prawn coulis, oyster mushrooms" } },
+    { name: { fr: "Bœuf confit sept heures", en: "Seven-hour confit beef" }, detail: { fr: "en croustillant, purée de patates douces, réduction au Pedro Ximénez", en: "in a crisp shell, sweet potato purée, Pedro Ximénez reduction" } },
+    { name: { fr: "Cœur popcorn", en: "Popcorn heart" }, detail: { fr: "maïs torréfié, sablé, crème brûlée", en: "roasted corn, shortbread, crème brûlée" } },
   ],
 };
 
@@ -157,19 +157,19 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                 </div>
 
                 {SAMPLE_MENUS[coffret.slug] && (
-                  <div className="mb-6 bg-sand/70 px-5 py-5" data-testid="gc-sample-menu">
-                    <p className="ps-overline text-ink/50 mb-1">{t({ fr: "Exemple de menu", en: "Sample menu" })}</p>
-                    <p className="font-sans text-xs text-ink/55 mb-4">
-                      {t({ fr: "Le chef compose selon les saisons : le menu servi pourra être différent.", en: "The chef cooks with the seasons, so the menu served may differ." })}
-                    </p>
-                    <dl className="space-y-3">
+                  <div className="mb-8 pt-6 border-t border-ink/10 text-center" data-testid="gc-sample-menu">
+                    <p className="ps-overline text-ink/50">{t({ fr: "Exemple de menu", en: "Sample menu" })}</p>
+                    <ul className="mt-5 space-y-4">
                       {SAMPLE_MENUS[coffret.slug].map((m, i) => (
-                        <div key={i}>
-                          <dt className="font-sans text-[10px] uppercase tracking-[0.25em] text-terracotta">{t(m.course)}</dt>
-                          <dd className="font-serif italic text-[17px] leading-snug text-ink/85 mt-0.5">{t(m.dish)}</dd>
-                        </div>
+                        <li key={i}>
+                          <p className="font-serif text-xl leading-tight">{t(m.name)}</p>
+                          <p className="font-sans text-[13px] text-ink/55 mt-1">{t(m.detail)}</p>
+                        </li>
                       ))}
-                    </dl>
+                    </ul>
+                    <p className="font-serif italic text-sm text-ink/50 mt-5">
+                      {t({ fr: "Le menu suit les saisons et peut changer.", en: "The menu follows the seasons and may change." })}
+                    </p>
                   </div>
                 )}
 
