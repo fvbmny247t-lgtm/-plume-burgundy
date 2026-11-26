@@ -105,8 +105,8 @@ DEFAULT_COFFRETS = [
             "en": "A night in a suite and a gourmet experience imagined by the chef, just for you.",
         },
         "long_description": {
-            "fr": "L'alliance d'une nuit en suite et d'une table imaginée par le chef. Pour les bénéficiaires de cette carte, le chef du restaurant Ô P'tit Repère du Goût compose une expérience gastronomique dédiée : un apéritif, un menu signé de sa main et un accord mets et vins. Choisissez votre suite, nous nous occupons du reste.",
-            "en": "The union of a night in a suite and a table imagined by the chef. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant composes a dedicated gourmet experience: an aperitif, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
+            "fr": "L'alliance d'une nuit en suite et d'une table imaginée par le chef. Pour les bénéficiaires de cette carte, le chef du restaurant Ô P'tit Repère du Goût compose une expérience gastronomique dédiée : une coupe de champagne, un menu signé de sa main et un accord mets et vins. Choisissez votre suite, nous nous occupons du reste.",
+            "en": "The union of a night in a suite and a table imagined by the chef. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant composes a dedicated gourmet experience: a glass of champagne, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
         },
         "usage": {
             "fr": "Valable 12 mois. Le bénéficiaire réserve via le formulaire « Utiliser ma carte cadeau ». L'expérience gastronomique est dédiée aux porteurs de cette carte et convenue ensemble selon les disponibilités.",
@@ -123,7 +123,7 @@ DEFAULT_COFFRETS = [
         ],
         "includes": [
             {"fr": "Une nuit pour deux (suite au choix)", "en": "One night for two (suite of your choice)"},
-            {"fr": "Un apéritif", "en": "An aperitif"},
+            {"fr": "Une coupe de champagne", "en": "A glass of champagne"},
             {"fr": "Une expérience gastronomique imaginée par le chef", "en": "A gourmet experience imagined by the chef"},
             {"fr": "Un accord mets et vins", "en": "A food and wine pairing"},
             {"fr": "Une attention de la maison", "en": "A welcome attention from the house"},
@@ -177,6 +177,20 @@ async def ensure_indexes_and_seed():
             for c in DEFAULT_COFFRETS:
                 await _db.giftcard_coffrets.insert_one({"id": str(uuid.uuid4()), **c, "created_at": _iso(_now())})
             logger.info("Refreshed gift coffrets to the new experience set")
+    # Échappée : l'apéritif devient une coupe de champagne. Ne touche que l'ancien libellé,
+    # donc sans effet si le texte a déjà été modifié depuis l'admin.
+    await _db.giftcard_coffrets.update_one(
+        {"slug": "echappee-gourmande", "includes.fr": "Un apéritif"},
+        {"$set": {"includes.$": {"fr": "Une coupe de champagne", "en": "A glass of champagne"}}},
+    )
+    doc = await _db.giftcard_coffrets.find_one({"slug": "echappee-gourmande"})
+    desc = (doc or {}).get("long_description") or {}
+    fixed = {
+        "fr": (desc.get("fr") or "").replace("un apéritif, un menu", "une coupe de champagne, un menu"),
+        "en": (desc.get("en") or "").replace("an aperitif, a menu", "a glass of champagne, a menu"),
+    }
+    if doc and fixed != {"fr": desc.get("fr") or "", "en": desc.get("en") or ""}:
+        await _db.giftcard_coffrets.update_one({"slug": "echappee-gourmande"}, {"$set": {"long_description": {**desc, **fixed}}})
 
 
 def _now():
