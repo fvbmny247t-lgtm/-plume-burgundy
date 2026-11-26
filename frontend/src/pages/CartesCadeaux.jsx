@@ -21,9 +21,9 @@ const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/s
 // shortcut: codé par slug ; à passer dans l'admin des coffrets si le menu change souvent.
 const SAMPLE_MENUS = {
   "echappee-gourmande": [
-    { name: { fr: "Homard", en: "Lobster" }, detail: { fr: "en ravioles, coulis de gambas, pleurotes", en: "ravioli, prawn coulis, oyster mushrooms" } },
-    { name: { fr: "Bœuf confit sept heures", en: "Seven-hour confit beef" }, detail: { fr: "en croustillant, purée de patates douces, réduction au Pedro Ximénez", en: "in a crisp shell, sweet potato purée, Pedro Ximénez reduction" } },
-    { name: { fr: "Cœur popcorn", en: "Popcorn heart" }, detail: { fr: "maïs torréfié, sablé, crème brûlée", en: "roasted corn, shortbread, crème brûlée" } },
+    { name: { fr: "Ravioles de homard", en: "Lobster ravioli" }, detail: { fr: "Coulis de gambas, pleurotes", en: "Prawn coulis, oyster mushrooms" } },
+    { name: { fr: "Bœuf confit 7 heures en croustillant", en: "Seven-hour confit beef in a crisp shell" }, detail: { fr: "Purée de patates douces, réduction au Pedro Ximénez", en: "Sweet potato purée, Pedro Ximénez reduction" } },
+    { name: { fr: "Popcorn", en: "Popcorn" }, detail: { fr: "Cœur popcorn, maïs torréfié, sablé, crème brûlée", en: "Popcorn heart, roasted corn, shortbread, crème brûlée" } },
   ],
 };
 
@@ -103,9 +103,9 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
   const gallery = coffret.images && coffret.images.length ? coffret.images : [coffret.image_url];
 
   return (
-    <div className="fixed inset-0 z-[90] bg-ink/75 backdrop-blur-sm overflow-y-auto" data-testid="gc-experience-modal" onClick={onClose}>
+    <div className="fixed inset-0 z-[90] bg-ink/75 backdrop-blur-sm overflow-y-auto animate-in fade-in-0 duration-300" data-testid="gc-experience-modal" onClick={onClose}>
       <div className="min-h-full flex items-start md:items-center justify-center p-4 md:p-8">
-        <div className="bg-cream w-full max-w-4xl overflow-hidden relative my-4" onClick={(e) => e.stopPropagation()}>
+        <div className="bg-cream w-full max-w-4xl overflow-hidden relative my-4 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-500 ease-out" onClick={(e) => e.stopPropagation()}>
           <button onClick={onClose} data-testid="gc-modal-close" aria-label="Fermer"
             className="absolute top-3 right-3 z-10 w-10 h-10 bg-cream/90 text-ink flex items-center justify-center hover:text-terracotta transition-colors">
             <X size={18} strokeWidth={1.5} />
@@ -168,7 +168,10 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                       ))}
                     </ul>
                     <p className="font-serif italic text-sm text-ink/50 mt-5">
-                      {t({ fr: "Le menu suit les saisons et peut changer.", en: "The menu follows the seasons and may change." })}
+                      {t({
+                        fr: "Ce menu est donné à titre d'exemple : il change avec les saisons. Contactez-nous pour connaître celui prévu à vos dates.",
+                        en: "This menu is only an example, as it changes with the seasons. Contact us to find out the menu for your dates.",
+                      })}
                     </p>
                   </div>
                 )}
