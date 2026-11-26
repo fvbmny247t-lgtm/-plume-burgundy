@@ -17,9 +17,19 @@ const fmtPrice = (n) => `${Number(n)} €`;
 // Grain papier (bruit SVG) posé sur la carte cadeau.
 const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.23  0 0 0 0 0.19  0 0 0 0 0.17  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
 
+// Exemple de menu affiché dans la fiche de l'Échappée ; la carte suit les saisons.
+// shortcut: codé par slug ; à passer dans l'admin des coffrets si le menu change souvent.
+const SAMPLE_MENUS = {
+  "echappee-gourmande": [
+    { course: { fr: "Entrée", en: "Starter" }, dish: { fr: "Ravioles de homard, coulis de gambas, pleurotes", en: "Lobster ravioli, prawn coulis, oyster mushrooms" } },
+    { course: { fr: "Plat", en: "Main" }, dish: { fr: "Bœuf confit 7 heures en croustillant, purée de patates douces, réduction au Pedro Ximénez", en: "Seven-hour confit beef in a crisp shell, sweet potato purée, Pedro Ximénez reduction" } },
+    { course: { fr: "Dessert", en: "Dessert" }, dish: { fr: "Cœur popcorn, maïs torréfié, sablé, crème brûlée", en: "Popcorn heart, roasted corn, shortbread, crème brûlée" } },
+  ],
+};
+
 // shortcut: badge codé par slug ; à déplacer dans l'admin des coffrets si on veut le changer souvent.
 const BADGES = {
-  "envolee-deux": { fr: "La plus spacieuse", en: "Our most spacious" },
+  "envolee-deux": { fr: "Signature", en: "Signature" },
 };
 
 // La carte telle que la reçoit le bénéficiaire : une bande photo + un carton crème.
@@ -29,9 +39,9 @@ const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) =
   return (
     <div data-testid="gc-preview"
       className="relative w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#f6f0e4] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.45] mix-blend-multiply" style={{ backgroundImage: GRAIN }} />
-      <div className="min-h-[220px] bg-terracotta flex items-center justify-center p-3">
-        <PlumeLogo variant="white" size="sm" className="!h-auto !w-full max-w-[110px]" />
+      <div className="relative min-h-[220px] bg-terracotta flex items-center justify-center p-3">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-multiply" style={{ backgroundImage: GRAIN }} />
+        <PlumeLogo variant="white" size="sm" className="relative !h-auto !w-full max-w-[110px]" />
       </div>
       <div className="flex flex-col p-4 sm:p-7 min-w-0">
         <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-terracotta whitespace-nowrap">{t({ fr: "Carte cadeau", en: "Gift card" })}</span>
@@ -140,11 +150,28 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                   <ul className="space-y-2">
                     {coffret.includes.map((inc, i) => (
                       <li key={i} className="font-sans text-sm text-ink/70 flex items-start gap-2.5">
-                        <span aria-hidden="true" className="text-terracotta">—</span> {inc[lang] || inc.fr}
+                        <span aria-hidden="true" className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-terracotta" /> {inc[lang] || inc.fr}
                       </li>
                     ))}
                   </ul>
                 </div>
+
+                {SAMPLE_MENUS[coffret.slug] && (
+                  <div className="mb-6 bg-sand/70 px-5 py-5" data-testid="gc-sample-menu">
+                    <p className="ps-overline text-ink/50 mb-1">{t({ fr: "Exemple de menu", en: "Sample menu" })}</p>
+                    <p className="font-sans text-xs text-ink/55 mb-4">
+                      {t({ fr: "Le chef compose selon les saisons : le menu servi pourra être différent.", en: "The chef cooks with the seasons, so the menu served may differ." })}
+                    </p>
+                    <dl className="space-y-3">
+                      {SAMPLE_MENUS[coffret.slug].map((m, i) => (
+                        <div key={i}>
+                          <dt className="font-sans text-[10px] uppercase tracking-[0.25em] text-terracotta">{t(m.course)}</dt>
+                          <dd className="font-serif italic text-[17px] leading-snug text-ink/85 mt-0.5">{t(m.dish)}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                )}
 
                 {coffret.usage && (
                   <p className="font-sans text-xs text-ink/50 leading-relaxed mb-6 border-l-2 border-terracotta/40 pl-3">
@@ -286,10 +313,11 @@ const CartesCadeaux = () => {
       {/* EXPÉRIENCES — les trois offres visibles d'un coup */}
       <section className="bg-cream text-ink px-6 md:px-12 pb-24 md:pb-32" data-testid="gc-coffrets">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-16">
+          {/* subgrid : image, accroche, titre, texte et prix tombent sur les mêmes lignes d'une carte à l'autre */}
           {coffrets.map((c, idx) => {
             const name = c.name[lang] || c.name.fr;
             return (
-              <Reveal key={c.id} delay={idx * 110} as="article" data-testid={`gc-coffret-${c.slug}`} className="flex flex-col">
+              <Reveal key={c.id} delay={idx * 110} as="article" data-testid={`gc-coffret-${c.slug}`} className="flex flex-col md:grid md:grid-rows-subgrid md:row-span-5 md:gap-y-0">
                 <button onClick={() => open(c, "detail")} aria-label={name} className="group relative block overflow-hidden aspect-[4/5]">
                   <Img src={c.image_url} alt={name} className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]" />
                   {BADGES[c.slug] && (
@@ -298,10 +326,9 @@ const CartesCadeaux = () => {
                     </span>
                   )}
                 </button>
-                <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta mt-7">0{idx + 1}</p>
-                <p className="font-serif italic text-base text-ink/60 mt-3">{c.tagline[lang] || c.tagline.fr}</p>
+                <p className="font-serif italic text-base text-ink/60 mt-7 self-end">{c.tagline[lang] || c.tagline.fr}</p>
                 <h2 className="font-serif italic font-light text-3xl lg:text-[34px] leading-[1.1] mt-1">{name}</h2>
-                <p className="font-sans text-[15px] text-ink/75 leading-relaxed mt-4 flex-1">
+                <p lang={lang} className="font-sans text-[15px] text-ink/75 leading-relaxed mt-4 flex-1 text-justify hyphens-auto">
                   {(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
                 </p>
                 <div className="mt-7 pt-5 border-t border-ink/15 flex items-center justify-between gap-4 md:flex-col md:items-start xl:flex-row xl:items-center">
