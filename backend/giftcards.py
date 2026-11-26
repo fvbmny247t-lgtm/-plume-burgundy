@@ -109,8 +109,8 @@ DEFAULT_COFFRETS = [
             "en": "The union of a night in a suite and a table imagined by the chef. For holders of this card, the chef of the Ô P'tit Repère du Goût restaurant composes a dedicated gourmet experience: a glass of champagne, a menu of his own creation and a food and wine pairing. Choose your suite, we take care of the rest.",
         },
         "usage": {
-            "fr": "Valable 12 mois. Le bénéficiaire réserve via le formulaire « Utiliser ma carte cadeau ». L'expérience gastronomique est dédiée aux porteurs de cette carte et convenue ensemble selon les disponibilités.",
-            "en": "Valid for 12 months. The recipient books via the \u201cUse my gift card\u201d form. The gourmet experience is dedicated to card holders and arranged together, subject to availability.",
+            "fr": "Valable 12 mois, week-ends compris, hors jours fériés et dates d'exception (Saint-Valentin, fête des mères…). Le bénéficiaire choisit ses dates via « J'ai une carte cadeau » sur la page Réserver : nous convenons ensemble de la table selon les disponibilités.",
+            "en": "Valid for 12 months, weekends included, excluding public holidays and special dates (Valentine's Day, Mother's Day…). The recipient picks dates via “I have a gift card” on the Book page; we arrange the table together, subject to availability.",
         },
         "price": 350.0,
         "from_price": True,
@@ -182,6 +182,11 @@ async def ensure_indexes_and_seed():
     await _db.giftcard_coffrets.update_one(
         {"slug": "echappee-gourmande", "includes.fr": "Un apéritif"},
         {"$set": {"includes.$": {"fr": "Une coupe de champagne", "en": "A glass of champagne"}}},
+    )
+    # Échappée : conditions (week-ends compris, hors jours fériés). Seulement si le texte d'origine est encore là.
+    await _db.giftcard_coffrets.update_one(
+        {"slug": "echappee-gourmande", "usage.fr": "Valable 12 mois. Le bénéficiaire réserve via le formulaire « Utiliser ma carte cadeau ». L'expérience gastronomique est dédiée aux porteurs de cette carte et convenue ensemble selon les disponibilités."},
+        {"$set": {"usage": {"fr": "Valable 12 mois, week-ends compris, hors jours fériés et dates d'exception (Saint-Valentin, fête des mères…). Le bénéficiaire choisit ses dates via « J'ai une carte cadeau » sur la page Réserver : nous convenons ensemble de la table selon les disponibilités.", "en": "Valid for 12 months, weekends included, excluding public holidays and special dates (Valentine's Day, Mother's Day…). The recipient picks dates via “I have a gift card” on the Book page; we arrange the table together, subject to availability."}}},
     )
     doc = await _db.giftcard_coffrets.find_one({"slug": "echappee-gourmande"})
     desc = (doc or {}).get("long_description") or {}
