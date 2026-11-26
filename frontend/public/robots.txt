@@ -33,3 +33,5 @@ User-agent: Bingbot
 Allow: /
 
 Sitemap: https://plumesuites.fr/sitemap.xml
+# Manifeste pour agents IA / registres
+AI-Catalog: https://plumesuites.fr/ai-catalog.json

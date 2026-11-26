@@ -99,7 +99,16 @@ async def ensure_indexes_and_seed():
     if _db is None:
         return
     await _db.giftcard_coffrets.create_index("slug", unique=True)
-    await _db.giftcards.create_index("code", unique=True)
+    # Unique only for issued codes (pending cards have code=None)
+    try:
+        info = await _db.giftcards.index_information()
+        if "code_1" in info and not info["code_1"].get("partialFilterExpression"):
+            await _db.giftcards.drop_index("code_1")
+    except Exception as e:  # noqa: BLE001
+        logger.warning("giftcards index check failed: %s", e)
+    await _db.giftcards.create_index(
+        "code", unique=True, partialFilterExpression={"code": {"$type": "string"}}
+    )
     await _db.payment_transactions.create_index("session_id", unique=True)
     if await _db.giftcard_coffrets.count_documents({}) == 0:
         for c in DEFAULT_COFFRETS:
@@ -181,23 +190,28 @@ async def create_checkout(payload: CheckoutIn):
     if not coffret:
         raise HTTPException(status_code=404, detail="Coffret introuvable")
     amount = float(coffret["price"])
+    if amount <= 0:
+        raise HTTPException(status_code=400, detail="Montant invalide")
     name_fr = (coffret.get("name") or {}).get("fr") or "Coffret Plume Suites"
 
+    import asyncio
     try:
-        session = stripe.checkout.Session.create(
-            mode="payment",
-            line_items=[{
-                "price_data": {
-                    "currency": CURRENCY,
-                    "product_data": {"name": f"Carte cadeau — {name_fr}"},
-                    "unit_amount": int(round(amount * 100)),
-                },
-                "quantity": 1,
-            }],
-            customer_email=str(payload.buyer_email),
-            success_url=f"{payload.origin_url}/paiement/succes?session_id={{CHECKOUT_SESSION_ID}}",
-            cancel_url=f"{payload.origin_url}/paiement/annule",
-            metadata={"kind": "giftcard", "coffret_id": coffret["id"], "buyer_email": str(payload.buyer_email)},
+        session = await asyncio.to_thread(
+            lambda: stripe.checkout.Session.create(
+                mode="payment",
+                line_items=[{
+                    "price_data": {
+                        "currency": CURRENCY,
+                        "product_data": {"name": f"Carte cadeau — {name_fr}"},
+                        "unit_amount": int(round(amount * 100)),
+                    },
+                    "quantity": 1,
+                }],
+                customer_email=str(payload.buyer_email),
+                success_url=f"{payload.origin_url}/paiement/succes?session_id={{CHECKOUT_SESSION_ID}}",
+                cancel_url=f"{payload.origin_url}/paiement/annule",
+                metadata={"kind": "giftcard", "coffret_id": coffret["id"], "buyer_email": str(payload.buyer_email)},
+            )
         )
     except Exception as e:  # noqa: BLE001
         logger.error("Stripe checkout create failed: %s", e)
@@ -238,7 +252,7 @@ async def create_checkout(payload: CheckoutIn):
 
 
 async def _activate_giftcard(session_id: str) -> Optional[dict]:
-    """Idempotent: mark paid, issue code, set validity, email the buyer. Returns the card."""
+    """Idempotent: mark paid, issue code, set validity, email the buyer once. Returns the card."""
     card = await _db.giftcards.find_one({"session_id": session_id})
     if not card:
         return None
@@ -246,8 +260,8 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
         return card
     code = await _unique_code()
     now = _now()
-    expires = now + timedelta(days=VALIDITY_MONTHS * 30)
-    await _db.giftcards.update_one(
+    expires = now.replace(year=now.year + 1)
+    res = await _db.giftcards.update_one(
         {"session_id": session_id, "status": {"$ne": "active"}},
         {"$set": {
             "code": code, "status": "active",
@@ -255,7 +269,8 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
         }},
     )
     card = await _db.giftcards.find_one({"session_id": session_id})
-    if card and card.get("code"):
+    # Email only when THIS call performed the activation (avoids a duplicate email on a webhook/poll race).
+    if res.modified_count == 1 and card and card.get("code"):
         origin = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
         voucher_url = f"{origin}/bon/{card['code']}" if origin else ""
         try:
@@ -277,12 +292,13 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
 
 @router.get("/status/{session_id}")
 async def payment_status(session_id: str):
+    import asyncio
     record = await _db.payment_transactions.find_one({"session_id": session_id})
     if not record:
         raise HTTPException(status_code=404, detail="Transaction introuvable")
     if record.get("payment_status") != "paid":
         try:
-            s = stripe.checkout.Session.retrieve(session_id)
+            s = await asyncio.to_thread(stripe.checkout.Session.retrieve, session_id)
             if s.payment_status == "paid" or s.status == "complete":
                 await _db.payment_transactions.update_one(
                     {"session_id": session_id, "payment_status": {"$ne": "paid"}},
@@ -290,8 +306,8 @@ async def payment_status(session_id: str):
                 )
                 await _activate_giftcard(session_id)
                 record = await _db.payment_transactions.find_one({"session_id": session_id})
-        except Exception:  # noqa: BLE001
-            pass
+        except Exception as e:  # noqa: BLE001
+            logger.error("status poll stripe retrieve failed: %s", e)
     card = await _db.giftcards.find_one({"session_id": session_id})
     return {
         "session_id": session_id,
@@ -372,14 +388,17 @@ async def handle_webhook(payload: bytes, sig: str):
     except Exception:  # noqa: BLE001
         raise HTTPException(status_code=400, detail="Invalid signature")
     obj, t = event["data"]["object"], event["type"]
-    if t == "checkout.session.completed":
+    if t in ("checkout.session.completed", "checkout.session.async_payment_succeeded"):
         sid = obj["id"]
+        pay_status = obj.get("payment_status", "")
         await _db.payment_transactions.update_one(
             {"session_id": sid, "payment_status": {"$ne": "paid"}},
-            {"$set": {"status": "completed", "payment_status": obj.get("payment_status", "paid"),
+            {"$set": {"status": "completed", "payment_status": pay_status or "paid",
                       "stripe_payment_intent_id": obj.get("payment_intent"), "updated_at": _now()}},
         )
-        await _activate_giftcard(sid)
+        # Only issue the card once payment is actually settled (delayed methods report 'unpaid').
+        if pay_status == "paid":
+            await _activate_giftcard(sid)
     elif t in ("checkout.session.expired",):
         await _db.payment_transactions.update_one(
             {"session_id": obj["id"]},
@@ -399,9 +418,19 @@ async def admin_list_coffrets():
 
 
 async def admin_upsert_coffret(data: dict, coffret_id: Optional[str] = None):
+    if float(data.get("price", 0)) <= 0:
+        raise HTTPException(status_code=400, detail="Le prix doit être supérieur à 0")
+    slug = data.get("slug")
+    clash = await _db.giftcard_coffrets.find_one({"slug": slug}) if slug else None
     if coffret_id:
+        if not await _db.giftcard_coffrets.find_one({"id": coffret_id}):
+            raise HTTPException(status_code=404, detail="Coffret introuvable")
+        if clash and clash.get("id") != coffret_id:
+            raise HTTPException(status_code=409, detail="Ce slug est déjà utilisé")
         await _db.giftcard_coffrets.update_one({"id": coffret_id}, {"$set": data})
         return await _db.giftcard_coffrets.find_one({"id": coffret_id}, {"_id": 0})
+    if clash:
+        raise HTTPException(status_code=409, detail="Ce slug est déjà utilisé")
     new = {"id": str(uuid.uuid4()), "created_at": _iso(_now()), **data}
     await _db.giftcard_coffrets.insert_one(new)
     new.pop("_id", None)

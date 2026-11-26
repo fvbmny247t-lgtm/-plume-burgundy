@@ -51,22 +51,36 @@ const Voucher = () => {
                   <p className="font-serif text-2xl tracking-[0.2em]" data-testid="gc-voucher-code">{data.code}</p>
                 </div>
                 <p className="font-sans text-xs text-ink/50">
-                  {t({ fr: "Valable jusqu'au", en: "Valid until" })} {fmtDate(data.expires_at, lang)}
+                  {data.status === "redeemed"
+                    ? t({ fr: "Bon déjà utilisé", en: "Voucher already used" })
+                    : data.status === "expired"
+                    ? t({ fr: "Bon expiré", en: "Voucher expired" })
+                    : `${t({ fr: "Valable jusqu'au", en: "Valid until" })} ${fmtDate(data.expires_at, lang)}`}
                 </p>
               </div>
 
               <div className="mt-8 text-center print:hidden">
-                <p className="font-sans text-sm text-ink/60 mb-5 leading-relaxed">
-                  {t({ fr: "Pour profiter de ce bon, remplissez le formulaire « Utiliser mon bon » : nous conviendrons ensemble des dates de votre séjour.", en: "To enjoy this voucher, fill in the \u201cUse my gift card\u201d form: we will arrange your stay dates together." })}
-                </p>
-                <div className="flex flex-wrap gap-3 justify-center">
-                  <Link to={`/utiliser-mon-bon?code=${data.code}`} data-testid="gc-voucher-use" className="bg-ink text-cream px-6 py-3 uppercase text-[11px] tracking-[0.25em] hover:bg-terracotta transition-colors">
-                    {t({ fr: "Utiliser mon bon", en: "Use my gift card" })}
-                  </Link>
-                  <button onClick={() => window.print()} data-testid="gc-voucher-print" className="inline-flex items-center gap-2 border border-ink/30 px-6 py-3 uppercase text-[11px] tracking-[0.25em] hover:border-terracotta hover:text-terracotta transition-colors">
-                    <Printer size={14} strokeWidth={1.5} /> {t({ fr: "Imprimer", en: "Print" })}
-                  </button>
-                </div>
+                {data.status === "active" ? (
+                  <>
+                    <p className="font-sans text-sm text-ink/60 mb-5 leading-relaxed">
+                      {t({ fr: "Pour profiter de ce bon, remplissez le formulaire « Utiliser mon bon » : nous conviendrons ensemble des dates de votre séjour.", en: "To enjoy this voucher, fill in the \u201cUse my gift card\u201d form: we will arrange your stay dates together." })}
+                    </p>
+                    <div className="flex flex-wrap gap-3 justify-center">
+                      <Link to={`/utiliser-mon-bon?code=${data.code}`} data-testid="gc-voucher-use" className="bg-ink text-cream px-6 py-3 uppercase text-[11px] tracking-[0.25em] hover:bg-terracotta transition-colors">
+                        {t({ fr: "Utiliser mon bon", en: "Use my gift card" })}
+                      </Link>
+                      <button onClick={() => window.print()} data-testid="gc-voucher-print" className="inline-flex items-center gap-2 border border-ink/30 px-6 py-3 uppercase text-[11px] tracking-[0.25em] hover:border-terracotta hover:text-terracotta transition-colors">
+                        <Printer size={14} strokeWidth={1.5} /> {t({ fr: "Imprimer", en: "Print" })}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <p className="font-sans text-sm text-ink/55" data-testid="gc-voucher-used-note">
+                    {data.status === "redeemed"
+                      ? t({ fr: "Ce bon a déjà été utilisé. Merci !", en: "This voucher has already been used. Thank you!" })
+                      : t({ fr: "Ce bon n'est plus valable.", en: "This voucher is no longer valid." })}
+                  </p>
+                )}
               </div>
             </>
           )}

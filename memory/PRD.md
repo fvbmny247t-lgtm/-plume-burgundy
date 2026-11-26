@@ -107,6 +107,23 @@ Spec complète: /app/memory/CARNET_PLUME_SPEC.md (37 points). Construction multi
 - P1 Phase 7: Éditeur d'e-mails par blocs + automatisations (emails 6/7/8: 100 premières Plumes, nouvelles Plumes après séjour, nouvelle attention). Journal d'envois.
 - Webhooks Smoobu temps réel (aujourd'hui: pull + cron quotidien). NB: pas de signature webhook documentée -> re-fetch par ID + idempotence.
 
+## Update (Nov 2026) — Cartes cadeaux (coffrets) + correctif menu + SEO
+Testé iteration_14 (parcours complet avec vrai paiement Stripe sandbox). 2 bugs bloquants trouvés+corrigés par le testeur (index unique code=null -> index partiel ; focus perdu dans le form admin). Action items restants traités ensuite par l'agent (validité 12 mois réelle, email unique anti-race, webhook active seulement si payé, slug dupliqué 409, prix>0 400, statut rédemption enum 422, appels Stripe non bloquants, état "bon utilisé/expiré" sur /bon/:code, gestion d'erreurs admin).
+- Paiement Stripe Flow A (sandbox claimable, acct_1Uege...). Clés dans backend/.env (STRIPE_SECRET_KEY etc., STRIPE_MODE=test). Tax mode = DIY. onboarding_url à réclamer par le client pour passer en live.
+- `giftcards.py`: coffrets (3 seedés, photos MAISON /media & /images), checkout (price_data serveur), status (fallback synchrone + activation), voucher, redeem ; webhook /api/stripe/webhook ; admin CRUD coffrets + cartes vendues + demandes.
+- Emails (Infomaniak SMTP, réels): bon cadeau à l'acheteur, demande de rédemption à Marie, confirmation au bénéficiaire.
+- Frontend: /cartes-cadeaux (festif, modal d'achat), /paiement/succes (polling), /paiement/annule, /bon/:code (bon imprimable), /utiliser-mon-bon (formulaire), /admin/cartes-cadeaux. Liens navbar (NAV.giftcards) + admin.
+- Validité 12 mois. Code format PLUME-XXXX-XXXX.
+- Menu mobile: barre + overlay partagent désormais le MÊME fondu d'opacité (bg-ink) -> plus aucun décalage.
+- SEO/Google: préchargement image LCP (poster hero, fetchpriority high) ; `public/ai-catalog.json` créé + référencé dans robots.txt ; llms.txt déjà conforme (H1 Markdown).
+- RESTE SEO (non bloquant, infra/perf): durée de cache des ressources, JS inutilisé/code-splitting (React.lazy exclu car casse l'ingress), width/height explicites sur toutes les images.
+
+## Backlog cartes cadeaux (améliorations suggérées)
+- Désactiver "Adaptive Pricing" dans le dashboard Stripe pour afficher toujours en EUR.
+- Éditeur de la liste "includes" dans le form admin coffret ; data-testid sur tous les boutons admin.
+- Empêcher plusieurs demandes de rédemption en attente pour un même code.
+- Upload de photos coffrets (object storage) si le client veut ajouter des images hors du site.
+
 ## Backlog (P1/P2)
 - Replace Smoobu placeholder URL with real booking widget (channel manager)
 - Replace Unsplash placeholders with user's real photos (the local Mac paths were inaccessible)

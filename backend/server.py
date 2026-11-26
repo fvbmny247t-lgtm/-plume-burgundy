@@ -7,7 +7,7 @@ import logging
 import hmac
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr
-from typing import Optional, List
+from typing import Optional, List, Literal
 import uuid
 import bcrypt
 import jwt as pyjwt
@@ -294,7 +294,7 @@ class CoffretIn(BaseModel):
 
 
 class RedemptionUpdate(BaseModel):
-    status: str
+    status: Literal["pending", "processed", "declined"]
     admin_note: str | None = None
 
 

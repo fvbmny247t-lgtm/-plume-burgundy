@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.org",
+  "version": "1.0",
+  "generated": "2026-11",
+  "publisher": {
+    "name": "Plume Suites",
+    "url": "https://plumesuites.fr",
+    "email": "hello@plumesuites.fr",
+    "telephone": "+33695488760",
+    "languages": ["fr", "en"],
+    "location": {
+      "streetAddress": "8 Rue des Vieilles Carrières",
+      "addressLocality": "Fleurey-sur-Ouche",
+      "postalCode": "21410",
+      "addressRegion": "Côte-d'Or",
+      "addressCountry": "FR",
+      "latitude": 47.2942,
+      "longitude": 4.8675
+    }
+  },
+  "description": {
+    "fr": "Maison d'hôtes de charme (deux suites) en Bourgogne, à Fleurey-sur-Ouche près de Dijon, au bord du canal de Bourgogne et au-dessus du restaurant Ô P'tit Repère du Goût.",
+    "en": "Boutique guesthouse (two suites) in Burgundy, in Fleurey-sur-Ouche near Dijon, by the Burgundy canal and above the Ô P'tit Repère du Goût restaurant."
+  },
+  "resources": [
+    { "type": "page", "title": "Accueil", "url": "https://plumesuites.fr/" },
+    { "type": "page", "title": "Les séjours (suites)", "url": "https://plumesuites.fr/sejours" },
+    { "type": "page", "title": "Réserver", "url": "https://plumesuites.fr/reserver" },
+    { "type": "page", "title": "Cartes cadeaux", "url": "https://plumesuites.fr/cartes-cadeaux" },
+    { "type": "page", "title": "Art de vivre", "url": "https://plumesuites.fr/art-de-vivre" },
+    { "type": "page", "title": "Journal", "url": "https://plumesuites.fr/journal" },
+    { "type": "page", "title": "Contact", "url": "https://plumesuites.fr/contact" },
+    { "type": "markdown", "title": "LLMs guide", "url": "https://plumesuites.fr/llms.txt" },
+    { "type": "sitemap", "title": "Sitemap", "url": "https://plumesuites.fr/sitemap.xml" }
+  ],
+  "offerings": [
+    { "type": "LodgingBusiness", "name": "L'Envolée", "description": "Suite signature, 1 chambre, 2 personnes, 55 m²." },
+    { "type": "LodgingBusiness", "name": "Douceur", "description": "Suite intimiste et chaleureuse." },
+    { "type": "GiftCard", "name": "Coffrets expérience", "description": "Cartes cadeaux à offrir (nuit en suite, dîner gastronomique, séjour signature)." }
+  ],
+  "usage_policy": {
+    "crawling": "allowed",
+    "ai_training": "allowed",
+    "attribution": "Plume Suites, https://plumesuites.fr",
+    "contact_for_licensing": "hello@plumesuites.fr"
+  }
+}

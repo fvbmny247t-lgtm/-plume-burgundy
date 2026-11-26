@@ -38,15 +38,24 @@ const AdminGiftCards = () => {
   const saveCoffret = async (e) => {
     e.preventDefault();
     const payload = { ...editing, price: Number(editing.price), sort_order: Number(editing.sort_order) };
-    if (editing.id) await axios.put(`${API}/admin/giftcards/coffrets/${editing.id}`, payload, auth());
-    else await axios.post(`${API}/admin/giftcards/coffrets`, payload, auth());
-    setEditing(null); loadAll();
+    try {
+      if (editing.id) await axios.put(`${API}/admin/giftcards/coffrets/${editing.id}`, payload, auth());
+      else await axios.post(`${API}/admin/giftcards/coffrets`, payload, auth());
+      setEditing(null); loadAll();
+    } catch (err) {
+      const d = err.response?.data?.detail;
+      window.alert(typeof d === "string" ? d : "Erreur lors de l'enregistrement.");
+    }
   };
-  const delCoffret = async (id) => { if (window.confirm("Supprimer ce coffret ?")) { await axios.delete(`${API}/admin/giftcards/coffrets/${id}`, auth()); loadAll(); } };
+  const delCoffret = async (id) => {
+    if (!window.confirm("Supprimer ce coffret ?")) return;
+    try { await axios.delete(`${API}/admin/giftcards/coffrets/${id}`, auth()); loadAll(); }
+    catch { window.alert("Erreur lors de la suppression."); }
+  };
   const updateRedemption = async (id, status) => {
     const note = window.prompt("Note (facultatif) :", "") || null;
-    await axios.patch(`${API}/admin/giftcards/redemptions/${id}`, { status, admin_note: note }, auth());
-    loadAll();
+    try { await axios.patch(`${API}/admin/giftcards/redemptions/${id}`, { status, admin_note: note }, auth()); loadAll(); }
+    catch { window.alert("Erreur lors de la mise à jour."); }
   };
 
   const tabBtn = (id, label) => (
@@ -141,9 +150,9 @@ const AdminGiftCards = () => {
                 <div><label className="text-xs text-ink/50">Slug</label><input required className="w-full border border-ink/20 px-3 py-2 text-sm" value={editing.slug} onChange={(e) => setEditing((p) => ({ ...p, slug: e.target.value }))} /></div>
                 <div><label className="text-xs text-ink/50">Prix (€)</label><input type="number" step="1" required className="w-full border border-ink/20 px-3 py-2 text-sm" value={editing.price} onChange={(e) => setEditing((p) => ({ ...p, price: e.target.value }))} /></div>
               </div>
-              <Nested obj={editing.name || {}} path="name" label="Nom" />
-              <Nested obj={editing.tagline || {}} path="tagline" label="Accroche" />
-              <Nested obj={editing.description || {}} path="description" label="Description" />
+              {Nested({ obj: editing.name || {}, path: "name", label: "Nom" })}
+              {Nested({ obj: editing.tagline || {}, path: "tagline", label: "Accroche" })}
+              {Nested({ obj: editing.description || {}, path: "description", label: "Description" })}
               <div className="mb-3"><label className="text-xs text-ink/50">Image (chemin de VOTRE photo, ex. /media/… ou /images/…)</label>
                 <input className="w-full border border-ink/20 px-3 py-2 text-sm" value={editing.image_url || ""} onChange={(e) => setEditing((p) => ({ ...p, image_url: e.target.value }))} placeholder="/media/votre-photo.jpg" /></div>
               <div className="grid grid-cols-2 gap-3 mb-5">
