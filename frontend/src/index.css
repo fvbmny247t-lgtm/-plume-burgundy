@@ -90,6 +90,28 @@ html { overflow-x: hidden; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Scroll reveal — Atera-inspired editorial fade up */
+.ps-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.ps-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Soft bounce for scroll cue */
+.ps-scroll-cue { animation: psScrollCue 2.2s ease-in-out infinite; }
+@keyframes psScrollCue {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
 .kenburns {
   animation: kenburns 18s ease-out both;
 }

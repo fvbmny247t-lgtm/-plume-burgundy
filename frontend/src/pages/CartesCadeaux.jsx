@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { X, ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { X, ArrowRight, ArrowLeft, Check, ArrowDown } from "lucide-react";
 import { useLang } from "../context/LanguageContext";
 import Seo from "../components/Seo";
 import Img from "../components/Img";
+import Reveal from "../components/Reveal";
+
+const HERO_IMG = "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api/giftcards`;
 
@@ -235,63 +238,117 @@ const CartesCadeaux = () => {
       <Seo title={t({ fr: "Cartes cadeaux — Offrir une expérience Plume", en: "Gift cards — Offer a Plume experience" })}
         description={t({ fr: "Offrez une parenthèse en Bourgogne : nos coffrets expérience à offrir, une nuit d'exception ou un instant de gastronomie.", en: "Offer a Burgundy escape: our experience gift cards, an exceptional night or a gastronomic moment." })} path="/cartes-cadeaux" />
 
-      <section className="relative bg-ink text-cream pt-36 pb-24 px-6" data-testid="gc-hero">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-serif italic font-light text-4xl sm:text-5xl lg:text-6xl leading-[1.1] mb-7">
+      {/* HERO — immersive fullscreen photography */}
+      <section className="relative h-[92vh] min-h-[560px] w-full overflow-hidden bg-ink" data-testid="gc-hero">
+        <Img src={HERO_IMG} alt="" loading="eager" className="absolute inset-0 w-full h-full object-cover kenburns" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/20 to-ink/70" />
+        <div className="relative h-full w-full flex flex-col items-center justify-center text-center px-6 text-cream">
+          <p className="ps-overline text-cream/75 mb-6 fade-in">{t({ fr: "Plume Suites · Cartes cadeaux", en: "Plume Suites · Gift cards" })}</p>
+          <h1 className="font-serif italic font-light text-4xl sm:text-6xl lg:text-7xl leading-[1.05] max-w-3xl fade-in">
             {t({ fr: "Offrez un moment d'exception", en: "Offer an exceptional moment" })}
           </h1>
-          <p className="font-sans text-base text-cream/70 max-w-xl mx-auto leading-relaxed">
+          <p className="font-sans text-sm md:text-base text-cream/80 max-w-lg mx-auto leading-relaxed mt-7 fade-in">
             {t({
-              fr: "Les plus beaux cadeaux sont ceux qui se vivent. Une nuit en suite, une table imaginée par le chef, une parenthèse hors du temps à partager.",
-              en: "The finest gifts are the ones you live. A night in a suite, a table imagined by the chef, a moment out of time to share.",
+              fr: "Les plus beaux cadeaux sont ceux qui se vivent — une nuit en suite, une table imaginée par le chef, une parenthèse hors du temps.",
+              en: "The finest gifts are the ones you live — a night in a suite, a table imagined by the chef, a moment out of time.",
             })}
           </p>
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 ps-scroll-cue">
+            <ArrowDown size={22} strokeWidth={1.2} className="text-cream/70" />
+          </div>
         </div>
       </section>
 
-      <section className="bg-cream text-ink py-20 md:py-28 px-6" data-testid="gc-coffrets">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-7 lg:gap-9">
-          {coffrets.map((c, idx) => (
-            <article key={c.id} data-testid={`gc-coffret-${c.slug}`}
-              onClick={() => open(c, "detail")}
-              className="group cursor-pointer rounded-2xl overflow-hidden bg-white border border-ink/10 flex flex-col transition-all duration-500 hover:shadow-[0_28px_60px_-28px_rgba(59,49,43,0.4)] hover:-translate-y-1"
-              style={{ animationDelay: `${idx * 90}ms` }}>
-              <div className="aspect-[4/5] overflow-hidden relative">
-                <Img src={c.image_url} alt={c.name[lang] || c.name.fr} loading="eager" className="w-full h-full object-cover transition-transform duration-[1100ms] group-hover:scale-[1.06]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent opacity-80" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-cream">
-                  <p className="font-serif italic text-[11px] tracking-[0.25em] opacity-80 mb-1">{c.tagline[lang] || c.tagline.fr}</p>
-                  <h2 className="font-serif italic font-light text-2xl leading-tight">{c.name[lang] || c.name.fr}</h2>
-                </div>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <p className="font-sans text-sm text-ink/60 leading-relaxed flex-1">{(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}</p>
-                <div className="flex items-center justify-between pt-5 mt-5 border-t border-ink/10">
-                  <span className="font-serif text-xl">
-                    {c.from_price && <span className="text-[10px] uppercase tracking-[0.15em] text-ink/45 mr-1.5 align-middle">{t({ fr: "dès", en: "from" })}</span>}
-                    {fmtPrice(c.price)}
-                  </span>
-                  <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-terracotta group-hover:gap-3 transition-all">
-                    {t({ fr: "Découvrir", en: "Discover" })} <ArrowRight size={14} strokeWidth={1.5} />
-                  </span>
-                </div>
-                <button onClick={(e) => { e.stopPropagation(); open(c, "personalize"); }} data-testid={`gc-offer-${c.slug}`}
-                  className="mt-4 w-full bg-ink text-cream py-3 rounded-full uppercase text-[11px] tracking-[0.2em] hover:bg-terracotta transition-colors">
-                  {t({ fr: "Offrir", en: "Gift this" })}
-                </button>
-              </div>
-            </article>
-          ))}
+      {/* STATEMENT — editorial scroll reveal */}
+      <section className="bg-cream text-ink py-28 md:py-40 px-6" data-testid="gc-statement">
+        <div className="max-w-4xl mx-auto text-center">
+          <Reveal className="ps-overline text-terracotta mb-10">{t({ fr: "L'art d'offrir", en: "The art of giving" })}</Reveal>
+          <Reveal as="p" delay={120} className="font-serif italic font-light text-3xl sm:text-4xl lg:text-5xl leading-[1.25] tracking-tight">
+            {t({
+              fr: "Offrir une carte Plume, c'est offrir du temps. Celui que l'on prend pour soi, pour l'autre, loin du bruit — au bord du canal de Bourgogne, entre deux suites et une table d'exception.",
+              en: "To give a Plume card is to give time. The kind you keep for yourself, for the other, far from the noise — by the Burgundy canal, between two suites and an exceptional table.",
+            })}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* EXPERIENCES — alternating editorial rows */}
+      <section className="bg-cream text-ink pb-28 md:pb-40 px-6" data-testid="gc-coffrets">
+        <div className="max-w-6xl mx-auto space-y-28 md:space-y-40">
+          {coffrets.map((c, idx) => {
+            const reversed = idx % 2 === 1;
+            return (
+              <article key={c.id} data-testid={`gc-coffret-${c.slug}`}
+                className="group grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                {/* Image */}
+                <Reveal
+                  onClick={() => open(c, "detail")}
+                  className={`relative cursor-pointer overflow-hidden rounded-2xl ${reversed ? "lg:order-2" : ""}`}>
+                  <div className="aspect-[4/5] md:aspect-[5/4] overflow-hidden">
+                    <Img src={c.image_url} alt={c.name[lang] || c.name.fr} loading="eager"
+                      className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                </Reveal>
+
+                {/* Text */}
+                <Reveal delay={140} className={`flex flex-col ${reversed ? "lg:order-1" : ""}`}>
+                  <div className="flex items-center gap-4 mb-5">
+                    <span className="font-serif italic text-2xl text-terracotta/70">{String(idx + 1).padStart(2, "0")}</span>
+                    <span className="h-px flex-1 max-w-[52px] bg-ink/20" />
+                    <span className="ps-overline text-ink/45">{c.tagline[lang] || c.tagline.fr}</span>
+                  </div>
+
+                  <h2 onClick={() => open(c, "detail")}
+                    className="font-serif italic font-light text-4xl lg:text-5xl leading-[1.05] mb-5 cursor-pointer hover:text-terracotta transition-colors">
+                    {c.name[lang] || c.name.fr}
+                  </h2>
+
+                  <p className="font-sans text-base text-ink/65 leading-relaxed max-w-md mb-7">
+                    {(c.long_description && (c.long_description[lang] || c.long_description.fr)) || (c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
+                  </p>
+
+                  <ul className="space-y-2.5 mb-8">
+                    {c.includes.slice(0, 4).map((inc, i) => (
+                      <li key={i} className="font-sans text-sm text-ink/70 flex items-start gap-3">
+                        <Check size={15} strokeWidth={2} className="text-terracotta mt-0.5 shrink-0" /> {inc[lang] || inc.fr}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex items-center gap-6 flex-wrap pt-6 border-t border-ink/10">
+                    <span className="font-serif text-3xl">
+                      {c.from_price && <span className="text-[10px] uppercase tracking-[0.15em] text-ink/45 mr-2 align-middle">{t({ fr: "dès", en: "from" })}</span>}
+                      {fmtPrice(c.price)}
+                    </span>
+                    <div className="flex items-center gap-3 flex-wrap ml-auto">
+                      <button onClick={() => open(c, "detail")} data-testid={`gc-discover-${c.slug}`}
+                        className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-ink/70 hover:text-terracotta transition-colors">
+                        {t({ fr: "Découvrir", en: "Discover" })} <ArrowRight size={14} strokeWidth={1.5} />
+                      </button>
+                      <button onClick={(e) => { e.stopPropagation(); open(c, "personalize"); }} data-testid={`gc-offer-${c.slug}`}
+                        className="bg-ink text-cream px-7 py-3.5 rounded-full uppercase text-[11px] tracking-[0.2em] hover:bg-terracotta transition-colors">
+                        {t({ fr: "Offrir", en: "Gift this" })}
+                      </button>
+                    </div>
+                  </div>
+                </Reveal>
+              </article>
+            );
+          })}
         </div>
 
-        <div className="text-center mt-16">
-          <p className="font-sans text-sm text-ink/60">
-            {t({ fr: "Vous avez déjà reçu une carte cadeau ?", en: "Already received a gift card?" })}{" "}
-            <Link to="/reserver" data-testid="gc-use-link" className="text-terracotta hover:underline underline-offset-4">
-              {t({ fr: "Utiliser ma carte", en: "Use my card" })}
-            </Link>
+        {/* REDEMPTION */}
+        <Reveal className="max-w-2xl mx-auto text-center mt-32 md:mt-44 border-t border-ink/10 pt-16">
+          <p className="ps-overline text-terracotta mb-4">{t({ fr: "Déjà reçu une carte ?", en: "Already received a card?" })}</p>
+          <p className="font-serif italic font-light text-2xl md:text-3xl leading-snug mb-7">
+            {t({ fr: "Profitez de l'expérience qui vous a été offerte.", en: "Enjoy the experience you were given." })}
           </p>
-        </div>
+          <Link to="/reserver" data-testid="gc-use-link"
+            className="inline-flex items-center gap-2 border border-ink text-ink px-8 py-3.5 rounded-full uppercase text-[11px] tracking-[0.2em] hover:bg-ink hover:text-cream transition-colors">
+            {t({ fr: "Utiliser ma carte cadeau", en: "Use my gift card" })} <ArrowRight size={14} strokeWidth={1.5} />
+          </Link>
+        </Reveal>
       </section>
 
       {selected && <ExperienceModal coffret={selected} startStep={startStep} onClose={() => setSelected(null)} />}
