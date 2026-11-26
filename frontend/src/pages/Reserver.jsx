@@ -16,7 +16,7 @@ const Reserver = () => {
   const [giftOpen, setGiftOpen] = useState(params.get("carte") === "1");
   const onGiftChange = (v) => {
     setGiftOpen(v);
-    if (!v && params.get("carte")) { params.delete("carte"); setParams(params, { replace: true }); }
+    if (!v && params.get("carte")) { params.delete("carte"); params.delete("code"); setParams(params, { replace: true }); }
   };
 
   const GiftLink = ({ className = "" }) => (
@@ -130,7 +130,7 @@ const Reserver = () => {
       {/* PROLONGER L'EXPÉRIENCE — présentées lors de la réservation */}
       <ExperiencesSection embedded />
 
-      <GiftRedeemSheet open={giftOpen} onOpenChange={onGiftChange} />
+      <GiftRedeemSheet open={giftOpen} onOpenChange={onGiftChange} initialCode={params.get("code") || ""} />
 
       {/* CLOSING editorial line */}
       <section className="px-6 md:px-12 pb-24 pt-16">

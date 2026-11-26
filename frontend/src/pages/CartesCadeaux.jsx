@@ -6,7 +6,7 @@ import { useLang } from "../context/LanguageContext";
 import Seo from "../components/Seo";
 import Img from "../components/Img";
 import Reveal from "../components/Reveal";
-import PlumeLogo from "../components/PlumeLogo";
+import GiftCardVisual from "../components/GiftCardVisual";
 
 const HERO_IMG = "/media/06c7bdiw_50CA4710-2440-42FD-BA71-5227C2500D01.JPG";
 
@@ -14,8 +14,6 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api/giftcards`;
 
 const fmtPrice = (n) => `${Number(n)} €`;
 
-// Grain papier (bruit SVG) posé sur la carte cadeau.
-const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.23  0 0 0 0 0.19  0 0 0 0 0.17  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
 
 // Exemple de menu affiché dans la fiche de l'Échappée ; la carte suit les saisons.
 // shortcut: codé par slug ; à passer dans l'admin des coffrets si le menu change souvent.
@@ -37,28 +35,14 @@ const BADGES = {
 const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) => {
   const { t } = useLang();
   return (
-    <div data-testid="gc-preview"
-      className="relative w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#f6f0e4] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
-      <div className="relative min-h-[220px] bg-terracotta flex items-center justify-center p-3">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-multiply" style={{ backgroundImage: GRAIN }} />
-        <PlumeLogo variant="white" size="sm" className="relative !h-auto !w-full max-w-[110px]" />
-      </div>
-      <div className="flex flex-col p-4 sm:p-7 min-w-0">
-        <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-terracotta whitespace-nowrap">{t({ fr: "Carte cadeau", en: "Gift card" })}</span>
-        <div className="my-5 sm:my-6">
-          <p className="font-serif italic font-light text-[22px] sm:text-[26px] leading-tight break-words">{coffret.name[lang] || coffret.name.fr}</p>
-          {suiteLabel && <p className="font-sans text-xs text-ink/55 mt-1">{suiteLabel}</p>}
-          <p className="font-serif text-[15px] text-ink/75 mt-3 break-words">
-            {t({ fr: "Pour", en: "For" })} {recipient || <span className="text-ink/35">…</span>}
-          </p>
-          {message && <p className="font-serif italic text-sm text-ink/60 mt-1.5 leading-snug break-words line-clamp-3">« {message} »</p>}
-        </div>
-        <div className="mt-auto pt-3 border-t border-ink/10 flex items-baseline justify-between gap-3">
-          <span className="font-sans text-[9px] uppercase tracking-[0.2em] text-ink/45 whitespace-nowrap">{t({ fr: "Valable 12 mois", en: "Valid 12 months" })}</span>
-          {price != null && <span className="font-serif text-xl whitespace-nowrap">{fmtPrice(price)}</span>}
-        </div>
-      </div>
-    </div>
+    <GiftCardVisual
+      title={coffret.name[lang] || coffret.name.fr}
+      subtitle={suiteLabel}
+      recipient={recipient}
+      message={message}
+      footerLeft={t({ fr: "Valable 12 mois", en: "Valid 12 months" })}
+      footerRight={price != null ? fmtPrice(price) : null}
+    />
   );
 };
 
