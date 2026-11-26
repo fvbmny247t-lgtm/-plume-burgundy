@@ -4,6 +4,9 @@ import { useLang } from "../context/LanguageContext";
 import { NAV } from "../data/content";
 import PlumeLogo from "./PlumeLogo";
 
+// Carnet Plume (espace fidélité) pas encore terminé : accès masqués jusqu'à son lancement.
+const CARNET_PUBLIC = false;
+
 const Navbar = () => {
   const { lang, setLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
@@ -126,14 +129,14 @@ const Navbar = () => {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
 
-          <Link
+          {CARNET_PUBLIC && <Link
             to="/carnet"
             data-testid="nav-carnet"
             aria-label={t(NAV.carnet)}
             className="hidden md:inline-flex items-center hover:opacity-70 transition-opacity"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </Link>
+          </Link>}
 
           <button
             data-testid="mobile-menu-toggle"
@@ -219,13 +222,13 @@ const Navbar = () => {
             {t({ fr: "Carte cadeau", en: "Gift card" })}
           </Link>
         </div>
-        <Link
+        {CARNET_PUBLIC && <Link
           to="/carnet"
           data-testid="mobile-carnet-link"
           className="mt-6 block font-sans text-[11px] uppercase tracking-[0.3em] text-cream/70 hover:text-cream transition-colors"
         >
           {t(NAV.carnet)}
-        </Link>
+        </Link>}
       </div>
     </header>
   );
