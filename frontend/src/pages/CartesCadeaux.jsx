@@ -101,12 +101,11 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
     }
   };
 
-  const gallery = coffret.images && coffret.images.length ? coffret.images : [coffret.image_url];
 
   return (
     <div className="fixed inset-0 z-[90] bg-ink/75 backdrop-blur-sm overflow-y-auto animate-in fade-in-0 duration-300" data-testid="gc-experience-modal" onClick={onClose}>
       <div className="min-h-full flex items-start md:items-center justify-center p-4 md:p-8">
-        <div className="bg-cream w-full max-w-4xl overflow-hidden relative my-4 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-500 ease-out" onClick={(e) => e.stopPropagation()}>
+        <div className="bg-cream w-full max-w-4xl overflow-clip relative my-4 animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-500 ease-out" onClick={(e) => e.stopPropagation()}>
           <button onClick={onClose} data-testid="gc-modal-close" aria-label="Fermer"
             className="absolute top-3 right-3 z-10 w-10 h-10 bg-cream/90 text-ink flex items-center justify-center hover:text-terracotta transition-colors">
             <X size={18} strokeWidth={1.5} />
@@ -116,17 +115,12 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="bg-ink">
                 {/* photo au format portrait, qui reste visible pendant qu'on lit le texte (au lieu d'être étirée sur toute la hauteur) */}
-                <div className="md:sticky md:top-0">
+                <div className="md:sticky md:top-0 relative">
                   <div className="aspect-[4/5] overflow-hidden">
                     <Img src={mainImg} alt={coffret.name[lang] || coffret.name.fr} loading="eager" className="w-full h-full object-cover" />
                   </div>
-                  <div className="hidden md:flex gap-2 p-3 bg-ink">
-                    {gallery.slice(0, 4).map((g, i) => (
-                      <button key={i} onClick={() => setMainImg(g)} className={`w-16 h-16 overflow-hidden border-2 ${mainImg === g ? "border-terracotta" : "border-transparent opacity-70 hover:opacity-100"}`}>
-                        <Img src={g} alt="" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
+                  {/* fondu vers le brun du panneau, pour ne pas étirer la photo sur toute la hauteur */}
+                  <div aria-hidden="true" className="hidden md:block pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-ink" />
                 </div>
               </div>
               <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
