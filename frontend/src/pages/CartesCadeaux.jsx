@@ -14,9 +14,12 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api/giftcards`;
 
 const fmtPrice = (n) => `${Number(n)} €`;
 
+// Grain papier (bruit SVG) posé sur la carte cadeau.
+const GRAIN = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.23  0 0 0 0 0.19  0 0 0 0 0.17  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+
 // shortcut: badge codé par slug ; à déplacer dans l'admin des coffrets si on veut le changer souvent.
 const BADGES = {
-  "envolee-deux": { fr: "Notre préférée", en: "Our favourite" },
+  "envolee-deux": { fr: "La plus spacieuse", en: "Our most spacious" },
 };
 
 // La carte telle que la reçoit le bénéficiaire : une bande photo + un carton crème.
@@ -25,7 +28,8 @@ const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) =
   const { t } = useLang();
   return (
     <div data-testid="gc-preview"
-      className="w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#faf7f1] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
+      className="relative w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#f6f0e4] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.45] mix-blend-multiply" style={{ backgroundImage: GRAIN }} />
       <div className="min-h-[220px] bg-terracotta flex items-center justify-center p-3">
         <PlumeLogo variant="white" size="sm" className="!h-auto !w-full max-w-[110px]" />
       </div>
@@ -148,14 +152,16 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                   </p>
                 )}
 
-                <div className="mt-auto flex items-center justify-between pt-4 border-t border-ink/10">
-                  <div>
+                <div className="mt-auto flex items-center justify-between gap-4 pt-4 border-t border-ink/10">
+                  <div className="shrink-0">
                     {coffret.from_price && <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-ink/45 block">{t({ fr: "À partir de", en: "From" })}</span>}
-                    <span className="font-serif text-3xl">{fmtPrice(price)}</span>
+                    <span className="font-serif text-2xl lg:text-3xl whitespace-nowrap">{fmtPrice(price)}</span>
                   </div>
                   <button onClick={() => setStep("personalize")} data-testid="gc-to-personalize"
-                    className="inline-flex items-center gap-2 bg-ink text-cream px-6 py-3.5 uppercase text-[11px] tracking-[0.2em] hover:bg-terracotta transition-colors">
-                    {t({ fr: "Offrir cette expérience", en: "Gift this experience" })} <ArrowRight size={15} strokeWidth={1.5} />
+                    className="inline-flex items-center gap-2 whitespace-nowrap bg-ink text-cream px-4 lg:px-6 py-3.5 uppercase text-[10px] lg:text-[11px] tracking-[0.18em] lg:tracking-[0.2em] hover:bg-terracotta transition-colors">
+                    <span className="lg:hidden">{t({ fr: "Offrir", en: "Gift it" })}</span>
+                    <span className="hidden lg:inline">{t({ fr: "Offrir cette expérience", en: "Gift this experience" })}</span>
+                    <ArrowRight size={15} strokeWidth={1.5} />
                   </button>
                 </div>
               </div>
