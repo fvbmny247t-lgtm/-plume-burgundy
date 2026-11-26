@@ -14,6 +14,11 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api/giftcards`;
 
 const fmtPrice = (n) => `${Number(n)} €`;
 
+// shortcut: badge codé par slug ; à déplacer dans l'admin des coffrets si on veut le changer souvent.
+const BADGES = {
+  "envolee-deux": { fr: "Notre préférée", en: "Our favourite" },
+};
+
 // La carte telle que la reçoit le bénéficiaire : une bande photo + un carton crème.
 // Mise en page en flux simple (pas d'aspect-ratio ni de position absolue) pour rester stable partout.
 const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) => {
@@ -21,14 +26,11 @@ const GiftPreview = ({ coffret, suiteLabel, recipient, message, price, lang }) =
   return (
     <div data-testid="gc-preview"
       className="w-full grid grid-cols-[28%_1fr] sm:grid-cols-[34%_1fr] bg-[#faf7f1] text-ink overflow-hidden shadow-[0_24px_50px_-28px_rgba(59,49,43,0.55)]">
-      <div className="relative min-h-[220px]">
-        <Img src={coffret.image_url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+      <div className="min-h-[220px] bg-terracotta flex items-center justify-center p-3">
+        <PlumeLogo variant="white" size="sm" className="!h-auto !w-full max-w-[110px]" />
       </div>
-      <div className="flex flex-col p-4 sm:p-7 border-l-[3px] border-terracotta/70 min-w-0">
-        <div className="flex items-center justify-between gap-3">
-          <PlumeLogo variant="dark" size="sm" className="!h-7" />
-          <span className="hidden sm:inline font-sans text-[9px] uppercase tracking-[0.3em] text-terracotta whitespace-nowrap">{t({ fr: "Carte cadeau", en: "Gift card" })}</span>
-        </div>
+      <div className="flex flex-col p-4 sm:p-7 min-w-0">
+        <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-terracotta whitespace-nowrap">{t({ fr: "Carte cadeau", en: "Gift card" })}</span>
         <div className="my-5 sm:my-6">
           <p className="font-serif italic font-light text-[22px] sm:text-[26px] leading-tight break-words">{coffret.name[lang] || coffret.name.fr}</p>
           {suiteLabel && <p className="font-sans text-xs text-ink/55 mt-1">{suiteLabel}</p>}
@@ -284,6 +286,11 @@ const CartesCadeaux = () => {
               <Reveal key={c.id} delay={idx * 110} as="article" data-testid={`gc-coffret-${c.slug}`} className="flex flex-col">
                 <button onClick={() => open(c, "detail")} aria-label={name} className="group relative block overflow-hidden aspect-[4/5]">
                   <Img src={c.image_url} alt={name} className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]" />
+                  {BADGES[c.slug] && (
+                    <span className="absolute top-4 left-4 bg-cream/95 text-ink font-serif italic text-[15px] px-3.5 py-1.5 leading-none">
+                      {t(BADGES[c.slug])}
+                    </span>
+                  )}
                 </button>
                 <p className="font-sans text-[11px] tracking-[0.3em] text-terracotta mt-7">0{idx + 1}</p>
                 <p className="font-serif italic text-base text-ink/60 mt-3">{c.tagline[lang] || c.tagline.fr}</p>
@@ -291,7 +298,7 @@ const CartesCadeaux = () => {
                 <p className="font-sans text-[15px] text-ink/75 leading-relaxed mt-4 flex-1">
                   {(c.short_description && (c.short_description[lang] || c.short_description.fr)) || ""}
                 </p>
-                <div className="mt-7 pt-5 border-t border-ink/15 flex items-center justify-between gap-4">
+                <div className="mt-7 pt-5 border-t border-ink/15 flex items-center justify-between gap-4 md:flex-col md:items-start xl:flex-row xl:items-center">
                   <p className="font-serif text-2xl leading-none whitespace-nowrap">
                     {c.from_price && <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-ink/50 mr-1.5 align-middle">{t({ fr: "dès", en: "from" })}</span>}
                     {fmtPrice(c.price)}
@@ -316,8 +323,8 @@ const CartesCadeaux = () => {
       {/* LA CARTE — l'objet que l'on offre, posé sur une photo de la maison */}
       {coffrets[0] && (
         <section className="bg-sand text-ink px-6 md:px-12 py-24 md:py-32" data-testid="gc-the-card">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-5">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10 lg:gap-16 items-center">
+            <div className="md:col-span-5">
               <p className="ps-overline text-terracotta mb-4">{t({ fr: "La carte", en: "The card" })}</p>
               <h2 className="font-serif italic font-light text-4xl md:text-5xl leading-[1.05]">
                 {t({ fr: "Une carte à son nom.", en: "A card in their name." })}
@@ -341,10 +348,10 @@ const CartesCadeaux = () => {
                 ))}
               </ol>
             </div>
-            <div className="lg:col-span-7">
+            <div className="md:col-span-7">
               <div className="relative">
                 <Img src={coffrets[1]?.image_url || coffrets[0].image_url} alt="" className="w-full aspect-[4/3] object-cover" />
-                <div className="relative -mt-24 sm:-mt-32 mx-4 sm:mx-10 lg:mx-0 lg:-ml-12 lg:mr-16">
+                <div className="relative -mt-24 sm:-mt-32 mx-4 sm:mx-10 md:mx-0 md:-ml-8 lg:-ml-12 md:mr-6 lg:mr-16">
                   <GiftPreview coffret={coffrets[0]} recipient="Claire & Antoine"
                     message={t({ fr: "Pour souffler un peu, rien que vous deux.", en: "A little time to breathe, just the two of you." })}
                     price={coffrets[0].price} lang={lang} />
