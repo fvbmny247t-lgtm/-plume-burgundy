@@ -34,8 +34,8 @@ const Reserver = () => {
       icon: Tag,
       title: { fr: "Meilleur tarif garanti", en: "Best rate guaranteed" },
       text: {
-        fr: "Aucune commission d'intermédiaire — le prix le plus juste, en direct.",
-        en: "No intermediary commission — the fairest price, direct.",
+        fr: "Aucune commission d'intermédiaire, vous payez le prix le plus juste.",
+        en: "No intermediary commission, so you pay the fairest price.",
       },
     },
     {
@@ -50,8 +50,8 @@ const Reserver = () => {
       icon: Gift,
       title: { fr: "Une attention de la maison", en: "A little something from us" },
       text: {
-        fr: "Une petite intention à l'arrivée pour nos hôtes en direct.",
-        en: "A welcome touch on arrival for our direct guests.",
+        fr: "Une petite intention vous attend à l'arrivée quand vous réservez chez nous.",
+        en: "A little something awaits you on arrival when you book with us.",
       },
     },
   ];
