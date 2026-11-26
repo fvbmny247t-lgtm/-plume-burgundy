@@ -167,7 +167,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                     <a href="https://www.optitreperedugout.fr" target="_blank" rel="noreferrer" data-testid="gc-restaurant-submark"
                       aria-label={t({ fr: "Découvrir le restaurant Ô P'tit Repère du Goût", en: "Discover the Ô P'tit Repère du Goût restaurant" })}
                       className="mt-12 inline-block opacity-90 hover:opacity-100 transition-opacity">
-                      <Img src="/images/submark-repere-du-gout.png" alt="Ô P'tit Repère du Goût" className="h-14 w-auto mx-auto" />
+                      <Img src="/images/submark-repere-du-gout.png" alt="Ô P'tit Repère du Goût" className="h-9 w-auto mx-auto" />
                     </a>
                     <p className="font-serif italic text-sm text-ink/50 mt-6 max-w-xs mx-auto">
                       {t({
