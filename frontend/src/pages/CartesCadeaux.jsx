@@ -120,7 +120,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                     <Img src={mainImg} alt={coffret.name[lang] || coffret.name.fr} loading="eager" className="w-full h-full object-cover" />
                   </div>
                   {/* fondu vers le brun du panneau, pour ne pas étirer la photo sur toute la hauteur */}
-                  <div aria-hidden="true" className="hidden md:block pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-ink" />
+                  <div aria-hidden="true" className="hidden md:block pointer-events-none absolute inset-x-0 -bottom-px h-1/2 bg-gradient-to-b from-ink/0 via-ink/55 to-ink" />
                 </div>
               </div>
               <div className="p-8 pt-14 md:p-10 md:pt-14 flex flex-col">
