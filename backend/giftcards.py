@@ -375,6 +375,17 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
     if res.modified_count == 1 and card and card.get("code"):
         origin = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
         voucher_url = f"{origin}/bon/{card['code']}" if origin else ""
+        coffret = await _db.giftcard_coffrets.find_one({"id": card.get("coffret_id")}) or {}
+        lang = card.get("locale", "fr")
+        usage = (coffret.get("usage") or {}).get("fr") or ""
+        conditions = ""
+        if "jours fériés" in usage:
+            conditions = ("Excluding public holidays and special dates (Valentine's Day, Mother's Day…)." if lang == "en"
+                          else "Hors jours fériés et dates d'exception (Saint-Valentin, fête des mères…).")
+        try:
+            await mail.send_giftcard_sale_admin_email(card)
+        except Exception as e:  # noqa: BLE001
+            logger.error("gift card sale admin email failed: %s", e)
         try:
             await mail.send_giftcard_email(
                 to=card["buyer_email"],
@@ -385,7 +396,8 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
                 message=card.get("message"),
                 expires_at=card.get("expires_at"),
                 voucher_url=voucher_url,
-                lang=card.get("locale", "fr"),
+                lang=lang,
+                conditions=conditions,
             )
         except Exception as e:  # noqa: BLE001
             logger.error("gift card email failed: %s", e)
