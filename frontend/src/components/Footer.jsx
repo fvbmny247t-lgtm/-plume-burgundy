@@ -51,6 +51,7 @@ const Footer = () => {
             <li><Link data-testid="footer-link-art" to="/art-de-vivre" className="hover:text-terracotta transition-colors">{t(NAV.artDeVivre)}</Link></li>
             <li><Link data-testid="footer-link-sejours" to="/sejours" className="hover:text-terracotta transition-colors">{t(NAV.sejours)}</Link></li>
             <li><Link data-testid="footer-link-journal" to="/journal" className="hover:text-terracotta transition-colors">{t(NAV.journal)}</Link></li>
+            <li><Link data-testid="footer-link-giftcards" to="/cartes-cadeaux" className="font-serif italic text-base text-terracotta hover:text-cream transition-colors">{t(NAV.giftcards)}</Link></li>
             <li><Link data-testid="footer-link-contact" to="/contact" className="hover:text-terracotta transition-colors">{t(NAV.contact)}</Link></li>
           </ul>
           <h4 className="ps-overline text-cream/70 mt-8 mb-4">{t(FOOTER.followTitle)}</h4>

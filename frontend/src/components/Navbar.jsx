@@ -34,6 +34,7 @@ const Navbar = () => {
   const heroIsDark =
     pathname === "/" ||
     pathname === "/art-de-vivre" ||
+    pathname === "/cartes-cadeaux" ||
     /^\/sejours\/[^/]+$/.test(pathname);
 
   // At top of image-hero pages: white. On scroll OR on cream pages: ink (Nespresso brown).
@@ -51,6 +52,11 @@ const Navbar = () => {
       <div
         className={`relative z-[60] flex items-center justify-between px-6 md:px-10 py-4 md:py-5 transition-colors duration-500 ease-out ${open ? "text-cream" : textColor}`}
       >
+        {/* Fond crème au scroll : sans lui, le menu passe par-dessus le texte */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 bg-cream/95 backdrop-blur-sm border-b border-ink/10 transition-opacity duration-500 ease-out ${scrolled && !open ? "opacity-100" : "opacity-0"}`}
+        />
         <div
           aria-hidden="true"
           className={`pointer-events-none absolute inset-0 bg-ink transition-opacity duration-500 ease-out ${open ? "opacity-100" : "opacity-0"}`}
@@ -59,7 +65,7 @@ const Navbar = () => {
           <PlumeLogo variant={open ? "white" : logoVariant} size="sm" />
         </Link>
 
-        <nav className="relative z-10 hidden lg:flex items-center gap-9">
+        <nav className="relative z-10 hidden lg:flex items-center gap-6 xl:gap-9">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -67,10 +73,10 @@ const Navbar = () => {
               data-testid={`nav-link-${l.to.replace("/", "")}`}
               className={({ isActive }) =>
                 l.to === "/cartes-cadeaux"
-                  ? `font-serif italic text-[13px] tracking-[0.12em] px-3.5 py-1.5 rounded-full border transition-colors ${
-                      open || isActive ? "border-terracotta text-terracotta" : "border-current/40 hover:border-terracotta hover:text-terracotta"
+                  ? `whitespace-nowrap font-serif italic text-[17px] leading-none transition-colors ${
+                      isActive ? "text-terracotta" : useDarkContent ? "text-terracotta hover:text-terracottaDark" : "hover:text-terracotta"
                     }`
-                  : `font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
+                  : `whitespace-nowrap font-sans uppercase text-[11px] tracking-[0.3em] hover:opacity-70 transition-opacity ${
                       isActive ? "opacity-100" : "opacity-90"
                     }`
               }
