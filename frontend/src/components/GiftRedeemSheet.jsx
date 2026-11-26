@@ -5,7 +5,7 @@ import { useLang } from "../context/LanguageContext";
 import GiftRedeemForm from "./GiftRedeemForm";
 
 // Panneau latéral « J'ai une carte cadeau » ouvert depuis la page Réserver.
-const GiftRedeemSheet = ({ open, onOpenChange }) => {
+const GiftRedeemSheet = ({ open, onOpenChange, initialCode = "" }) => {
   const { t } = useLang();
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -36,7 +36,7 @@ const GiftRedeemSheet = ({ open, onOpenChange }) => {
                 en: "Enter your code and the dates you have in mind. We take care of the booking.",
               })}
             </Dialog.Description>
-            <GiftRedeemForm />
+            <GiftRedeemForm initialCode={initialCode} />
           </div>
         </Dialog.Content>
       </Dialog.Portal>
