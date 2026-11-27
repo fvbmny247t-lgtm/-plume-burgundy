@@ -28,7 +28,7 @@ def is_configured() -> bool:
     return bool(os.environ.get("SMTP_PASSWORD"))
 
 
-def _send_smtp(to: str, subject: str, html: str, reply_to: str | None = None) -> None:
+def _send_smtp(to: str, subject: str, html: str, reply_to: str | None = None, bcc: str | None = None) -> None:
     host = _required("SMTP_HOST")
     port = int(_required("SMTP_PORT"))
     user = _required("SMTP_USER")
@@ -42,6 +42,8 @@ def _send_smtp(to: str, subject: str, html: str, reply_to: str | None = None) ->
     message["To"] = to
     message["Subject"] = subject
     message["Reply-To"] = reply_to or default_reply
+    if bcc:
+        message["Bcc"] = bcc  # send_message envoie aussi en copie cachée puis retire l'en-tête
     message.set_content(
         "Ce message contient du contenu HTML. Veuillez l'ouvrir dans un client email compatible."
     )
@@ -63,7 +65,7 @@ def _send_smtp(to: str, subject: str, html: str, reply_to: str | None = None) ->
         raise RuntimeError("SMTP_PORT must be 465 or 587")
 
 
-async def send_email(to: str, subject: str, html: str, reply_to: str | None = None) -> bool:
+async def send_email(to: str, subject: str, html: str, reply_to: str | None = None, bcc: str | None = None) -> bool:
     """Send one HTML email. Blocking smtplib runs off the event loop."""
-    await asyncio.to_thread(_send_smtp, to, subject, html, reply_to)
+    await asyncio.to_thread(_send_smtp, to, subject, html, reply_to, bcc)
     return True

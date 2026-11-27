@@ -17,6 +17,7 @@ from fastapi import APIRouter, HTTPException, Request, Depends, Header
 from pydantic import BaseModel, EmailStr, Field
 
 import email_service as mail
+import sheet_sync
 
 logger = logging.getLogger(__name__)
 
@@ -244,7 +245,10 @@ class CheckoutIn(BaseModel):
     coffret_id: str
     option_key: Optional[str] = None
     buyer_name: str = Field(min_length=1, max_length=120)
+    buyer_first_name: Optional[str] = Field(default=None, max_length=60)
+    buyer_last_name: Optional[str] = Field(default=None, max_length=60)
     buyer_email: EmailStr
+    buyer_phone: Optional[str] = Field(default=None, max_length=40)
     recipient_name: Optional[str] = Field(default=None, max_length=120)
     message: Optional[str] = Field(default=None, max_length=600)
     locale: str = "fr"
@@ -339,7 +343,10 @@ async def create_checkout(payload: CheckoutIn):
         "amount": amount,
         "currency": CURRENCY,
         "buyer_name": payload.buyer_name.strip(),
+        "buyer_first_name": (payload.buyer_first_name or "").strip() or None,
+        "buyer_last_name": (payload.buyer_last_name or "").strip() or None,
         "buyer_email": str(payload.buyer_email),
+        "buyer_phone": (payload.buyer_phone or "").strip() or None,
         "recipient_name": (payload.recipient_name or "").strip() or None,
         "message": (payload.message or "").strip() or None,
         "locale": payload.locale,
@@ -382,6 +389,7 @@ async def _activate_giftcard(session_id: str) -> Optional[dict]:
         if "jours fériés" in usage:
             conditions = ("Excluding public holidays and special dates (Valentine's Day, Mother's Day…)." if lang == "en"
                           else "Hors jours fériés et dates d'exception (Saint-Valentin, fête des mères…).")
+        await sheet_sync.push("sale", card)
         try:
             await mail.send_giftcard_sale_admin_email(card)
         except Exception as e:  # noqa: BLE001
@@ -578,4 +586,7 @@ async def admin_update_redemption(redemption_id: str, status: str, admin_note: O
         await _db.giftcards.update_one(
             {"code": red["code"]}, {"$set": {"status": "redeemed", "redeemed_at": _iso(_now())}}
         )
+        card = await _db.giftcards.find_one({"code": red["code"]})
+        if card:
+            await sheet_sync.push("redeemed", card)
     return {"ok": True}

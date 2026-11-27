@@ -361,7 +361,7 @@ async def send_giftcard_email(to, buyer_name, coffret_name, code, recipient_name
             + _signature("fr")
         )
         subject = "Votre carte cadeau Plume Suites"
-    await send_email(to, subject, _shell(inner))
+    await send_email(to, subject, _shell(inner), bcc=CONTACT_INBOX)  # copie à Plume Suites pour garder une trace
 
 
 def _eur(amount) -> str:
@@ -373,13 +373,19 @@ def _eur(amount) -> str:
 
 async def send_giftcard_sale_admin_email(card: dict):
     """Prévient Plume Suites qu'une carte vient d'être vendue."""
+    carte, _, suite = (card.get("coffret_name") or "").partition(" — ")
     rows = [
-        ("Carte", card.get("coffret_name")),
+        ("Prénom", card.get("buyer_first_name") or "—"),
+        ("Nom", card.get("buyer_last_name") or card.get("buyer_name") or "—"),
+        ("Email", card.get("buyer_email")),
+        ("Téléphone", card.get("buyer_phone") or "—"),
+        ("", ""),
+        ("Carte", carte),
+        ("Suite", suite or "—"),
         ("Montant", _eur(card.get("amount"))),
         ("Code", card.get("code")),
-        ("Acheteur", card.get("buyer_name")),
-        ("Email acheteur", card.get("buyer_email")),
         ("Pour", card.get("recipient_name") or "—"),
+        ("Achetée le", _fmt_date(card.get("purchased_at") or "", "fr")),
         ("Valable jusqu'au", _fmt_date(card.get("expires_at") or "", "fr")),
     ]
     rows_html = "".join(
@@ -393,6 +399,7 @@ async def send_giftcard_sale_admin_email(card: dict):
     )
     inner = (
         _heading("Nouvelle carte cadeau vendue")
+        + _para("Acheteur, puis détail de la carte :")
         + f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">{rows_html}</table>'
         + msg_block
         + _para(f'La carte est enregistrée dans <a href="{_site_url("/admin/cartes-cadeaux")}" style="color:{TERRA};">l\'administration</a>, onglet « Vendues ». L\'acheteur a reçu son code par email.')
@@ -450,4 +457,4 @@ async def send_redemption_guest_email(to, guest_name, coffret_name, code, lang="
             + _signature("fr")
         )
         subject = "Votre demande de carte cadeau — Plume Suites"
-    await send_email(to, subject, _shell(inner))
+    await send_email(to, subject, _shell(inner), bcc=CONTACT_INBOX)
