@@ -52,7 +52,7 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
   const hasOptions = (coffret.suite_options || []).length > 0;
   const [optionKey, setOptionKey] = useState(hasOptions ? coffret.suite_options[0].key : null);
   const [mainImg, setMainImg] = useState(coffret.image_url);
-  const [form, setForm] = useState({ recipient_name: "", message: "", buyer_name: "", buyer_email: "" });
+  const [form, setForm] = useState({ recipient_name: "", message: "", buyer_first_name: "", buyer_last_name: "", buyer_email: "", buyer_phone: "" });
   const [cgvOk, setCgvOk] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -74,7 +74,9 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
     try {
       const { data } = await axios.post(`${API}/checkout`, {
         coffret_id: coffret.id, option_key: optionKey,
-        buyer_name: form.buyer_name, buyer_email: form.buyer_email,
+        buyer_name: `${form.buyer_first_name.trim()} ${form.buyer_last_name.trim()}`.trim(),
+        buyer_first_name: form.buyer_first_name.trim(), buyer_last_name: form.buyer_last_name.trim(),
+        buyer_email: form.buyer_email, buyer_phone: form.buyer_phone.trim(),
         recipient_name: form.recipient_name, message: form.message,
         locale: lang, origin_url: window.location.origin,
       });
@@ -224,16 +226,28 @@ const ExperienceModal = ({ coffret, startStep, onClose }) => {
                       {suiteLabel && <div className="text-ink/55 text-xs">{suiteLabel}</div>}
                       {form.recipient_name && <div className="text-ink/55 text-xs mt-1">{t({ fr: "Pour", en: "For" })} {form.recipient_name}</div>}
                     </div>
+                    <div className="grid grid-cols-2 gap-x-6">
+                      <div className="mb-4">
+                        <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Prénom", en: "First name" })}</label>
+                        <input required autoComplete="given-name" value={form.buyer_first_name} onChange={upd("buyer_first_name")} data-testid="gc-buyer-first-name"
+                          className="w-full border-0 border-b border-ink/25 bg-transparent px-0 py-2.5 font-sans text-sm outline-none focus:border-terracotta" />
+                      </div>
+                      <div className="mb-4">
+                        <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Nom", en: "Last name" })}</label>
+                        <input required autoComplete="family-name" value={form.buyer_last_name} onChange={upd("buyer_last_name")} data-testid="gc-buyer-last-name"
+                          className="w-full border-0 border-b border-ink/25 bg-transparent px-0 py-2.5 font-sans text-sm outline-none focus:border-terracotta" />
+                      </div>
+                    </div>
                     <div className="mb-4">
-                      <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Votre nom", en: "Your name" })}</label>
-                      <input required value={form.buyer_name} onChange={upd("buyer_name")} data-testid="gc-buyer-name"
+                      <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Votre email", en: "Your email" })}</label>
+                      <input required type="email" autoComplete="email" value={form.buyer_email} onChange={upd("buyer_email")} data-testid="gc-buyer-email"
                         className="w-full border-0 border-b border-ink/25 bg-transparent px-0 py-2.5 font-sans text-sm outline-none focus:border-terracotta" />
+                      <p className="text-xs text-ink/45 mt-1">{t({ fr: "Vous recevrez la carte cadeau par email.", en: "You will receive the gift card by email." })}</p>
                     </div>
                     <div className="mb-5">
-                      <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Votre email", en: "Your email" })}</label>
-                      <input required type="email" value={form.buyer_email} onChange={upd("buyer_email")} data-testid="gc-buyer-email"
+                      <label className="block ps-overline text-ink/60 mb-2">{t({ fr: "Téléphone", en: "Phone" })}</label>
+                      <input required type="tel" autoComplete="tel" value={form.buyer_phone} onChange={upd("buyer_phone")} data-testid="gc-buyer-phone"
                         className="w-full border-0 border-b border-ink/25 bg-transparent px-0 py-2.5 font-sans text-sm outline-none focus:border-terracotta" />
-                      <p className="text-xs text-ink/45 mt-1">{t({ fr: "Vous recevrez le bon cadeau par email.", en: "You will receive the gift card by email." })}</p>
                     </div>
                     <label className="flex items-start gap-3 mb-5 cursor-pointer font-sans text-xs text-ink/70 leading-relaxed">
                       <input type="checkbox" required checked={cgvOk} onChange={(e) => setCgvOk(e.target.checked)} data-testid="gc-cgv"

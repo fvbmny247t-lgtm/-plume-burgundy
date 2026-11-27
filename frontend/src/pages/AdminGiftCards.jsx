@@ -111,7 +111,7 @@ const AdminGiftCards = () => {
               <div key={c.id} className="p-4 flex flex-wrap items-center gap-x-6 gap-y-1">
                 <span className="font-mono text-sm">{c.code}</span>
                 <span className="text-sm flex-1">{c.coffret_name} · {c.amount} €</span>
-                <span className="text-sm text-ink/60">{c.buyer_email}</span>
+                <span className="text-sm text-ink/60">{c.buyer_name}{c.buyer_phone ? ` · ${c.buyer_phone}` : ""} · {c.buyer_email}</span>
                 <span className={`text-xs uppercase px-2 py-1 ${c.status === "redeemed" ? "bg-ink/10 text-ink/60" : c.status === "expired" ? "bg-red-50 text-red-600" : "bg-terracotta/10 text-terracotta"}`}>{c.status}</span>
               </div>
             ))}
